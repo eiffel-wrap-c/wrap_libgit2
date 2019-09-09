@@ -1,0 +1,552 @@
+<?xml version="1.0"?>
+<ewg_config name="libgit2">
+
+  <rule_list>
+
+	<!--<rule>
+ 		<function_exclude name="">
+	 </rule>
+
+	 <rule>
+	 	<function_address name="git_repository_open"/>
+	 </rule> -->
+		
+    <!-- Ignore everything that starts with an underscore. -->
+    <rule>
+      <match>
+	<identifier name="_.*"/>	
+      </match>
+       <wrapper type="none">
+      </wrapper>
+    </rule>
+
+    <!-- The next rule specify what headers should be wrapped -->
+    <!-- On libgit2 initialization functions are defined in common.h header -->
+    <!-- We use a common class name for functions -->			
+    <rule>
+      <match>
+         <!--header name=".*common.h"/-->
+	 <identifier name="git_libgit2_.*"/>
+	 <type name="function"/>	
+      </match>
+       <wrapper type="default">
+	<class_name name="LIBGIT2_INITIALIZER"/>
+      </wrapper>
+    </rule>
+
+   <!-- The next rule specify the errors functions to be wrapped -->
+   <!-- We use a common class name for functions -->			
+    <rule>
+      <match>
+	 <identifier name="git_error_.*"/>
+	 <type name="function"/>	
+      </match>
+       <wrapper type="default">
+	<class_name name="LIBGIT2_ERROR"/>
+      </wrapper>
+    </rule>
+    <rule>
+      <match>
+	 <identifier name="git_error_.*"/>
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>
+
+   <!-- The next rule specify the repository functions to be wrapped -->
+   <!-- We use a common class name for functions -->			
+    <rule>
+      <match>
+	 <identifier name="git_repository_.*"/>
+	 <type name="function"/>	
+      </match>
+       <wrapper type="default">
+	<class_name name="LIBGIT2_REPOSITORY"/>
+      </wrapper>
+    </rule>
+    <rule>
+      <match>
+	 <identifier name="git_repository"/>
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>
+
+    <!-- The next rule specify the repository enums to be wrapped -->	
+    <rule>
+      <match>
+	 <identifier name="git_repository_init.*"/>
+	 <type name="enum"/>	
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>
+   <rule>
+      <match>
+	 <identifier name="git_repository_open.*"/>
+	 <type name="enum"/>	
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>
+
+    <!-- The next rule specify the clone definitions to be wrapped -->
+    <rule>
+      <match>
+	 <identifier name="git_clone.*"/>
+	 <type name="function"/>	
+      </match>
+       <wrapper type="default">
+	<class_name name="GIT_CLONE"/>	
+      </wrapper>
+    </rule>
+
+    <!-- The next rule specify the git_signature definitions to be wrapped -->
+    <rule>
+      <match>
+	 <identifier name="git_signature"/>
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>
+    <!-- The next rule specify the git_signature functions definitions to be wrapped -->
+    <rule>
+      <match>
+	<identifier name="git_signature_.*"/>
+	<type name="function"/>	
+      </match>
+       <wrapper type="default">
+	<class_name name="GIT_SIGNATURE"/>	
+      </wrapper>
+    </rule>
+
+
+    <!-- The next rule specify the git_index definitions to be wrapped -->
+    <rule>
+      <match>
+	 <identifier name="git_index"/>
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>
+
+    <!-- The next rule specify the git_index functions definitions to be wrapped -->
+    <rule>
+      <match>
+	 <identifier name="git_index_.*"/>
+	 <type name="function"/>	
+      </match>
+       <wrapper type="default">
+	 <class_name name="GIT_INDEX"/>	
+      </wrapper>
+    </rule>
+
+    <!-- The next rule specify the Git index stage states -->
+    <rule>
+      <match>
+        <identifier name="git_index_stage_t*"/>
+        <type name="enum"/>  
+      </match>
+       <wrapper type="default">
+      </wrapper>
+  </rule>
+
+
+    <!-- The next rule specify the git_oid definitions to be wrapped -->
+    <rule>
+      <match>
+	 <identifier name="git_oid"/>
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>
+
+    <!-- The next rule specify the git_tree definitions to be wrapped -->
+    <rule>
+      <match>
+	 <identifier name="git_tree"/>
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>
+ 
+    <!-- The next rule specify the git_tree functions definitions to be wrapped -->
+    <rule>
+      <match>
+	 <identifier name="git_tree_.*"/>
+	 <type name="function"/>	
+      </match>
+       <wrapper type="default">
+	 <class_name name="GIT_TREE"/>	
+      </wrapper>
+    </rule>
+	
+   <!-- The next rule specify the git_commit functions definitions to be wrapped -->
+    <rule>
+      <match>
+	 <identifier name="git_commit_.*"/>
+	 <type name="function"/>	
+      </match>
+       <wrapper type="default">
+	 <class_name name="GIT_COMMIT"/>	
+      </wrapper>
+    </rule>
+
+
+    <!-- The next rule specify the git_status functions definitions to be wrapped -->
+    <rule>
+      <match>
+	 <identifier name="git_status_.*"/>
+	 <type name="function"/>	
+      </match>
+       <wrapper type="default">
+	 <class_name name="GIT_STATUS"/>	
+      </wrapper>
+    </rule>
+
+    <!-- The next rule specify the git_status functions definitions to be wrapped -->
+    <rule>
+      <match>
+	 <identifier name="git_status.*"/>
+	  </match>
+       <wrapper type="default">
+	  </wrapper>
+    </rule>
+
+ <!-- The next rule specify the git_reference functions definitions to be wrapped -->
+    <rule>
+      <match>
+   <identifier name="git_reference_.*"/>
+   <type name="function"/>  
+      </match>
+       <wrapper type="default">
+        <class_name name="GIT_REFERENCE"/>  
+      </wrapper>
+    </rule>
+
+   <!-- The next rule specify the git_submodule functions definitions to be wrapped -->
+    <rule>
+      <match>
+      <identifier name="git_submodule_.*"/>
+      <type name="function"/>  
+      </match>
+       <wrapper type="default">
+       <class_name name="GIT_REFERENCE"/>  
+      </wrapper>
+    </rule>
+
+    <!-- The next rule specify the git_reference functions definitions to be wrapped -->
+    <rule>
+      <match>
+       <identifier name="git_submodule"/>
+       <type name="struct"/>  
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>
+
+ <!-- The next rule specify the git_diff_file struct definitions to be wrapped -->
+    <rule>
+      <match>
+          <identifier name="git_diff_file"/>
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>
+
+
+ <!-- The next rule specify the git_diff_delta struct definitions to be wrapped -->
+    <rule>
+      <match>
+          <identifier name="git_diff_delta"/>
+      ]</match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>
+
+  <!-- The next rule specify the git_filemode enum definitions to be wrapped -->
+    <rule>
+      <match>
+          <identifier name="git_filemode_t.*"/>
+          <type name="enum"/>  
+      ]</match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>
+
+  <!-- The next rule specify the git submodule ignore enum definitions to be wrapped -->
+    <rule>
+      <match>
+          <identifier name="git_submodule_ignore_t"/>
+          <type name="enum"/>  
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>
+
+  <!-- The next rule specify the git submodule status enum definitions to be wrapped -->
+    <rule>
+      <match>
+          <identifier name="git_submodule_status_t"/>
+          <type name="enum"/>  
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>
+
+   <!-- The next rule specify the git repository state enum definitions to be wrapped -->
+    <rule>
+      <match>
+          <identifier name="git_repository_state.*"/>
+          <type name="enum"/>  
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule> 
+
+    <!-- The next rule specify the git submodule callback -->
+    <rule>
+      <match>
+          <identifier name="git_submodule_cb"/>
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule> 
+
+    <!-- The next rule specify the git annotated commit functions-->
+    <rule>
+      <match>
+          <identifier name="git_annotated_commit.*"/>
+          <type name="function"/>  
+      </match>
+      <wrapper type="default">
+          <class_name name="GIT_ANNOTATED_COMMIT"/>  
+      </wrapper>
+    </rule> 
+
+    <!-- The next rule specify the git revparse functions-->
+    <rule>
+      <match>
+          <identifier name="git_revparse_.*"/>
+          <type name="function"/>  
+      </match>
+      <wrapper type="default">
+          <class_name name="GIT_REVPARSE"/>  
+      </wrapper>
+    </rule> 
+
+    <!-- The next rule specify the git object functions-->
+    <rule>
+      <match>
+          <identifier name="git_object_.*"/>
+          <type name="function"/>  
+      </match>
+      <wrapper type="default">
+          <class_name name="GIT_OBJECT"/>  
+      </wrapper>
+    </rule> 
+
+    <!-- The next rule specify the git checkout behaviors flags-->
+    <rule>
+      <match>
+          <identifier name="git_checkout_strategy_t"/>
+          <type name="enum"/>  
+      </match>
+      <wrapper type="default">
+      </wrapper>
+    </rule> 
+
+    <!-- The next rule specify the Checkout progress notification function  -->
+    <rule>
+      <match>
+          <identifier name="git_checkout_progress_cb"/>
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule> 
+
+    <!-- The next rule specify the Checkout perfdata notification function  -->
+    <rule>
+      <match>
+          <identifier name="git_checkout_perfdata_cb"/>
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule> 
+
+    <!-- The next rule specify the Checkout perfdata notification function  -->
+    <rule>
+      <match>
+          <identifier name="git_checkout_perfdata"/>
+          <type name="struct"/>  
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule> 
+
+    <!-- The next rule specify the Checkout functions  -->
+    <rule>
+      <match>
+          <identifier name="git_checkout_.*"/>
+          <type name="function"/>  
+      </match>
+       <wrapper type="default">
+          <class_name name="GIT_CHECKOUT"/>  
+      </wrapper>
+    </rule>
+
+    <!-- The next rule specify the Oid functions  -->
+    <rule>
+      <match>
+          <identifier name="git_oid_.*"/>
+          <type name="function"/>  
+      </match>
+       <wrapper type="default">
+          <class_name name="GIT_OID"/>  
+      </wrapper>
+    </rule> 
+
+    <!-- The next rule specify the Blob functions  -->
+    <rule>
+      <match>
+          <identifier name="git_blob_.*"/>
+          <type name="function"/>  
+      </match>
+       <wrapper type="default">
+          <class_name name="GIT_BLOB"/>  
+      </wrapper>
+    </rule>
+
+    <!-- The next rule specify the git_blob_filter_flag_t Flags to control the functionality of `git_blob_filter`. -->
+    <rule>
+      <match>
+          <identifier name="git_blob_filter_flag_t"/>
+          <type name="enum"/>  
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>  
+
+        <!-- The next rule specify the In-memory representation of a blob object. . -->
+    <rule>
+      <match>
+          <identifier name="git_blob"/>
+          <type name="struct"/>  
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>  
+
+    <!-- The next rule specify the Tag functions  -->
+    <rule>
+      <match>
+          <identifier name="git_tag_.*"/>
+          <type name="function"/>  
+      </match>
+       <wrapper type="default">
+          <class_name name="GIT_TAG"/>  
+      </wrapper>
+    </rule>
+
+    <!-- The next rule specify the Parsed representation of a tag object.   -->
+    <rule>
+      <match>
+          <identifier name="git_tag"/>
+          <type name="struct"/>  
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>
+
+    <!-- The next rule specify the Callback used to iterate over tag names -->
+    <rule>
+      <match>
+          <identifier name="git_tag_foreach_cb"/>
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>
+
+    <!-- The next rule specify the Callback for APIs that add/remove/update files matching pathspec  -->
+    <rule>
+      <match>
+          <identifier name="git_index_matched_path_cb"/>
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>
+
+       <!-- The next rule specify the Indexer structures  -->
+    <rule>
+      <match>
+          <identifier name="git_indexer_progress"/>
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>
+
+
+    <!-- The next rule specify the Indexer functions  -->
+    <rule>
+      <match>
+          <identifier name="git_indexer_.*"/>
+          <type name="function"/>  
+      </match>
+       <wrapper type="default">
+          <class_name name="GIT_INDEXER"/>  
+      </wrapper>
+    </rule>
+
+    <!-- The next rule specify the Callback for APIs that add/remove/update files matching pathspec  -->
+    <rule>
+      <match>
+          <identifier name="git_indexer_progress_cb"/>
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>
+
+    <!-- The next rule specify the Describe options structure -->
+    <rule>
+      <match>
+          <identifier name="git_describe_options"/>
+          <type name="struct"/>  
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>
+
+    <!-- The next rule specify the Describe format options structure -->
+    <rule>
+      <match>
+          <identifier name="git_describe_format_options"/>
+          <type name="struct"/>  
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>
+
+
+    <!-- The next rule specify the Describe format options structure -->
+    <rule>
+      <match>
+          <identifier name="git_describe.*"/>
+          <type name="function"/>  
+      </match>
+       <wrapper type="default">
+        <class_name name="GIT_DESCRIBE"/>  
+      </wrapper>
+    </rule>
+
+ 
+    <!-- And the rest should be ignored -->
+    <rule>
+      <match>
+      </match>
+       <wrapper type="none">
+      </wrapper>
+    </rule>
+
+  </rule_list>
+
+</ewg_config>

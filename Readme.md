@@ -10,14 +10,19 @@ allowing you to write native speed custom Git applications in any language which
 *  [WrapC](https://github.com/eiffel-wrap-c/WrapC) tool.
 *  [Libgit2 v0.28.3](https://github.com/libgit2/libgit2/releases).
 
-== Status ==
+### Status
 The binding is work in progress.
 Tested on Linux and Windows 64 bits.
 
 ## Examples 
 
-* Git Init: 		`shows how to initialize a new repo`
-* Git Status:		`shows how to use the status APIs` 
+* [Git Init](./examples/init): 		`shows how to initialize a new repo`
+* [Git Status](./examples/status):	`shows how to use the status APIs` 
+* [Git Add](./examples/add)		`shows how to modify the index`
+* [Git Checkout](./examples/checkout)	`shows how to perform checkouts`.
+* [Git Describe](./examples/describe)	`shows how to describe commits`.
+* [Git ls-files](./examples/ls_files)	`shows how to view all files currently in the index.`
+* [Git push](./examples/push)		`shows how to git push <remote> <branch>`.
 
 [Guide to linking libgit2](https://libgit2.org/docs/guides/build-and-link/) on various platforms
 
@@ -27,6 +32,7 @@ On Linux to install version 0.28.3 you will need to do the following.
 	$ cd build
 	$ cmake ..
 	$ sudo cmake --build . --target install
+ 
  
 Optionally you can use [vckpg](https://github.com/Microsoft/vcpkg), a C++ Library Manager for Windows, Linux, and MacOS.
 
@@ -39,6 +45,7 @@ Linux example
 ```
 	./vcpkg install libgit2:x64-linux
 ```
+
 
 
 

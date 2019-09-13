@@ -140,6 +140,30 @@ feature -- Access
 			c_call_git_checkout_perfdata_cb (a_function, perfdata.item, payload)
 		end
 
+	get_git_cred_acquire_cb_stub: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_cred_acquire_cb_stub ();
+			]"
+		end
+
+	set_git_cred_acquire_cb_entry (a_class: GIT_CRED_ACQUIRE_CB_DISPATCHER; a_feature: POINTER) 
+		do
+			c_set_git_cred_acquire_cb_entry (a_class, a_feature)
+		end
+
+	call_git_cred_acquire_cb (a_function: POINTER; cred: GIT_CRED_STRUCT_API; url: STRING; username_from_url: STRING; allowed_types: INTEGER; payload: POINTER): INTEGER 
+		local
+			url_c_string: C_STRING
+			username_from_url_c_string: C_STRING
+		do
+			create url_c_string.make (url)
+			create username_from_url_c_string.make (username_from_url)
+			Result := c_call_git_cred_acquire_cb (a_function, cred.item, url_c_string.item, username_from_url_c_string.item, allowed_types, payload)
+		end
+
 feature -- Externals
 
 	c_set_git_index_matched_path_cb_entry (a_class: GIT_INDEX_MATCHED_PATH_CB_DISPATCHER; a_feature: POINTER)
@@ -247,6 +271,24 @@ feature -- Externals
 		alias
 			"[
 				call_git_checkout_perfdata_cb ((void*)$a_function, (git_checkout_perfdata const*)$perfdata, (void*)$payload);
+			]"
+		end
+
+	c_set_git_cred_acquire_cb_entry (a_class: GIT_CRED_ACQUIRE_CB_DISPATCHER; a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_cred_acquire_cb_entry ((void*)$a_class, (void*)$a_feature);
+			]"
+		end
+
+	c_call_git_cred_acquire_cb (a_function: POINTER; cred: POINTER; url: POINTER; username_from_url: POINTER; allowed_types: INTEGER; payload: POINTER): INTEGER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return call_git_cred_acquire_cb ((void*)$a_function, (git_cred**)$cred, (char const*)$url, (char const*)$username_from_url, (unsigned int)$allowed_types, (void*)$payload);
 			]"
 		end
 

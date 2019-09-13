@@ -1,0 +1,26 @@
+-- enum wrapper
+class GIT_DIRECTION_ENUM_API
+
+feature {ANY}
+
+	is_valid_enum (a_value: INTEGER): BOOLEAN 
+			-- Is `a_value' a valid integer code for this enum ?
+		do
+			Result := a_value = git_direction_fetch or a_value = git_direction_push
+		end
+
+	git_direction_fetch: INTEGER 
+		external
+			"C inline use <git2.h>"
+		alias
+			"GIT_DIRECTION_FETCH"
+		end
+
+	git_direction_push: INTEGER 
+		external
+			"C inline use <git2.h>"
+		alias
+			"GIT_DIRECTION_PUSH"
+		end
+
+end

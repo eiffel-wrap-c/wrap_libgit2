@@ -160,3 +160,29 @@ void call_git_checkout_perfdata_cb (void *a_function, git_checkout_perfdata cons
 	((void (*) (git_checkout_perfdata const *perfdata, void *payload))a_function) (perfdata, payload);
 }
 
+struct git_cred_acquire_cb_entry_struct git_cred_acquire_cb_entry = {NULL, NULL};
+
+int git_cred_acquire_cb_stub (git_cred **cred, char const *url, char const *username_from_url, unsigned int allowed_types, void *payload)
+{
+	if (git_cred_acquire_cb_entry.a_class != NULL && git_cred_acquire_cb_entry.feature != NULL)
+	{
+		return git_cred_acquire_cb_entry.feature (eif_access(git_cred_acquire_cb_entry.a_class), cred, url, username_from_url, allowed_types, payload);
+	}
+}
+
+void set_git_cred_acquire_cb_entry (void* a_class, void* a_feature)
+{
+	git_cred_acquire_cb_entry.a_class = eif_adopt(a_class);
+	git_cred_acquire_cb_entry.feature = (git_cred_acquire_cb_eiffel_feature) a_feature;
+}
+
+void* get_git_cred_acquire_cb_stub ()
+{
+	return (void*) git_cred_acquire_cb_stub;
+}
+
+int call_git_cred_acquire_cb (void *a_function, git_cred **cred, char const *url, char const *username_from_url, unsigned int allowed_types, void *payload)
+{
+	return ((int (*) (git_cred **cred, char const *url, char const *username_from_url, unsigned int allowed_types, void *payload))a_function) (cred, url, username_from_url, allowed_types, payload);
+}
+

@@ -1,6 +1,6 @@
 note
 	description: "[
-		libgit2 "push" example - shows how to git push <remote> <branch>
+			libgit2 "push" example - shows how to git push <remote> <branch>
 		]"
 
 class APPLICATION
@@ -43,6 +43,9 @@ feature -- Intiialize Repository
 			refspec: STRING
 			l_options: GIT_PUSH_OPTIONS_STRUCT_API
 			a_array: GIT_STRARRAY_STRUCT_API
+			callbacks: GIT_REMOTE_CALLBACKS_STRUCT_API
+			callback_dispatcher: GIT_CRED_ACQUIRE_CB_DISPATCHER
+
 		do
 			ini := {LIBGIT2_INITIALIZER_API}.git_libgit2_init
 			print ("%N Intializing Libgit2")
@@ -56,14 +59,24 @@ feature -- Intiialize Repository
 
 				-- get the remote
 			create l_remote.make
+
 			create git_remote
 			if git_remote.git_remote_lookup (l_remote, repo, remote) < 0 then
 				print ("%NCould not get remote repository " + remote)
 				{EXCEPTIONS}.die (1)
 			end
 
+			create callbacks.make
+			if git_remote.git_remote_init_callbacks (callbacks, 1) < 0 then
+				print ("%NCould not intialize callback ")
+				{EXCEPTIONS}.die (1)
+			end
+
+			create callback_dispatcher.make (agent cred_acquire_cb )
+			callbacks.set_credentials (callback_dispatcher.c_dispatcher)
+
 				-- connect to remote
-			if git_remote.git_remote_connect (l_remote, {GIT_DIRECTION_ENUM_API}.git_direction_push, Void, Void, Void) < 0 then
+			if git_remote.git_remote_connect (l_remote, {GIT_DIRECTION_ENUM_API}.git_direction_push, callbacks, Void, Void) < 0 then
 				print ("%NCould not connect to remote repository " + remote)
 				{EXCEPTIONS}.die (1)
 			end
@@ -112,8 +125,62 @@ feature -- Intiialize Repository
 		end
 
 
-feature	{NONE} -- Process Arguments
 
+	cred_acquire_cb (a_cred: POINTER; a_url: POINTER; a_username_from_url: POINTER; a_allowed_types: INTEGER; a_payload: POINTER): INTEGER
+		local
+			l_user_name: STRING
+			exit: BOOLEAN
+			cred: GIT_CRED_STRUCT_API
+			git_cred: GIT_CREDENTIALS_API
+			l_password: STRING
+			l_privkey: STRING
+			l_pubkey: STRING
+		do
+
+			if a_username_from_url /= default_pointer then
+				l_user_name := (create {C_STRING}.make_by_pointer (a_username_from_url)).string
+				exit := l_user_name.is_empty
+			else
+				print ("%NUsername:")
+				io.read_line
+				l_user_name := io.last_string.twin
+				exit := l_user_name.is_empty
+			end
+
+			if not exit and then a_allowed_types & {GIT_CREDTYPE_T_ENUM_API}.GIT_CREDTYPE_SSH_KEY > 0 then
+				print ("%NSSH key:")
+				io.read_line
+				l_privkey := io.last_string.twin
+				print ("%NPassword:")
+				l_password := read_password
+				if l_password.is_empty or l_privkey.is_empty then
+					exit := True
+				end
+				create l_pubkey.make_from_string (l_password)
+				l_pubkey.append_string (".pub")
+				create git_cred
+				create cred.make_by_pointer (a_cred)
+				Result := git_cred.git_cred_ssh_key_new(cred, l_user_name, l_pubkey, l_privkey, l_password)
+			elseif not exit and then a_allowed_types & {GIT_CREDTYPE_T_ENUM_API}.GIT_CREDTYPE_USERPASS_PLAINTEXT > 0 then
+				print ("%NPassword:")
+				l_password := read_password
+				exit := l_password.is_empty
+				if not exit then
+					create git_cred
+					create cred.make_by_pointer (a_cred)
+					Result := git_cred.git_cred_userpass_plaintext_new(cred, l_user_name, l_password)
+				end
+			else
+				if not exit then
+					create git_cred
+					create cred.make_by_pointer (a_cred)
+					Result := git_cred.git_cred_username_new (cred, l_user_name)
+				end
+			end
+
+		end
+
+feature	{NONE} -- Process Arguments
 
 	process_arguments
 			-- Process command line arguments
@@ -153,7 +220,6 @@ feature	{NONE} -- Process Arguments
 			str: STRING
 		do
 			str := "[
-				%N
 				git_push [--git-dir=<directory>]
 				<remote>
 				<branch>
@@ -162,6 +228,53 @@ feature	{NONE} -- Process Arguments
 			print("%N")
 			print (str)
 		end
+
+	read_password: STRING
+		local
+			l_ptr: POINTER
+		do
+		 	l_ptr := c_read_password
+		 	if l_ptr /= default_pointer then
+		 		Result := (create {C_STRING}.make_by_pointer (l_ptr)).string
+		 	else
+		 		Result := ""
+		 	end
+		end
+
+	c_read_password: POINTER
+		external "C inline"
+		alias
+			"[
+				#define ENTER 13
+				#define TAB 9
+				#define BKSP 8
+
+				char* pwd;
+
+				int i = 0;
+				char ch;
+
+				while(1){
+					ch = getch();	//get key
+
+					if(ch == ENTER || ch == TAB){
+						pwd[i] = '\0';
+						break;
+					}else if(ch == BKSP){
+						if(i > 0){
+							i--;
+							printf("\b \b");		//for backspace
+						}
+					}else{
+						pwd[i++] = ch;
+						printf("* \b");				//to replace password character with *
+					}
+				}//while ends here
+
+				return pwd;
+			]"
+		end
+
 
 feature -- Options
 

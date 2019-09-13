@@ -103,4 +103,21 @@ void set_git_checkout_perfdata_cb_entry (void* a_class, void* a_feature);
 void call_git_checkout_perfdata_cb (void *a_function, git_checkout_perfdata const *perfdata, void *payload);
 
 
+#include <git2.h>
+
+typedef int (*git_cred_acquire_cb_eiffel_feature) (void *a_class, git_cred **cred, char const *url, char const *username_from_url, unsigned int allowed_types, void *payload);
+
+void* get_git_cred_acquire_cb_stub ();
+
+struct git_cred_acquire_cb_entry_struct
+{
+	void* a_class;
+	git_cred_acquire_cb_eiffel_feature feature;
+};
+
+void set_git_cred_acquire_cb_entry (void* a_class, void* a_feature);
+
+int call_git_cred_acquire_cb (void *a_function, git_cred **cred, char const *url, char const *username_from_url, unsigned int allowed_types, void *payload);
+
+
 #endif

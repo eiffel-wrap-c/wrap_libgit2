@@ -22,7 +22,8 @@ Tested on Linux and Windows 64 bits.
 * [Git Checkout](./examples/checkout)	`shows how to perform checkouts`.
 * [Git Describe](./examples/describe)	`shows how to describe commits`.
 * [Git ls-files](./examples/ls_files)	`shows how to view all files currently in the index.`
-* [Git push](./examples/push)		`shows how to git push <remote> <branch>`.
+* [Git push](./examples/push)		`shows how to git push <remote> <branch>`
+* [Git ls_remote](./examples/ls_remote)	`shows how to list remote references.`
 
 [Guide to linking libgit2](https://libgit2.org/docs/guides/build-and-link/) on various platforms
 

@@ -16,8 +16,8 @@ Tested on Linux and Windows 64 bits.
 
 ## Examples 
 
-* [Git Init](./examples/init): 		`shows how to initialize a new repo`
-* [Git Status](./examples/status):	`shows how to use the status APIs` 
+* [Git Init](./examples/init) 		`shows how to initialize a new repo`
+* [Git Status](./examples/status)	`shows how to use the status APIs` 
 * [Git Add](./examples/add)		`shows how to modify the index`
 * [Git Checkout](./examples/checkout)	`shows how to perform checkouts`.
 * [Git Describe](./examples/describe)	`shows how to describe commits`.

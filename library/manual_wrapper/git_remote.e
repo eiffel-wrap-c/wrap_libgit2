@@ -11,7 +11,9 @@ inherit
 	GIT_REMOTE_API
 		rename
 			git_remote_lookup as git_remote_lookup_api,
-			git_remote_connect as git_remote_connect_api
+			git_remote_connect as git_remote_connect_api,
+			git_remote_create_anonymous as git_remote_create_anonymous_api,
+			git_remote_ls as git_remote_ls_api
 		end
 
 
@@ -27,6 +29,19 @@ feature -- Access
 			if l_ptr /= default_pointer then
 				a_out.make_by_pointer (l_ptr)
 			end
+		end
+
+	git_remote_create_anonymous (a_out: GIT_REMOTE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; url: STRING): INTEGER
+		local
+			url_c_string: C_STRING
+			l_ptr: POINTER
+		do
+			create url_c_string.make (url)
+			Result := c_git_remote_create_anonymous ($l_ptr, repo.item, url_c_string.item)
+			if l_ptr /= default_pointer then
+				a_out.make_by_pointer (l_ptr)
+			end
+
 		end
 
 	git_remote_connect (remote: GIT_REMOTE_STRUCT_API; direction: INTEGER; callbacks: detachable GIT_REMOTE_CALLBACKS_STRUCT_API; proxy_opts: detachable GIT_PROXY_OPTIONS_STRUCT_API; custom_headers: detachable GIT_STRARRAY_STRUCT_API): INTEGER
@@ -45,6 +60,35 @@ feature -- Access
 				l_custom_header := custom_headers.item
 			end
 			Result := c_git_remote_connect (remote.item, direction, l_callbacks, l_proxy_opts, l_custom_header)
+		end
+
+	git_remote_ls (a_out: LIST [GIT_REMOTE_HEAD_STRUCT_API]; remote: GIT_REMOTE_STRUCT_API): INTEGER
+		local
+			l_ptr: POINTER
+			l_mgr: MANAGED_POINTER
+			i: INTEGER
+			l_size: INTEGER
+			l_item: POINTER
+			l_remote: GIT_REMOTE_HEAD_STRUCT_API
+		do
+			create l_remote.make
+			l_ptr := l_remote.item
+			Result := c_git_remote_ls ($l_ptr, $l_size, remote.item)
+			if l_ptr /= default_pointer then
+				create l_mgr.make_from_pointer (l_ptr, l_size * {PLATFORM}.pointer_bytes)
+				from
+					i := 0
+				until
+					i = l_mgr.count
+				loop
+					l_item := l_mgr.read_pointer (i)
+					if l_item /= default_pointer then
+						a_out.force (create {GIT_REMOTE_HEAD_STRUCT_API}.make_by_pointer (l_item))
+					end
+					i := i + {PLATFORM}.pointer_bytes
+				end
+
+			end
 		end
 
 

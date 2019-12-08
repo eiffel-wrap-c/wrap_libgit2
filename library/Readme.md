@@ -1,7 +1,7 @@
 # How to generate the code?
 
 ## Requirements
-You need to have a binary version of WrapC tool and be able to execute it form the library folder.
+You need to have a binary version of WrapC tool and be able to execute it from the library folder.
 
 Before to regenerate the generated code, remove the folder `generated_wrapper`. If you are using geant, just run `geant clean` in other 
 case remove it manually.

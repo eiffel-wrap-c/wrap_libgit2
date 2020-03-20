@@ -266,14 +266,13 @@ feature -- Access
 			Result := c_git_reference_is_note (ref.item)
 		end
 
-	git_reference_normalize_name (buffer_out: STRING; buffer_size: INTEGER; name: STRING; flags: INTEGER): INTEGER 
-		local
-			buffer_out_c_string: C_STRING
-			name_c_string: C_STRING
-		do
-			create buffer_out_c_string.make (buffer_out)
-			create name_c_string.make (name)
-			Result := c_git_reference_normalize_name (buffer_out_c_string.item, buffer_size, name_c_string.item, flags)
+	git_reference_normalize_name (buffer_out: POINTER; buffer_size: INTEGER; name: POINTER; flags: INTEGER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_reference_normalize_name ((char*)$buffer_out, (size_t)$buffer_size, (char const*)$name, (unsigned int)$flags);
+			]"
 		end
 
 	git_reference_peel (a_out: GIT_OBJECT_STRUCT_API; ref: GIT_REFERENCE_STRUCT_API; type: INTEGER): INTEGER 
@@ -281,12 +280,13 @@ feature -- Access
 			Result := c_git_reference_peel (a_out.item, ref.item, type)
 		end
 
-	git_reference_is_valid_name (refname: STRING): INTEGER 
-		local
-			refname_c_string: C_STRING
-		do
-			create refname_c_string.make (refname)
-			Result := c_git_reference_is_valid_name (refname_c_string.item)
+	git_reference_is_valid_name (refname: POINTER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_reference_is_valid_name ((char const*)$refname);
+			]"
 		end
 
 	git_reference_shorthand (ref: GIT_REFERENCE_STRUCT_API): POINTER 
@@ -834,30 +834,12 @@ feature -- Externals
 			]"
 		end
 
-	c_git_reference_normalize_name (buffer_out: POINTER; buffer_size: INTEGER; name: POINTER; flags: INTEGER): INTEGER
-		external
-			"C inline use <git2.h>"
-		alias
-			"[
-				return git_reference_normalize_name ((char*)$buffer_out, (size_t)$buffer_size, (char const*)$name, (unsigned int)$flags);
-			]"
-		end
-
 	c_git_reference_peel (a_out: POINTER; ref: POINTER; type: INTEGER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
 				return git_reference_peel ((git_object**)$a_out, (git_reference const*)$ref, (git_object_t)$type);
-			]"
-		end
-
-	c_git_reference_is_valid_name (refname: POINTER): INTEGER
-		external
-			"C inline use <git2.h>"
-		alias
-			"[
-				return git_reference_is_valid_name ((char const*)$refname);
 			]"
 		end
 

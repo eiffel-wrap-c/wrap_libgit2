@@ -45,17 +45,14 @@ feature {ANY} -- Member Access
 			version_set: a_value = version
 		end
 
-	checkout_opts: detachable GIT_CHECKOUT_OPTIONS_STRUCT_API
+	checkout_opts: GIT_CHECKOUT_OPTIONS_STRUCT_API
 			-- Access member `checkout_opts`
 		require
 			exists: exists
 		do
-			if attached c_checkout_opts (item) as l_ptr and then not l_ptr.is_default_pointer then
-				create Result.make_by_pointer (l_ptr)
-			end
+			create Result.make_by_pointer ( c_checkout_opts(item) )
 		ensure
-			result_void: Result = Void implies c_checkout_opts (item) = default_pointer 
-			result_not_void: attached Result as l_result implies l_result.item = c_checkout_opts (item) 
+			result_not_void: Result.item = c_checkout_opts (item) 
 		end
 
 	set_checkout_opts (a_value: GIT_CHECKOUT_OPTIONS_STRUCT_API) 
@@ -66,20 +63,17 @@ feature {ANY} -- Member Access
 		do
 			set_c_checkout_opts (item, a_value.item)
 		ensure
-			checkout_opts_set: attached checkout_opts as l_value implies l_value.item = a_value.item
+			checkout_opts_set: checkout_opts.item = a_value.item
 		end
 
-	fetch_opts: detachable GIT_FETCH_OPTIONS_STRUCT_API
+	fetch_opts: GIT_FETCH_OPTIONS_STRUCT_API
 			-- Access member `fetch_opts`
 		require
 			exists: exists
 		do
-			if attached c_fetch_opts (item) as l_ptr and then not l_ptr.is_default_pointer then
-				create Result.make_by_pointer (l_ptr)
-			end
+			create Result.make_by_pointer ( c_fetch_opts(item) )
 		ensure
-			result_void: Result = Void implies c_fetch_opts (item) = default_pointer 
-			result_not_void: attached Result as l_result implies l_result.item = c_fetch_opts (item) 
+			result_not_void: Result.item = c_fetch_opts (item) 
 		end
 
 	set_fetch_opts (a_value: GIT_FETCH_OPTIONS_STRUCT_API) 
@@ -90,7 +84,7 @@ feature {ANY} -- Member Access
 		do
 			set_c_fetch_opts (item, a_value.item)
 		ensure
-			fetch_opts_set: attached fetch_opts as l_value implies l_value.item = a_value.item
+			fetch_opts_set: fetch_opts.item = a_value.item
 		end
 
 	bare: INTEGER

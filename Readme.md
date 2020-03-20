@@ -8,7 +8,7 @@ allowing you to write native speed custom Git applications in any language which
 ## Requirements 
 
 *  [WrapC](https://github.com/eiffel-wrap-c/WrapC) tool.
-*  [Libgit2 v0.28.3](https://github.com/libgit2/libgit2/releases).
+*  [libgit2 v0.99.0](https://github.com/libgit2/libgit2/releases).
 
 ### Status
 The binding is work in progress.
@@ -27,7 +27,7 @@ Tested on Linux and Windows 64 bits.
 
 [Guide to linking libgit2](https://libgit2.org/docs/guides/build-and-link/) on various platforms
 
-On Linux to install version 0.28.3 you will need to do the following. 
+On Linux to install version 0.99.0 you will need to do the following. 
 
 	$ mkdir build
 	$ cd build

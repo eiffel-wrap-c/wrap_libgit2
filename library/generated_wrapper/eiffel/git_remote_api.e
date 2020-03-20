@@ -268,12 +268,13 @@ feature -- Access
 			Result := c_git_remote_rename (problems.item, repo.item, name_c_string.item, new_name_c_string.item)
 		end
 
-	git_remote_is_valid_name (remote_name: STRING): INTEGER 
-		local
-			remote_name_c_string: C_STRING
-		do
-			create remote_name_c_string.make (remote_name)
-			Result := c_git_remote_is_valid_name (remote_name_c_string.item)
+	git_remote_is_valid_name (remote_name: POINTER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_remote_is_valid_name ((char const*)$remote_name);
+			]"
 		end
 
 	git_remote_delete (repo: GIT_REPOSITORY_STRUCT_API; name: STRING): INTEGER 
@@ -639,15 +640,6 @@ feature -- Externals
 		alias
 			"[
 				return git_remote_rename ((git_strarray*)$problems, (git_repository*)$repo, (char const*)$name, (char const*)$new_name);
-			]"
-		end
-
-	c_git_remote_is_valid_name (remote_name: POINTER): INTEGER
-		external
-			"C inline use <git2.h>"
-		alias
-			"[
-				return git_remote_is_valid_name ((char const*)$remote_name);
 			]"
 		end
 

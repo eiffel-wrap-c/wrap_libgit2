@@ -110,8 +110,10 @@ feature -- Intiialize Repository
 			git_object: GIT_OBJECT_STRUCT_API
 			git_checkout: GIT_CHECKOUT_API
 		do
-			create cp_dispatcher.make (agent print_checkout_progress)
-			create cf_dispatcher.make (agent print_perf_data)
+			create cp_dispatcher.make
+			cp_dispatcher.register_callback_1(agent print_checkout_progress)
+			create cf_dispatcher.make
+			cf_dispatcher.register_callback_1(agent print_perf_data)
 			create l_checkout_opts.make
 			l_checkout_opts.set_version (1) -- GIT_CHECKOUT_OPTIONS_VERSION
 			l_checkout_opts.set_checkout_strategy ({GIT_CHECKOUT_STRATEGY_T_ENUM_API}.GIT_CHECKOUT_SAFE)
@@ -123,11 +125,11 @@ feature -- Intiialize Repository
 			end
 
 			if a_otions.progress then
-				l_checkout_opts.set_progress_cb (cp_dispatcher.c_dispatcher)
+				l_checkout_opts.set_progress_cb (cp_dispatcher.c_dispatcher_1)
 			end
 
 			if a_otions.perf then
-				l_checkout_opts.set_perfdata_cb (cf_dispatcher.c_dispatcher)
+				l_checkout_opts.set_perfdata_cb (cf_dispatcher.c_dispatcher_1)
 			end
 
 				-- Grab the commit we're interested to move to.

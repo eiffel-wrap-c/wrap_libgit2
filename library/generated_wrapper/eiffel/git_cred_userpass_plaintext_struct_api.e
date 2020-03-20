@@ -25,17 +25,14 @@ feature -- Measurement
 
 feature {ANY} -- Member Access
 
-	parent: detachable GIT_CRED_STRUCT_API
+	parent: GIT_CRED_STRUCT_API
 			-- Access member `parent`
 		require
 			exists: exists
 		do
-			if attached c_parent (item) as l_ptr and then not l_ptr.is_default_pointer then
-				create Result.make_by_pointer (l_ptr)
-			end
+			create Result.make_by_pointer ( c_parent(item) )
 		ensure
-			result_void: Result = Void implies c_parent (item) = default_pointer 
-			result_not_void: attached Result as l_result implies l_result.item = c_parent (item) 
+			result_not_void: Result.item = c_parent (item) 
 		end
 
 	set_parent (a_value: GIT_CRED_STRUCT_API) 
@@ -46,7 +43,7 @@ feature {ANY} -- Member Access
 		do
 			set_c_parent (item, a_value.item)
 		ensure
-			parent_set: attached parent as l_value implies l_value.item = a_value.item
+			parent_set: parent.item = a_value.item
 		end
 
 	username:  detachable STRING

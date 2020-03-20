@@ -45,17 +45,14 @@ feature {ANY} -- Member Access
 			action_set: a_value = action
 		end
 
-	id: detachable GIT_OID_STRUCT_API
+	id: GIT_OID_STRUCT_API
 			-- Access member `id`
 		require
 			exists: exists
 		do
-			if attached c_id (item) as l_ptr and then not l_ptr.is_default_pointer then
-				create Result.make_by_pointer (l_ptr)
-			end
+			create Result.make_by_pointer ( c_id(item) )
 		ensure
-			result_void: Result = Void implies c_id (item) = default_pointer 
-			result_not_void: attached Result as l_result implies l_result.item = c_id (item) 
+			result_not_void: Result.item = c_id (item) 
 		end
 
 	set_id (a_value: GIT_OID_STRUCT_API) 
@@ -66,7 +63,7 @@ feature {ANY} -- Member Access
 		do
 			set_c_id (item, a_value.item)
 		ensure
-			id_set: attached id as l_value implies l_value.item = a_value.item
+			id_set: id.item = a_value.item
 		end
 
 	filemode: INTEGER

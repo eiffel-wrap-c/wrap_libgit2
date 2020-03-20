@@ -105,17 +105,14 @@ feature {ANY} -- Member Access
 			nfiles_set: a_value = nfiles
 		end
 
-	old_file: detachable GIT_DIFF_FILE_STRUCT_API
+	old_file: GIT_DIFF_FILE_STRUCT_API
 			-- Access member `old_file`
 		require
 			exists: exists
 		do
-			if attached c_old_file (item) as l_ptr and then not l_ptr.is_default_pointer then
-				create Result.make_by_pointer (l_ptr)
-			end
+			create Result.make_by_pointer ( c_old_file(item) )
 		ensure
-			result_void: Result = Void implies c_old_file (item) = default_pointer 
-			result_not_void: attached Result as l_result implies l_result.item = c_old_file (item) 
+			result_not_void: Result.item = c_old_file (item) 
 		end
 
 	set_old_file (a_value: GIT_DIFF_FILE_STRUCT_API) 
@@ -126,20 +123,17 @@ feature {ANY} -- Member Access
 		do
 			set_c_old_file (item, a_value.item)
 		ensure
-			old_file_set: attached old_file as l_value implies l_value.item = a_value.item
+			old_file_set: old_file.item = a_value.item
 		end
 
-	new_file: detachable GIT_DIFF_FILE_STRUCT_API
+	new_file: GIT_DIFF_FILE_STRUCT_API
 			-- Access member `new_file`
 		require
 			exists: exists
 		do
-			if attached c_new_file (item) as l_ptr and then not l_ptr.is_default_pointer then
-				create Result.make_by_pointer (l_ptr)
-			end
+			create Result.make_by_pointer ( c_new_file(item) )
 		ensure
-			result_void: Result = Void implies c_new_file (item) = default_pointer 
-			result_not_void: attached Result as l_result implies l_result.item = c_new_file (item) 
+			result_not_void: Result.item = c_new_file (item) 
 		end
 
 	set_new_file (a_value: GIT_DIFF_FILE_STRUCT_API) 
@@ -150,7 +144,7 @@ feature {ANY} -- Member Access
 		do
 			set_c_new_file (item, a_value.item)
 		ensure
-			new_file_set: attached new_file as l_value implies l_value.item = a_value.item
+			new_file_set: new_file.item = a_value.item
 		end
 
 feature {NONE} -- Implementation wrapper for struct git_diff_delta

@@ -45,17 +45,14 @@ feature {ANY} -- Member Access
 			version_set: a_value = version
 		end
 
-	callbacks: detachable GIT_REMOTE_CALLBACKS_STRUCT_API
+	callbacks: GIT_REMOTE_CALLBACKS_STRUCT_API
 			-- Access member `callbacks`
 		require
 			exists: exists
 		do
-			if attached c_callbacks (item) as l_ptr and then not l_ptr.is_default_pointer then
-				create Result.make_by_pointer (l_ptr)
-			end
+			create Result.make_by_pointer ( c_callbacks(item) )
 		ensure
-			result_void: Result = Void implies c_callbacks (item) = default_pointer 
-			result_not_void: attached Result as l_result implies l_result.item = c_callbacks (item) 
+			result_not_void: Result.item = c_callbacks (item) 
 		end
 
 	set_callbacks (a_value: GIT_REMOTE_CALLBACKS_STRUCT_API) 
@@ -66,7 +63,7 @@ feature {ANY} -- Member Access
 		do
 			set_c_callbacks (item, a_value.item)
 		ensure
-			callbacks_set: attached callbacks as l_value implies l_value.item = a_value.item
+			callbacks_set: callbacks.item = a_value.item
 		end
 
 	prune: INTEGER
@@ -129,17 +126,14 @@ feature {ANY} -- Member Access
 			download_tags_set: a_value = download_tags
 		end
 
-	proxy_opts: detachable GIT_PROXY_OPTIONS_STRUCT_API
+	proxy_opts: GIT_PROXY_OPTIONS_STRUCT_API
 			-- Access member `proxy_opts`
 		require
 			exists: exists
 		do
-			if attached c_proxy_opts (item) as l_ptr and then not l_ptr.is_default_pointer then
-				create Result.make_by_pointer (l_ptr)
-			end
+			create Result.make_by_pointer ( c_proxy_opts(item) )
 		ensure
-			result_void: Result = Void implies c_proxy_opts (item) = default_pointer 
-			result_not_void: attached Result as l_result implies l_result.item = c_proxy_opts (item) 
+			result_not_void: Result.item = c_proxy_opts (item) 
 		end
 
 	set_proxy_opts (a_value: GIT_PROXY_OPTIONS_STRUCT_API) 
@@ -150,20 +144,17 @@ feature {ANY} -- Member Access
 		do
 			set_c_proxy_opts (item, a_value.item)
 		ensure
-			proxy_opts_set: attached proxy_opts as l_value implies l_value.item = a_value.item
+			proxy_opts_set: proxy_opts.item = a_value.item
 		end
 
-	custom_headers: detachable GIT_STRARRAY_STRUCT_API
+	custom_headers: GIT_STRARRAY_STRUCT_API
 			-- Access member `custom_headers`
 		require
 			exists: exists
 		do
-			if attached c_custom_headers (item) as l_ptr and then not l_ptr.is_default_pointer then
-				create Result.make_by_pointer (l_ptr)
-			end
+			create Result.make_by_pointer ( c_custom_headers(item) )
 		ensure
-			result_void: Result = Void implies c_custom_headers (item) = default_pointer 
-			result_not_void: attached Result as l_result implies l_result.item = c_custom_headers (item) 
+			result_not_void: Result.item = c_custom_headers (item) 
 		end
 
 	set_custom_headers (a_value: GIT_STRARRAY_STRUCT_API) 
@@ -174,7 +165,7 @@ feature {ANY} -- Member Access
 		do
 			set_c_custom_headers (item, a_value.item)
 		ensure
-			custom_headers_set: attached custom_headers as l_value implies l_value.item = a_value.item
+			custom_headers_set: custom_headers.item = a_value.item
 		end
 
 feature {NONE} -- Implementation wrapper for struct git_fetch_options

@@ -63,12 +63,13 @@ feature -- Access
 			Result := c_git_object_type2string (type)
 		end
 
-	git_object_string2type (str: STRING): INTEGER 
-		local
-			str_c_string: C_STRING
-		do
-			create str_c_string.make (str)
-			Result := c_git_object_string2type (str_c_string.item)
+	git_object_string2type (str: POINTER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_object_string2type ((char const*)$str);
+			]"
 		end
 
 	git_object_typeisloose (type: INTEGER): INTEGER 
@@ -171,15 +172,6 @@ feature -- Externals
 		alias
 			"[
 				return git_object_type2string ((git_object_t)$type);
-			]"
-		end
-
-	c_git_object_string2type (str: POINTER): INTEGER
-		external
-			"C inline use <git2.h>"
-		alias
-			"[
-				return git_object_string2type ((char const*)$str);
 			]"
 		end
 

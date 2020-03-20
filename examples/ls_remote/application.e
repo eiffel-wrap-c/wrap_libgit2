@@ -76,8 +76,9 @@ feature -- Intiialize Repository
 				{EXCEPTIONS}.die (1)
 			end
 
-			create callback_dispatcher.make (agent cred_acquire_cb )
-			callbacks.set_credentials (callback_dispatcher.c_dispatcher)
+			create callback_dispatcher.make
+			callback_dispatcher.register_callback_1(agent cred_acquire_cb )
+			callbacks.set_credentials (callback_dispatcher.c_dispatcher_1)
 
 				-- connect to remote
 			if git_remote.git_remote_connect (l_remote, {GIT_DIRECTION_ENUM_API}.git_direction_fetch, callbacks, Void, Void) < 0 then

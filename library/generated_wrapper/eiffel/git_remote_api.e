@@ -151,6 +151,14 @@ feature -- Access
 			Result := c_git_remote_refspec_count (remote.item)
 		end
 
+	git_remote_get_refspec (remote: GIT_REMOTE_STRUCT_API; n: INTEGER): detachable GIT_REFSPEC_STRUCT_API 
+		do
+			if attached c_git_remote_get_refspec (remote.item, n) as l_ptr and then not l_ptr.is_default_pointer then
+				create Result.make_by_pointer ( l_ptr )
+			end
+
+		end
+
 	git_remote_connect (remote: GIT_REMOTE_STRUCT_API; direction: INTEGER; callbacks: GIT_REMOTE_CALLBACKS_STRUCT_API; proxy_opts: GIT_PROXY_OPTIONS_STRUCT_API; custom_headers: GIT_STRARRAY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_remote_connect (remote.item, direction, callbacks.item, proxy_opts.item, custom_headers.item)
@@ -460,6 +468,15 @@ feature -- Externals
 		alias
 			"[
 				return git_remote_refspec_count ((git_remote const*)$remote);
+			]"
+		end
+
+	c_git_remote_get_refspec (remote: POINTER; n: INTEGER): POINTER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_remote_get_refspec ((git_remote const*)$remote, (size_t)$n);
 			]"
 		end
 

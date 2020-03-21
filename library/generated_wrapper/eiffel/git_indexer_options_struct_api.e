@@ -156,7 +156,7 @@ feature {NONE} -- Implementation wrapper for struct struct git_indexer_options
 			"C inline use <git2.h>"
 		alias
 			"[
-				((struct git_indexer_options*)$an_item)->progress_cb =  (git_transfer_progress_cb)$a_value
+				((struct git_indexer_options*)$an_item)->progress_cb =  (git_indexer_progress_cb)$a_value
 			]"
 		ensure
 			progress_cb_set: a_value = c_progress_cb (an_item)

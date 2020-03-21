@@ -9,14 +9,14 @@ class GIT_DESCRIBE_API
 
 feature -- Access
 
-	git_describe_init_options (opts: GIT_DESCRIBE_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
+	git_describe_options_init (opts: GIT_DESCRIBE_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
-			Result := c_git_describe_init_options (opts.item, version)
+			Result := c_git_describe_options_init (opts.item, version)
 		end
 
-	git_describe_init_format_options (opts: GIT_DESCRIBE_FORMAT_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
+	git_describe_format_options_init (opts: GIT_DESCRIBE_FORMAT_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
-			Result := c_git_describe_init_format_options (opts.item, version)
+			Result := c_git_describe_format_options_init (opts.item, version)
 		end
 
 	git_describe_commit (a_result: GIT_DESCRIBE_RESULT_STRUCT_API; committish: GIT_OBJECT_STRUCT_API; opts: GIT_DESCRIBE_OPTIONS_STRUCT_API): INTEGER 
@@ -39,23 +39,33 @@ feature -- Access
 			c_git_describe_result_free (a_result.item)
 		end
 
+	git_describe_init_options (opts: GIT_DESCRIBE_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
+		do
+			Result := c_git_describe_init_options (opts.item, version)
+		end
+
+	git_describe_init_format_options (opts: GIT_DESCRIBE_FORMAT_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
+		do
+			Result := c_git_describe_init_format_options (opts.item, version)
+		end
+
 feature -- Externals
 
-	c_git_describe_init_options (opts: POINTER; version: INTEGER): INTEGER
+	c_git_describe_options_init (opts: POINTER; version: INTEGER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
-				return git_describe_init_options ((git_describe_options*)$opts, (unsigned int)$version);
+				return git_describe_options_init ((git_describe_options*)$opts, (unsigned int)$version);
 			]"
 		end
 
-	c_git_describe_init_format_options (opts: POINTER; version: INTEGER): INTEGER
+	c_git_describe_format_options_init (opts: POINTER; version: INTEGER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
-				return git_describe_init_format_options ((git_describe_format_options*)$opts, (unsigned int)$version);
+				return git_describe_format_options_init ((git_describe_format_options*)$opts, (unsigned int)$version);
 			]"
 		end
 
@@ -92,6 +102,24 @@ feature -- Externals
 		alias
 			"[
 				git_describe_result_free ((git_describe_result*)$a_result);
+			]"
+		end
+
+	c_git_describe_init_options (opts: POINTER; version: INTEGER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_describe_init_options ((git_describe_options*)$opts, (unsigned int)$version);
+			]"
+		end
+
+	c_git_describe_init_format_options (opts: POINTER; version: INTEGER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_describe_init_format_options ((git_describe_format_options*)$opts, (unsigned int)$version);
 			]"
 		end
 

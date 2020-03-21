@@ -436,75 +436,147 @@ void call_git_checkout_perfdata_cb (void *a_function, git_checkout_perfdata cons
 	((void (*) (git_checkout_perfdata const *perfdata, void *payload))a_function) (perfdata, payload);
 }
 
-void* git_cred_acquire_cb_object =  NULL;
-git_cred_acquire_cb_eiffel_feature git_cred_acquire_cb_address_1 = NULL;
-git_cred_acquire_cb_eiffel_feature git_cred_acquire_cb_address_2 = NULL;
-git_cred_acquire_cb_eiffel_feature git_cred_acquire_cb_address_3 = NULL;
+void* git_indexer_progress_cb_object =  NULL;
+git_indexer_progress_cb_eiffel_feature git_indexer_progress_cb_address_1 = NULL;
+git_indexer_progress_cb_eiffel_feature git_indexer_progress_cb_address_2 = NULL;
+git_indexer_progress_cb_eiffel_feature git_indexer_progress_cb_address_3 = NULL;
 
-void set_git_cred_acquire_cb_object (void* a_object)
+void set_git_indexer_progress_cb_object (void* a_object)
 {
 	if (a_object) {
-		git_cred_acquire_cb_object = eif_protect(a_object);
+		git_indexer_progress_cb_object = eif_protect(a_object);
 	} else { 
-		git_cred_acquire_cb_object = NULL;
+		git_indexer_progress_cb_object = NULL;
 	}
 }
 
-void release_git_cred_acquire_cb_object ()
+void release_git_indexer_progress_cb_object ()
 {
-	eif_wean (git_cred_acquire_cb_object);
+	eif_wean (git_indexer_progress_cb_object);
 }
 
-int git_cred_acquire_cb_stub_1 (git_cred **cred, char const *url, char const *username_from_url, unsigned int allowed_types, void *payload)
+int git_indexer_progress_cb_stub_1 (git_indexer_progress const *stats, void *payload)
 {
-	if (git_cred_acquire_cb_object != NULL && git_cred_acquire_cb_address_1 != NULL)
+	if (git_indexer_progress_cb_object != NULL && git_indexer_progress_cb_address_1 != NULL)
 	{
-		return git_cred_acquire_cb_address_1 (eif_access(git_cred_acquire_cb_object), cred, url, username_from_url, allowed_types, payload);
+		return git_indexer_progress_cb_address_1 (eif_access(git_indexer_progress_cb_object), stats, payload);
 	}
 }
 
-int git_cred_acquire_cb_stub_2 (git_cred **cred, char const *url, char const *username_from_url, unsigned int allowed_types, void *payload)
+int git_indexer_progress_cb_stub_2 (git_indexer_progress const *stats, void *payload)
 {
-	if (git_cred_acquire_cb_object != NULL && git_cred_acquire_cb_address_2 != NULL)
+	if (git_indexer_progress_cb_object != NULL && git_indexer_progress_cb_address_2 != NULL)
 	{
-		return git_cred_acquire_cb_address_2 (eif_access(git_cred_acquire_cb_object), cred, url, username_from_url, allowed_types, payload);
+		return git_indexer_progress_cb_address_2 (eif_access(git_indexer_progress_cb_object), stats, payload);
 	}
 }
 
-int git_cred_acquire_cb_stub_3 (git_cred **cred, char const *url, char const *username_from_url, unsigned int allowed_types, void *payload)
+int git_indexer_progress_cb_stub_3 (git_indexer_progress const *stats, void *payload)
 {
-	if (git_cred_acquire_cb_object != NULL && git_cred_acquire_cb_address_3 != NULL)
+	if (git_indexer_progress_cb_object != NULL && git_indexer_progress_cb_address_3 != NULL)
 	{
-		return git_cred_acquire_cb_address_3 (eif_access(git_cred_acquire_cb_object), cred, url, username_from_url, allowed_types, payload);
+		return git_indexer_progress_cb_address_3 (eif_access(git_indexer_progress_cb_object), stats, payload);
 	}
 }
 
-void set_git_cred_acquire_cb_entry_1 (void* a_feature){
-	git_cred_acquire_cb_address_1 = (git_cred_acquire_cb_eiffel_feature) a_feature;
+void set_git_indexer_progress_cb_entry_1 (void* a_feature){
+	git_indexer_progress_cb_address_1 = (git_indexer_progress_cb_eiffel_feature) a_feature;
 }
 
-void set_git_cred_acquire_cb_entry_2 (void* a_feature){
-	git_cred_acquire_cb_address_2 = (git_cred_acquire_cb_eiffel_feature) a_feature;
+void set_git_indexer_progress_cb_entry_2 (void* a_feature){
+	git_indexer_progress_cb_address_2 = (git_indexer_progress_cb_eiffel_feature) a_feature;
 }
 
-void set_git_cred_acquire_cb_entry_3 (void* a_feature){
-	git_cred_acquire_cb_address_3 = (git_cred_acquire_cb_eiffel_feature) a_feature;
+void set_git_indexer_progress_cb_entry_3 (void* a_feature){
+	git_indexer_progress_cb_address_3 = (git_indexer_progress_cb_eiffel_feature) a_feature;
 }
 
-void* get_git_cred_acquire_cb_stub_1 (){
-	return (void*) git_cred_acquire_cb_stub_1;
+void* get_git_indexer_progress_cb_stub_1 (){
+	return (void*) git_indexer_progress_cb_stub_1;
 }
 
-void* get_git_cred_acquire_cb_stub_2 (){
-	return (void*) git_cred_acquire_cb_stub_2;
+void* get_git_indexer_progress_cb_stub_2 (){
+	return (void*) git_indexer_progress_cb_stub_2;
 }
 
-void* get_git_cred_acquire_cb_stub_3 (){
-	return (void*) git_cred_acquire_cb_stub_3;
+void* get_git_indexer_progress_cb_stub_3 (){
+	return (void*) git_indexer_progress_cb_stub_3;
 }
 
-int call_git_cred_acquire_cb (void *a_function, git_cred **cred, char const *url, char const *username_from_url, unsigned int allowed_types, void *payload)
+int call_git_indexer_progress_cb (void *a_function, git_indexer_progress const *stats, void *payload)
 {
-	return ((int (*) (git_cred **cred, char const *url, char const *username_from_url, unsigned int allowed_types, void *payload))a_function) (cred, url, username_from_url, allowed_types, payload);
+	return ((int (*) (git_indexer_progress const *stats, void *payload))a_function) (stats, payload);
+}
+
+void* git_credential_acquire_cb_object =  NULL;
+git_credential_acquire_cb_eiffel_feature git_credential_acquire_cb_address_1 = NULL;
+git_credential_acquire_cb_eiffel_feature git_credential_acquire_cb_address_2 = NULL;
+git_credential_acquire_cb_eiffel_feature git_credential_acquire_cb_address_3 = NULL;
+
+void set_git_credential_acquire_cb_object (void* a_object)
+{
+	if (a_object) {
+		git_credential_acquire_cb_object = eif_protect(a_object);
+	} else { 
+		git_credential_acquire_cb_object = NULL;
+	}
+}
+
+void release_git_credential_acquire_cb_object ()
+{
+	eif_wean (git_credential_acquire_cb_object);
+}
+
+int git_credential_acquire_cb_stub_1 (git_credential **a_out, char const *url, char const *username_from_url, unsigned int allowed_types, void *payload)
+{
+	if (git_credential_acquire_cb_object != NULL && git_credential_acquire_cb_address_1 != NULL)
+	{
+		return git_credential_acquire_cb_address_1 (eif_access(git_credential_acquire_cb_object), a_out, url, username_from_url, allowed_types, payload);
+	}
+}
+
+int git_credential_acquire_cb_stub_2 (git_credential **a_out, char const *url, char const *username_from_url, unsigned int allowed_types, void *payload)
+{
+	if (git_credential_acquire_cb_object != NULL && git_credential_acquire_cb_address_2 != NULL)
+	{
+		return git_credential_acquire_cb_address_2 (eif_access(git_credential_acquire_cb_object), a_out, url, username_from_url, allowed_types, payload);
+	}
+}
+
+int git_credential_acquire_cb_stub_3 (git_credential **a_out, char const *url, char const *username_from_url, unsigned int allowed_types, void *payload)
+{
+	if (git_credential_acquire_cb_object != NULL && git_credential_acquire_cb_address_3 != NULL)
+	{
+		return git_credential_acquire_cb_address_3 (eif_access(git_credential_acquire_cb_object), a_out, url, username_from_url, allowed_types, payload);
+	}
+}
+
+void set_git_credential_acquire_cb_entry_1 (void* a_feature){
+	git_credential_acquire_cb_address_1 = (git_credential_acquire_cb_eiffel_feature) a_feature;
+}
+
+void set_git_credential_acquire_cb_entry_2 (void* a_feature){
+	git_credential_acquire_cb_address_2 = (git_credential_acquire_cb_eiffel_feature) a_feature;
+}
+
+void set_git_credential_acquire_cb_entry_3 (void* a_feature){
+	git_credential_acquire_cb_address_3 = (git_credential_acquire_cb_eiffel_feature) a_feature;
+}
+
+void* get_git_credential_acquire_cb_stub_1 (){
+	return (void*) git_credential_acquire_cb_stub_1;
+}
+
+void* get_git_credential_acquire_cb_stub_2 (){
+	return (void*) git_credential_acquire_cb_stub_2;
+}
+
+void* get_git_credential_acquire_cb_stub_3 (){
+	return (void*) git_credential_acquire_cb_stub_3;
+}
+
+int call_git_credential_acquire_cb (void *a_function, git_credential **a_out, char const *url, char const *username_from_url, unsigned int allowed_types, void *payload)
+{
+	return ((int (*) (git_credential **a_out, char const *url, char const *username_from_url, unsigned int allowed_types, void *payload))a_function) (a_out, url, username_from_url, allowed_types, payload);
 }
 

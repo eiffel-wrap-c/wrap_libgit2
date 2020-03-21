@@ -6,7 +6,7 @@ feature {ANY}
 	is_valid_enum (a_value: INTEGER): BOOLEAN 
 			-- Is `a_value' a valid integer code for this enum ?
 		do
-			Result := a_value = git_repository_item_gitdir or a_value = git_repository_item_workdir or a_value = git_repository_item_commondir or a_value = git_repository_item_index or a_value = git_repository_item_objects or a_value = git_repository_item_refs or a_value = git_repository_item_packed_refs or a_value = git_repository_item_remotes or a_value = git_repository_item_config or a_value = git_repository_item_info or a_value = git_repository_item_hooks or a_value = git_repository_item_logs or a_value = git_repository_item_modules or a_value = git_repository_item_worktrees
+			Result := a_value = git_repository_item_gitdir or a_value = git_repository_item_workdir or a_value = git_repository_item_commondir or a_value = git_repository_item_index or a_value = git_repository_item_objects or a_value = git_repository_item_refs or a_value = git_repository_item_packed_refs or a_value = git_repository_item_remotes or a_value = git_repository_item_config or a_value = git_repository_item_info or a_value = git_repository_item_hooks or a_value = git_repository_item_logs or a_value = git_repository_item_modules or a_value = git_repository_item_worktrees or a_value = git_repository_item__last
 		end
 
 	git_repository_item_gitdir: INTEGER 
@@ -105,6 +105,13 @@ feature {ANY}
 			"C inline use <git2.h>"
 		alias
 			"GIT_REPOSITORY_ITEM_WORKTREES"
+		end
+
+	git_repository_item__last: INTEGER 
+		external
+			"C inline use <git2.h>"
+		alias
+			"GIT_REPOSITORY_ITEM__LAST"
 		end
 
 end

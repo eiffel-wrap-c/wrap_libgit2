@@ -245,7 +245,7 @@ feature {NONE} -- Implementation wrapper for struct git_proxy_options
 			"C inline use <git2.h>"
 		alias
 			"[
-				((git_proxy_options*)$an_item)->credentials =  (git_cred_acquire_cb)$a_value
+				((git_proxy_options*)$an_item)->credentials =  (git_credential_acquire_cb)$a_value
 			]"
 		ensure
 			credentials_set: a_value = c_credentials (an_item)

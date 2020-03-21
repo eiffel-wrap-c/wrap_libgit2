@@ -176,9 +176,9 @@ feature -- Access
 			Result := c_git_index_add_bypath (index.item, path_c_string.item)
 		end
 
-	git_index_add_frombuffer (index: GIT_INDEX_STRUCT_API; entry: GIT_INDEX_ENTRY_STRUCT_API; buffer: POINTER; len: INTEGER): INTEGER 
+	git_index_add_from_buffer (index: GIT_INDEX_STRUCT_API; entry: GIT_INDEX_ENTRY_STRUCT_API; buffer: POINTER; len: INTEGER): INTEGER 
 		do
-			Result := c_git_index_add_frombuffer (index.item, entry.item, buffer, len)
+			Result := c_git_index_add_from_buffer (index.item, entry.item, buffer, len)
 		end
 
 	git_index_remove_bypath (index: GIT_INDEX_STRUCT_API; path: STRING): INTEGER 
@@ -264,6 +264,11 @@ feature -- Access
 	git_index_conflict_iterator_free (iterator: GIT_INDEX_CONFLICT_ITERATOR_STRUCT_API) 
 		do
 			c_git_index_conflict_iterator_free (iterator.item)
+		end
+
+	git_index_add_frombuffer (index: GIT_INDEX_STRUCT_API; entry: GIT_INDEX_ENTRY_STRUCT_API; buffer: POINTER; len: INTEGER): INTEGER 
+		do
+			Result := c_git_index_add_frombuffer (index.item, entry.item, buffer, len)
 		end
 
 feature -- Externals
@@ -520,12 +525,12 @@ feature -- Externals
 			]"
 		end
 
-	c_git_index_add_frombuffer (index: POINTER; entry: POINTER; buffer: POINTER; len: INTEGER): INTEGER
+	c_git_index_add_from_buffer (index: POINTER; entry: POINTER; buffer: POINTER; len: INTEGER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
-				return git_index_add_frombuffer ((git_index*)$index, (git_index_entry const*)$entry, (void const*)$buffer, (size_t)$len);
+				return git_index_add_from_buffer ((git_index*)$index, (git_index_entry const*)$entry, (void const*)$buffer, (size_t)$len);
 			]"
 		end
 
@@ -652,6 +657,15 @@ feature -- Externals
 		alias
 			"[
 				git_index_conflict_iterator_free ((git_index_conflict_iterator*)$iterator);
+			]"
+		end
+
+	c_git_index_add_frombuffer (index: POINTER; entry: POINTER; buffer: POINTER; len: INTEGER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_index_add_frombuffer ((git_index*)$index, (git_index_entry const*)$entry, (void const*)$buffer, (size_t)$len);
 			]"
 		end
 

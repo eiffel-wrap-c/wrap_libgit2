@@ -285,6 +285,26 @@ feature {ANY} -- Member Access
 			payload_set: a_value = payload
 		end
 
+	resolve_url: POINTER
+			-- Access member `resolve_url`
+		require
+			exists: exists
+		do
+			Result := c_resolve_url (item)
+		ensure
+			result_correct: Result = c_resolve_url (item)
+		end
+
+	set_resolve_url (a_value: POINTER) 
+			-- Change the value of member `resolve_url` to `a_value`.
+		require
+			exists: exists
+		do
+			set_c_resolve_url (item, a_value)
+		ensure
+			resolve_url_set: a_value = resolve_url
+		end
+
 feature {NONE} -- Implementation wrapper for struct struct git_remote_callbacks
 
 	sizeof_external: INTEGER 
@@ -360,7 +380,7 @@ feature {NONE} -- Implementation wrapper for struct struct git_remote_callbacks
 			"C inline use <git2.h>"
 		alias
 			"[
-				((struct git_remote_callbacks*)$an_item)->completion =  (int (*) (git_remote_completion_type type, void *data))$a_value
+				((struct git_remote_callbacks*)$an_item)->completion =  (int (*) (git_remote_completion_t type, void *data))$a_value
 			]"
 		ensure
 			completion_set: a_value = c_completion (an_item)
@@ -384,7 +404,7 @@ feature {NONE} -- Implementation wrapper for struct struct git_remote_callbacks
 			"C inline use <git2.h>"
 		alias
 			"[
-				((struct git_remote_callbacks*)$an_item)->credentials =  (git_cred_acquire_cb)$a_value
+				((struct git_remote_callbacks*)$an_item)->credentials =  (git_credential_acquire_cb)$a_value
 			]"
 		ensure
 			credentials_set: a_value = c_credentials (an_item)
@@ -432,7 +452,7 @@ feature {NONE} -- Implementation wrapper for struct struct git_remote_callbacks
 			"C inline use <git2.h>"
 		alias
 			"[
-				((struct git_remote_callbacks*)$an_item)->transfer_progress =  (git_transfer_progress_cb)$a_value
+				((struct git_remote_callbacks*)$an_item)->transfer_progress =  (git_indexer_progress_cb)$a_value
 			]"
 		ensure
 			transfer_progress_set: a_value = c_transfer_progress (an_item)
@@ -504,7 +524,7 @@ feature {NONE} -- Implementation wrapper for struct struct git_remote_callbacks
 			"C inline use <git2.h>"
 		alias
 			"[
-				((struct git_remote_callbacks*)$an_item)->push_transfer_progress =  (git_push_transfer_progress)$a_value
+				((struct git_remote_callbacks*)$an_item)->push_transfer_progress =  (git_push_transfer_progress_cb)$a_value
 			]"
 		ensure
 			push_transfer_progress_set: a_value = c_push_transfer_progress (an_item)
@@ -604,6 +624,30 @@ feature {NONE} -- Implementation wrapper for struct struct git_remote_callbacks
 			]"
 		ensure
 			payload_set: a_value = c_payload (an_item)
+		end
+
+	c_resolve_url (an_item: POINTER): POINTER
+		require
+			an_item_not_null: an_item /= default_pointer
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				((struct git_remote_callbacks*)$an_item)->resolve_url
+			]"
+		end
+
+	set_c_resolve_url (an_item: POINTER; a_value: POINTER) 
+		require
+			an_item_not_null: an_item /= default_pointer
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				((struct git_remote_callbacks*)$an_item)->resolve_url =  (git_url_resolve_cb)$a_value
+			]"
+		ensure
+			resolve_url_set: a_value = c_resolve_url (an_item)
 		end
 
 end

@@ -4,7 +4,7 @@ note
 
 	generator: "Eiffel Wrapper Generator"
 
-class GIT_REFSPEC_STRUCT_API
+class GIT_CREDENTIAL_USERNAME_STRUCT_API
 
 inherit
 
@@ -25,7 +25,7 @@ feature -- Measurement
 
 feature {ANY} -- Member Access
 
-feature {NONE} -- Implementation wrapper for struct struct git_refspec
+feature {NONE} -- Implementation wrapper for struct struct git_credential_username
 
 	sizeof_external: INTEGER 
 		do

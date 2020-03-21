@@ -77,11 +77,6 @@ feature -- Access
 			Result := c_git_object_typeisloose (type)
 		end
 
-	git_object__size (type: INTEGER): INTEGER 
-		do
-			Result := c_git_object__size (type)
-		end
-
 	git_object_peel (peeled: GIT_OBJECT_STRUCT_API; object: GIT_OBJECT_STRUCT_API; target_type: INTEGER): INTEGER 
 		do
 			Result := c_git_object_peel (peeled.item, object.item, target_type)
@@ -90,6 +85,11 @@ feature -- Access
 	git_object_dup (dest: GIT_OBJECT_STRUCT_API; source: GIT_OBJECT_STRUCT_API): INTEGER 
 		do
 			Result := c_git_object_dup (dest.item, source.item)
+		end
+
+	git_object__size (type: INTEGER): INTEGER 
+		do
+			Result := c_git_object__size (type)
 		end
 
 feature -- Externals
@@ -184,15 +184,6 @@ feature -- Externals
 			]"
 		end
 
-	c_git_object__size (type: INTEGER): INTEGER
-		external
-			"C inline use <git2.h>"
-		alias
-			"[
-				return git_object__size ((git_object_t)$type);
-			]"
-		end
-
 	c_git_object_peel (peeled: POINTER; object: POINTER; target_type: INTEGER): INTEGER
 		external
 			"C inline use <git2.h>"
@@ -208,6 +199,15 @@ feature -- Externals
 		alias
 			"[
 				return git_object_dup ((git_object**)$dest, (git_object*)$source);
+			]"
+		end
+
+	c_git_object__size (type: INTEGER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_object__size ((git_object_t)$type);
 			]"
 		end
 

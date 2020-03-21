@@ -43,7 +43,7 @@ feature -- Intiialize Repository
 			l_options: GIT_PUSH_OPTIONS_STRUCT_API
 			a_array: GIT_STRARRAY_STRUCT_API
 			callbacks: GIT_REMOTE_CALLBACKS_STRUCT_API
-			callback_dispatcher: GIT_CRED_ACQUIRE_CB_DISPATCHER
+			callback_dispatcher: GIT_CREDENTIAL_ACQUIRE_CB_DISPATCHER
 			refs: ARRAYED_LIST [GIT_REMOTE_HEAD_STRUCT_API]
 			ref_len: INTEGER
 			git_oid: GIT_OID
@@ -135,7 +135,7 @@ feature -- Intiialize Repository
 		local
 			l_user_name: STRING
 			exit: BOOLEAN
-			cred: GIT_CRED_STRUCT_API
+			cred: GIT_CREDENTIAL_STRUCT_API
 			git_cred: GIT_CREDENTIALS_API
 			l_password: STRING
 			l_privkey: STRING
@@ -152,7 +152,7 @@ feature -- Intiialize Repository
 				exit := l_user_name.is_empty
 			end
 
-			if not exit and then a_allowed_types & {GIT_CREDTYPE_T_ENUM_API}.GIT_CREDTYPE_SSH_KEY > 0 then
+			if not exit and then a_allowed_types & {GIT_CREDENTIAL_T_ENUM_API}.git_credential_ssh_key > 0 then
 				print ("%NSSH key:")
 				io.read_line
 				l_privkey := io.last_string.twin
@@ -166,7 +166,7 @@ feature -- Intiialize Repository
 				create git_cred
 				create cred.make_by_pointer (a_cred)
 				Result := git_cred.git_cred_ssh_key_new(cred, l_user_name, l_pubkey, l_privkey, l_password)
-			elseif not exit and then a_allowed_types & {GIT_CREDTYPE_T_ENUM_API}.GIT_CREDTYPE_USERPASS_PLAINTEXT > 0 then
+			elseif not exit and then a_allowed_types & {GIT_CREDENTIAL_T_ENUM_API}.git_credential_userpass_plaintext > 0 then
 				print ("%NPassword:")
 				l_password := read_password
 				exit := l_password.is_empty

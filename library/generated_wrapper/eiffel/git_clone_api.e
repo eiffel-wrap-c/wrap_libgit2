@@ -9,9 +9,9 @@ class GIT_CLONE_API
 
 feature -- Access
 
-	git_clone_init_options (opts: GIT_CLONE_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
+	git_clone_options_init (opts: GIT_CLONE_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
-			Result := c_git_clone_init_options (opts.item, version)
+			Result := c_git_clone_options_init (opts.item, version)
 		end
 
 	git_clone (a_out: GIT_REPOSITORY_STRUCT_API; url: STRING; local_path: STRING; options: GIT_CLONE_OPTIONS_STRUCT_API): INTEGER 
@@ -24,14 +24,19 @@ feature -- Access
 			Result := c_git_clone (a_out.item, url_c_string.item, local_path_c_string.item, options.item)
 		end
 
+	git_clone_init_options (opts: GIT_CLONE_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
+		do
+			Result := c_git_clone_init_options (opts.item, version)
+		end
+
 feature -- Externals
 
-	c_git_clone_init_options (opts: POINTER; version: INTEGER): INTEGER
+	c_git_clone_options_init (opts: POINTER; version: INTEGER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
-				return git_clone_init_options ((git_clone_options*)$opts, (unsigned int)$version);
+				return git_clone_options_init ((git_clone_options*)$opts, (unsigned int)$version);
 			]"
 		end
 
@@ -41,6 +46,15 @@ feature -- Externals
 		alias
 			"[
 				return git_clone ((git_repository**)$a_out, (char const*)$url, (char const*)$local_path, (git_clone_options const*)$options);
+			]"
+		end
+
+	c_git_clone_init_options (opts: POINTER; version: INTEGER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_clone_init_options ((git_clone_options*)$opts, (unsigned int)$version);
 			]"
 		end
 

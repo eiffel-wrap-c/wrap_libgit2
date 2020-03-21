@@ -36,7 +36,7 @@ note
 
 	generator: "Eiffel Wrapper Generator"
 
-class GIT_CRED_ACQUIRE_CB_DISPATCHER
+class GIT_INDEXER_PROGRESS_CB_DISPATCHER
 
 inherit
 
@@ -52,18 +52,18 @@ feature -- Initialization
 	make
 				-- Dispatcher initialization.
 		do
-			set_git_cred_acquire_cb_object ($Current)
+			set_git_indexer_progress_cb_object ($Current)
 		end
 
 feature -- Access: Routine 
 
-	routine_1: detachable FUNCTION [TUPLE [a_cred: POINTER; a_url: POINTER; a_username_from_url: POINTER; a_allowed_types: INTEGER; a_payload: POINTER], INTEGER] 
+	routine_1: detachable FUNCTION [TUPLE [a_stats: POINTER; a_payload: POINTER], INTEGER] 
 			--Eiffel routine to be call on callback.
 
-	routine_2: detachable FUNCTION [TUPLE [a_cred: POINTER; a_url: POINTER; a_username_from_url: POINTER; a_allowed_types: INTEGER; a_payload: POINTER], INTEGER] 
+	routine_2: detachable FUNCTION [TUPLE [a_stats: POINTER; a_payload: POINTER], INTEGER] 
 			--Eiffel routine to be call on callback.
 
-	routine_3: detachable FUNCTION [TUPLE [a_cred: POINTER; a_url: POINTER; a_username_from_url: POINTER; a_allowed_types: INTEGER; a_payload: POINTER], INTEGER] 
+	routine_3: detachable FUNCTION [TUPLE [a_stats: POINTER; a_payload: POINTER], INTEGER] 
 			--Eiffel routine to be call on callback.
 
 feature -- Access: Dispatcher
@@ -76,7 +76,7 @@ feature -- Access: Dispatcher
 			-- When its C function gets called, the dispatcher
 			-- calls`on_callback_1`on the Eiffel side.
 		do
-			Result := get_git_cred_acquire_cb_stub_1
+			Result := get_git_indexer_progress_cb_stub_1
 		end
 
 	c_dispatcher_2: POINTER
@@ -86,7 +86,7 @@ feature -- Access: Dispatcher
 			-- When its C function gets called, the dispatcher
 			-- calls`on_callback_2`on the Eiffel side.
 		do
-			Result := get_git_cred_acquire_cb_stub_2
+			Result := get_git_indexer_progress_cb_stub_2
 		end
 
 	c_dispatcher_3: POINTER
@@ -96,32 +96,32 @@ feature -- Access: Dispatcher
 			-- When its C function gets called, the dispatcher
 			-- calls`on_callback_3`on the Eiffel side.
 		do
-			Result := get_git_cred_acquire_cb_stub_3
+			Result := get_git_indexer_progress_cb_stub_3
 		end
 
 feature -- Access: Callback
 
-	on_callback_1 (a_cred: POINTER; a_url: POINTER; a_username_from_url: POINTER; a_allowed_types: INTEGER; a_payload: POINTER): INTEGER  
+	on_callback_1 (a_stats: POINTER; a_payload: POINTER): INTEGER  
 			-- Callback target.
 		do
 			if attached routine_1 as l_routine then 
-				Result :=  l_routine (a_cred, a_url, a_username_from_url, a_allowed_types, a_payload)
+				Result :=  l_routine (a_stats, a_payload)
 			end
 		end
 
-	on_callback_2 (a_cred: POINTER; a_url: POINTER; a_username_from_url: POINTER; a_allowed_types: INTEGER; a_payload: POINTER): INTEGER  
+	on_callback_2 (a_stats: POINTER; a_payload: POINTER): INTEGER  
 			-- Callback target.
 		do
 			if attached routine_2 as l_routine then 
-				Result :=  l_routine (a_cred, a_url, a_username_from_url, a_allowed_types, a_payload)
+				Result :=  l_routine (a_stats, a_payload)
 			end
 		end
 
-	on_callback_3 (a_cred: POINTER; a_url: POINTER; a_username_from_url: POINTER; a_allowed_types: INTEGER; a_payload: POINTER): INTEGER  
+	on_callback_3 (a_stats: POINTER; a_payload: POINTER): INTEGER  
 			-- Callback target.
 		do
 			if attached routine_3 as l_routine then 
-				Result :=  l_routine (a_cred, a_url, a_username_from_url, a_allowed_types, a_payload)
+				Result :=  l_routine (a_stats, a_payload)
 			end
 		end
 
@@ -155,7 +155,7 @@ feature -- Register: Callbacks
 			is_callback_1_unset: is_callback_1_available
 		do
 			routine_1 := a_routine
-			set_git_cred_acquire_cb_entry_1 ($on_callback_1)
+			set_git_indexer_progress_cb_entry_1 ($on_callback_1)
 		ensure
 			callback_1_set: attached routine_1
 		end
@@ -166,7 +166,7 @@ feature -- Register: Callbacks
 			is_callback_2_unset: is_callback_2_available
 		do
 			routine_2 := a_routine
-			set_git_cred_acquire_cb_entry_2 ($on_callback_2)
+			set_git_indexer_progress_cb_entry_2 ($on_callback_2)
 		ensure
 			callback_2_set: attached routine_2
 		end
@@ -177,7 +177,7 @@ feature -- Register: Callbacks
 			is_callback_3_unset: is_callback_3_available
 		do
 			routine_3 := a_routine
-			set_git_cred_acquire_cb_entry_3 ($on_callback_3)
+			set_git_indexer_progress_cb_entry_3 ($on_callback_3)
 		ensure
 			callback_3_set: attached routine_3
 		end
@@ -215,8 +215,8 @@ feature {NONE} -- Implementation
 	dispose
 			-- Wean `Current`.
 		do
-			release_git_cred_acquire_cb_object
-			set_git_cred_acquire_cb_object (default_pointer)
+			release_git_indexer_progress_cb_object
+			set_git_indexer_progress_cb_object (default_pointer)
 		end
 
 

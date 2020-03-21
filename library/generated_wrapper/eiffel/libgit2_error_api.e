@@ -26,12 +26,12 @@ feature -- Access
 			]"
 		end
 
-	git_error_set_str (error_class: INTEGER; string: POINTER)
+	git_error_set_str (error_class: INTEGER; string: POINTER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
-				git_error_set_str ((int)$error_class, (char const*)$string);
+				return git_error_set_str ((int)$error_class, (char const*)$string);
 			]"
 		end
 

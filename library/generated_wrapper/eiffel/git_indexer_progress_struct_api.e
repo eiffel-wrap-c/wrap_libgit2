@@ -4,7 +4,7 @@ note
 
 	generator: "Eiffel Wrapper Generator"
 
-class GIT_TRANSFER_PROGRESS_STRUCT_API
+class GIT_INDEXER_PROGRESS_STRUCT_API
 
 inherit
 
@@ -165,13 +165,13 @@ feature {ANY} -- Member Access
 			received_bytes_set: a_value = received_bytes
 		end
 
-feature {NONE} -- Implementation wrapper for struct struct git_transfer_progress
+feature {NONE} -- Implementation wrapper for struct struct git_indexer_progress
 
 	sizeof_external: INTEGER 
 		external
 			"C inline use <git2.h>"
 		alias
-			"sizeof(struct git_transfer_progress)"
+			"sizeof(struct git_indexer_progress)"
 		end
 
 	c_total_objects (an_item: POINTER): INTEGER
@@ -181,7 +181,7 @@ feature {NONE} -- Implementation wrapper for struct struct git_transfer_progress
 			"C inline use <git2.h>"
 		alias
 			"[
-				((struct git_transfer_progress*)$an_item)->total_objects
+				((struct git_indexer_progress*)$an_item)->total_objects
 			]"
 		end
 
@@ -192,7 +192,7 @@ feature {NONE} -- Implementation wrapper for struct struct git_transfer_progress
 			"C inline use <git2.h>"
 		alias
 			"[
-				((struct git_transfer_progress*)$an_item)->total_objects =  (unsigned int)$a_value
+				((struct git_indexer_progress*)$an_item)->total_objects =  (unsigned int)$a_value
 			]"
 		ensure
 			total_objects_set: a_value = c_total_objects (an_item)
@@ -205,7 +205,7 @@ feature {NONE} -- Implementation wrapper for struct struct git_transfer_progress
 			"C inline use <git2.h>"
 		alias
 			"[
-				((struct git_transfer_progress*)$an_item)->indexed_objects
+				((struct git_indexer_progress*)$an_item)->indexed_objects
 			]"
 		end
 
@@ -216,7 +216,7 @@ feature {NONE} -- Implementation wrapper for struct struct git_transfer_progress
 			"C inline use <git2.h>"
 		alias
 			"[
-				((struct git_transfer_progress*)$an_item)->indexed_objects =  (unsigned int)$a_value
+				((struct git_indexer_progress*)$an_item)->indexed_objects =  (unsigned int)$a_value
 			]"
 		ensure
 			indexed_objects_set: a_value = c_indexed_objects (an_item)
@@ -229,7 +229,7 @@ feature {NONE} -- Implementation wrapper for struct struct git_transfer_progress
 			"C inline use <git2.h>"
 		alias
 			"[
-				((struct git_transfer_progress*)$an_item)->received_objects
+				((struct git_indexer_progress*)$an_item)->received_objects
 			]"
 		end
 
@@ -240,7 +240,7 @@ feature {NONE} -- Implementation wrapper for struct struct git_transfer_progress
 			"C inline use <git2.h>"
 		alias
 			"[
-				((struct git_transfer_progress*)$an_item)->received_objects =  (unsigned int)$a_value
+				((struct git_indexer_progress*)$an_item)->received_objects =  (unsigned int)$a_value
 			]"
 		ensure
 			received_objects_set: a_value = c_received_objects (an_item)
@@ -253,7 +253,7 @@ feature {NONE} -- Implementation wrapper for struct struct git_transfer_progress
 			"C inline use <git2.h>"
 		alias
 			"[
-				((struct git_transfer_progress*)$an_item)->local_objects
+				((struct git_indexer_progress*)$an_item)->local_objects
 			]"
 		end
 
@@ -264,7 +264,7 @@ feature {NONE} -- Implementation wrapper for struct struct git_transfer_progress
 			"C inline use <git2.h>"
 		alias
 			"[
-				((struct git_transfer_progress*)$an_item)->local_objects =  (unsigned int)$a_value
+				((struct git_indexer_progress*)$an_item)->local_objects =  (unsigned int)$a_value
 			]"
 		ensure
 			local_objects_set: a_value = c_local_objects (an_item)
@@ -277,7 +277,7 @@ feature {NONE} -- Implementation wrapper for struct struct git_transfer_progress
 			"C inline use <git2.h>"
 		alias
 			"[
-				((struct git_transfer_progress*)$an_item)->total_deltas
+				((struct git_indexer_progress*)$an_item)->total_deltas
 			]"
 		end
 
@@ -288,7 +288,7 @@ feature {NONE} -- Implementation wrapper for struct struct git_transfer_progress
 			"C inline use <git2.h>"
 		alias
 			"[
-				((struct git_transfer_progress*)$an_item)->total_deltas =  (unsigned int)$a_value
+				((struct git_indexer_progress*)$an_item)->total_deltas =  (unsigned int)$a_value
 			]"
 		ensure
 			total_deltas_set: a_value = c_total_deltas (an_item)
@@ -301,7 +301,7 @@ feature {NONE} -- Implementation wrapper for struct struct git_transfer_progress
 			"C inline use <git2.h>"
 		alias
 			"[
-				((struct git_transfer_progress*)$an_item)->indexed_deltas
+				((struct git_indexer_progress*)$an_item)->indexed_deltas
 			]"
 		end
 
@@ -312,7 +312,7 @@ feature {NONE} -- Implementation wrapper for struct struct git_transfer_progress
 			"C inline use <git2.h>"
 		alias
 			"[
-				((struct git_transfer_progress*)$an_item)->indexed_deltas =  (unsigned int)$a_value
+				((struct git_indexer_progress*)$an_item)->indexed_deltas =  (unsigned int)$a_value
 			]"
 		ensure
 			indexed_deltas_set: a_value = c_indexed_deltas (an_item)
@@ -325,7 +325,7 @@ feature {NONE} -- Implementation wrapper for struct struct git_transfer_progress
 			"C inline use <git2.h>"
 		alias
 			"[
-				((struct git_transfer_progress*)$an_item)->received_bytes
+				((struct git_indexer_progress*)$an_item)->received_bytes
 			]"
 		end
 
@@ -336,7 +336,7 @@ feature {NONE} -- Implementation wrapper for struct struct git_transfer_progress
 			"C inline use <git2.h>"
 		alias
 			"[
-				((struct git_transfer_progress*)$an_item)->received_bytes =  (size_t)$a_value
+				((struct git_indexer_progress*)$an_item)->received_bytes =  (size_t)$a_value
 			]"
 		ensure
 			received_bytes_set: a_value = c_received_bytes (an_item)

@@ -294,9 +294,9 @@ feature -- Access
 			Result := c_git_reference_shorthand (ref.item)
 		end
 
-	git_submodule_update_init_options (opts: GIT_SUBMODULE_UPDATE_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
+	git_submodule_update_options_init (opts: GIT_SUBMODULE_UPDATE_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
-			Result := c_git_submodule_update_init_options (opts.item, version)
+			Result := c_git_submodule_update_options_init (opts.item, version)
 		end
 
 	git_submodule_update (submodule: GIT_SUBMODULE_STRUCT_API; init: INTEGER; options: GIT_SUBMODULE_UPDATE_OPTIONS_STRUCT_API): INTEGER 
@@ -330,6 +330,11 @@ feature -- Access
 			create url_c_string.make (url)
 			create path_c_string.make (path)
 			Result := c_git_submodule_add_setup (a_out.item, repo.item, url_c_string.item, path_c_string.item, use_gitlink)
+		end
+
+	git_submodule_clone (a_out: GIT_REPOSITORY_STRUCT_API; submodule: GIT_SUBMODULE_STRUCT_API; opts: GIT_SUBMODULE_UPDATE_OPTIONS_STRUCT_API): INTEGER 
+		do
+			Result := c_git_submodule_clone (a_out.item, submodule.item, opts.item)
 		end
 
 	git_submodule_add_finalize (submodule: GIT_SUBMODULE_STRUCT_API): INTEGER 
@@ -497,6 +502,11 @@ feature -- Access
 	git_submodule_location (location_status: POINTER; submodule: GIT_SUBMODULE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_submodule_location (location_status, submodule.item)
+		end
+
+	git_submodule_update_init_options (opts: GIT_SUBMODULE_UPDATE_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
+		do
+			Result := c_git_submodule_update_init_options (opts.item, version)
 		end
 
 feature -- Externals
@@ -852,12 +862,12 @@ feature -- Externals
 			]"
 		end
 
-	c_git_submodule_update_init_options (opts: POINTER; version: INTEGER): INTEGER
+	c_git_submodule_update_options_init (opts: POINTER; version: INTEGER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
-				return git_submodule_update_init_options ((git_submodule_update_options*)$opts, (unsigned int)$version);
+				return git_submodule_update_options_init ((git_submodule_update_options*)$opts, (unsigned int)$version);
 			]"
 		end
 
@@ -903,6 +913,15 @@ feature -- Externals
 		alias
 			"[
 				return git_submodule_add_setup ((git_submodule**)$a_out, (git_repository*)$repo, (char const*)$url, (char const*)$path, (int)$use_gitlink);
+			]"
+		end
+
+	c_git_submodule_clone (a_out: POINTER; submodule: POINTER; opts: POINTER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_submodule_clone ((git_repository**)$a_out, (git_submodule*)$submodule, (git_submodule_update_options const*)$opts);
 			]"
 		end
 
@@ -1137,6 +1156,15 @@ feature -- Externals
 		alias
 			"[
 				return git_submodule_location ((unsigned int*)$location_status, (git_submodule*)$submodule);
+			]"
+		end
+
+	c_git_submodule_update_init_options (opts: POINTER; version: INTEGER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_submodule_update_init_options ((git_submodule_update_options*)$opts, (unsigned int)$version);
 			]"
 		end
 

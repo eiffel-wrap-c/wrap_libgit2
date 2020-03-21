@@ -9,9 +9,9 @@ class GIT_INDEXER_API
 
 feature -- Access
 
-	git_indexer_init_options (opts: GIT_INDEXER_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
+	git_indexer_options_init (opts: GIT_INDEXER_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
-			Result := c_git_indexer_init_options (opts.item, version)
+			Result := c_git_indexer_options_init (opts.item, version)
 		end
 
 	git_indexer_new (a_out: GIT_INDEXER_STRUCT_API; path: STRING; mode: INTEGER; odb: GIT_ODB_STRUCT_API; opts: GIT_INDEXER_OPTIONS_STRUCT_API): INTEGER 
@@ -22,12 +22,12 @@ feature -- Access
 			Result := c_git_indexer_new (a_out.item, path_c_string.item, mode, odb.item, opts.item)
 		end
 
-	git_indexer_append (idx: GIT_INDEXER_STRUCT_API; data: POINTER; size: INTEGER; stats: GIT_TRANSFER_PROGRESS_STRUCT_API): INTEGER 
+	git_indexer_append (idx: GIT_INDEXER_STRUCT_API; data: POINTER; size: INTEGER; stats: GIT_INDEXER_PROGRESS_STRUCT_API): INTEGER 
 		do
 			Result := c_git_indexer_append (idx.item, data, size, stats.item)
 		end
 
-	git_indexer_commit (idx: GIT_INDEXER_STRUCT_API; stats: GIT_TRANSFER_PROGRESS_STRUCT_API): INTEGER 
+	git_indexer_commit (idx: GIT_INDEXER_STRUCT_API; stats: GIT_INDEXER_PROGRESS_STRUCT_API): INTEGER 
 		do
 			Result := c_git_indexer_commit (idx.item, stats.item)
 		end
@@ -45,14 +45,19 @@ feature -- Access
 			c_git_indexer_free (idx.item)
 		end
 
+	git_indexer_init_options (opts: GIT_INDEXER_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
+		do
+			Result := c_git_indexer_init_options (opts.item, version)
+		end
+
 feature -- Externals
 
-	c_git_indexer_init_options (opts: POINTER; version: INTEGER): INTEGER
+	c_git_indexer_options_init (opts: POINTER; version: INTEGER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
-				return git_indexer_init_options ((git_indexer_options*)$opts, (unsigned int)$version);
+				return git_indexer_options_init ((git_indexer_options*)$opts, (unsigned int)$version);
 			]"
 		end
 
@@ -70,7 +75,7 @@ feature -- Externals
 			"C inline use <git2.h>"
 		alias
 			"[
-				return git_indexer_append ((git_indexer*)$idx, (void const*)$data, (size_t)$size, (git_transfer_progress*)$stats);
+				return git_indexer_append ((git_indexer*)$idx, (void const*)$data, (size_t)$size, (git_indexer_progress*)$stats);
 			]"
 		end
 
@@ -79,7 +84,7 @@ feature -- Externals
 			"C inline use <git2.h>"
 		alias
 			"[
-				return git_indexer_commit ((git_indexer*)$idx, (git_transfer_progress*)$stats);
+				return git_indexer_commit ((git_indexer*)$idx, (git_indexer_progress*)$stats);
 			]"
 		end
 
@@ -98,6 +103,15 @@ feature -- Externals
 		alias
 			"[
 				git_indexer_free ((git_indexer*)$idx);
+			]"
+		end
+
+	c_git_indexer_init_options (opts: POINTER; version: INTEGER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_indexer_init_options ((git_indexer_options*)$opts, (unsigned int)$version);
 			]"
 		end
 

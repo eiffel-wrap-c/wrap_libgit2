@@ -220,7 +220,7 @@ feature {NONE} -- Implementation wrapper for struct git_diff_file
 			"C inline use <git2.h>"
 		alias
 			"[
-				((git_diff_file*)$an_item)->size =  (git_off_t)$a_value
+				((git_diff_file*)$an_item)->size =  (git_object_size_t)$a_value
 			]"
 		ensure
 			size_set: a_value = c_size (an_item)

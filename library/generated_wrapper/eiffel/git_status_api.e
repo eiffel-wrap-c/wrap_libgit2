@@ -9,9 +9,9 @@ class GIT_STATUS_API
 
 feature -- Access
 
-	git_status_init_options (opts: GIT_STATUS_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
+	git_status_options_init (opts: GIT_STATUS_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
-			Result := c_git_status_init_options (opts.item, version)
+			Result := c_git_status_options_init (opts.item, version)
 		end
 
 	git_status_foreach (repo: GIT_REPOSITORY_STRUCT_API; callback: POINTER; payload: POINTER): INTEGER 
@@ -63,14 +63,19 @@ feature -- Access
 			Result := c_git_status_should_ignore (ignored, repo.item, path_c_string.item)
 		end
 
+	git_status_init_options (opts: GIT_STATUS_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
+		do
+			Result := c_git_status_init_options (opts.item, version)
+		end
+
 feature -- Externals
 
-	c_git_status_init_options (opts: POINTER; version: INTEGER): INTEGER
+	c_git_status_options_init (opts: POINTER; version: INTEGER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
-				return git_status_init_options ((git_status_options*)$opts, (unsigned int)$version);
+				return git_status_options_init ((git_status_options*)$opts, (unsigned int)$version);
 			]"
 		end
 
@@ -143,6 +148,15 @@ feature -- Externals
 		alias
 			"[
 				return git_status_should_ignore ((int*)$ignored, (git_repository*)$repo, (char const*)$path);
+			]"
+		end
+
+	c_git_status_init_options (opts: POINTER; version: INTEGER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_status_init_options ((git_status_options*)$opts, (unsigned int)$version);
 			]"
 		end
 

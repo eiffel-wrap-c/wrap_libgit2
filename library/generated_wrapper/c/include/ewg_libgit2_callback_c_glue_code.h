@@ -147,26 +147,50 @@ void call_git_checkout_perfdata_cb (void *a_function, git_checkout_perfdata cons
 
 #include <git2.h>
 
-typedef int (*git_cred_acquire_cb_eiffel_feature) (void *a_class, git_cred **cred, char const *url, char const *username_from_url, unsigned int allowed_types, void *payload);
+typedef int (*git_indexer_progress_cb_eiffel_feature) (void *a_class, git_indexer_progress const *stats, void *payload);
 
-void* git_cred_acquire_cb_object;
-git_cred_acquire_cb_eiffel_feature git_cred_acquire_cb_address_1;
-git_cred_acquire_cb_eiffel_feature git_cred_acquire_cb_address_2;
-git_cred_acquire_cb_eiffel_feature git_cred_acquire_cb_address_3;
+void* git_indexer_progress_cb_object;
+git_indexer_progress_cb_eiffel_feature git_indexer_progress_cb_address_1;
+git_indexer_progress_cb_eiffel_feature git_indexer_progress_cb_address_2;
+git_indexer_progress_cb_eiffel_feature git_indexer_progress_cb_address_3;
 
-void set_git_cred_acquire_cb_object (void* a_class);
+void set_git_indexer_progress_cb_object (void* a_class);
 
-void release_git_cred_acquire_cb_object (void);
+void release_git_indexer_progress_cb_object (void);
 
-void* get_git_cred_acquire_cb_stub_1 ();
-void* get_git_cred_acquire_cb_stub_2 ();
-void* get_git_cred_acquire_cb_stub_3 ();
+void* get_git_indexer_progress_cb_stub_1 ();
+void* get_git_indexer_progress_cb_stub_2 ();
+void* get_git_indexer_progress_cb_stub_3 ();
 
-void set_git_cred_acquire_cb_entry_1 (void* a_feature);
-void set_git_cred_acquire_cb_entry_2 (void* a_feature);
-void set_git_cred_acquire_cb_entry_3 (void* a_feature);
+void set_git_indexer_progress_cb_entry_1 (void* a_feature);
+void set_git_indexer_progress_cb_entry_2 (void* a_feature);
+void set_git_indexer_progress_cb_entry_3 (void* a_feature);
 
-int call_git_cred_acquire_cb (void *a_function, git_cred **cred, char const *url, char const *username_from_url, unsigned int allowed_types, void *payload);
+int call_git_indexer_progress_cb (void *a_function, git_indexer_progress const *stats, void *payload);
+
+
+#include <git2.h>
+
+typedef int (*git_credential_acquire_cb_eiffel_feature) (void *a_class, git_credential **a_out, char const *url, char const *username_from_url, unsigned int allowed_types, void *payload);
+
+void* git_credential_acquire_cb_object;
+git_credential_acquire_cb_eiffel_feature git_credential_acquire_cb_address_1;
+git_credential_acquire_cb_eiffel_feature git_credential_acquire_cb_address_2;
+git_credential_acquire_cb_eiffel_feature git_credential_acquire_cb_address_3;
+
+void set_git_credential_acquire_cb_object (void* a_class);
+
+void release_git_credential_acquire_cb_object (void);
+
+void* get_git_credential_acquire_cb_stub_1 ();
+void* get_git_credential_acquire_cb_stub_2 ();
+void* get_git_credential_acquire_cb_stub_3 ();
+
+void set_git_credential_acquire_cb_entry_1 (void* a_feature);
+void set_git_credential_acquire_cb_entry_2 (void* a_feature);
+void set_git_credential_acquire_cb_entry_3 (void* a_feature);
+
+int call_git_credential_acquire_cb (void *a_function, git_credential **a_out, char const *url, char const *username_from_url, unsigned int allowed_types, void *payload);
 
 
 #endif

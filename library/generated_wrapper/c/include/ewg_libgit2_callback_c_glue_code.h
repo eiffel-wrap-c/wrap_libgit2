@@ -171,6 +171,30 @@ int call_git_indexer_progress_cb (void *a_function, git_indexer_progress const *
 
 #include <git2.h>
 
+typedef int (*git_transport_message_cb_eiffel_feature) (void *a_class, char const *str, int len, void *payload);
+
+void* git_transport_message_cb_object;
+git_transport_message_cb_eiffel_feature git_transport_message_cb_address_1;
+git_transport_message_cb_eiffel_feature git_transport_message_cb_address_2;
+git_transport_message_cb_eiffel_feature git_transport_message_cb_address_3;
+
+void set_git_transport_message_cb_object (void* a_class);
+
+void release_git_transport_message_cb_object (void);
+
+void* get_git_transport_message_cb_stub_1 ();
+void* get_git_transport_message_cb_stub_2 ();
+void* get_git_transport_message_cb_stub_3 ();
+
+void set_git_transport_message_cb_entry_1 (void* a_feature);
+void set_git_transport_message_cb_entry_2 (void* a_feature);
+void set_git_transport_message_cb_entry_3 (void* a_feature);
+
+int call_git_transport_message_cb (void *a_function, char const *str, int len, void *payload);
+
+
+#include <git2.h>
+
 typedef int (*git_credential_acquire_cb_eiffel_feature) (void *a_class, git_credential **a_out, char const *url, char const *username_from_url, unsigned int allowed_types, void *payload);
 
 void* git_credential_acquire_cb_object;

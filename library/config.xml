@@ -612,7 +612,15 @@
       </wrapper>
     </rule>
 
- 
+     <!-- The next rule specify the git_transport_message_cb  callback  -->
+    <rule>
+      <match>
+          <identifier name="git_transport_message_cb"/>
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>
+
   <!-- The next rule specify the credential type enum  -->
     <rule>
       <match>
@@ -621,7 +629,17 @@
        <wrapper type="default">
       </wrapper>
     </rule>
-  
+ 
+
+  <!-- The next rule specify the credential type enum  -->
+    <rule>
+      <match>
+          <identifier name="git_credtype_t"/>
+      </match>
+       <wrapper type="default">
+      </wrapper>
+    </rule>
+   
 
    <!-- And the rest should be ignored -->
     <rule>

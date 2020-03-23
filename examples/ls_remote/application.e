@@ -182,7 +182,6 @@ feature -- Intiialize Repository
 					Result := git_cred.git_cred_username_new (cred, l_user_name)
 				end
 			end
-
 		end
 
 feature	{NONE} -- Process Arguments

@@ -508,6 +508,78 @@ int call_git_indexer_progress_cb (void *a_function, git_indexer_progress const *
 	return ((int (*) (git_indexer_progress const *stats, void *payload))a_function) (stats, payload);
 }
 
+void* git_transport_message_cb_object =  NULL;
+git_transport_message_cb_eiffel_feature git_transport_message_cb_address_1 = NULL;
+git_transport_message_cb_eiffel_feature git_transport_message_cb_address_2 = NULL;
+git_transport_message_cb_eiffel_feature git_transport_message_cb_address_3 = NULL;
+
+void set_git_transport_message_cb_object (void* a_object)
+{
+	if (a_object) {
+		git_transport_message_cb_object = eif_protect(a_object);
+	} else { 
+		git_transport_message_cb_object = NULL;
+	}
+}
+
+void release_git_transport_message_cb_object ()
+{
+	eif_wean (git_transport_message_cb_object);
+}
+
+int git_transport_message_cb_stub_1 (char const *str, int len, void *payload)
+{
+	if (git_transport_message_cb_object != NULL && git_transport_message_cb_address_1 != NULL)
+	{
+		return git_transport_message_cb_address_1 (eif_access(git_transport_message_cb_object), str, len, payload);
+	}
+}
+
+int git_transport_message_cb_stub_2 (char const *str, int len, void *payload)
+{
+	if (git_transport_message_cb_object != NULL && git_transport_message_cb_address_2 != NULL)
+	{
+		return git_transport_message_cb_address_2 (eif_access(git_transport_message_cb_object), str, len, payload);
+	}
+}
+
+int git_transport_message_cb_stub_3 (char const *str, int len, void *payload)
+{
+	if (git_transport_message_cb_object != NULL && git_transport_message_cb_address_3 != NULL)
+	{
+		return git_transport_message_cb_address_3 (eif_access(git_transport_message_cb_object), str, len, payload);
+	}
+}
+
+void set_git_transport_message_cb_entry_1 (void* a_feature){
+	git_transport_message_cb_address_1 = (git_transport_message_cb_eiffel_feature) a_feature;
+}
+
+void set_git_transport_message_cb_entry_2 (void* a_feature){
+	git_transport_message_cb_address_2 = (git_transport_message_cb_eiffel_feature) a_feature;
+}
+
+void set_git_transport_message_cb_entry_3 (void* a_feature){
+	git_transport_message_cb_address_3 = (git_transport_message_cb_eiffel_feature) a_feature;
+}
+
+void* get_git_transport_message_cb_stub_1 (){
+	return (void*) git_transport_message_cb_stub_1;
+}
+
+void* get_git_transport_message_cb_stub_2 (){
+	return (void*) git_transport_message_cb_stub_2;
+}
+
+void* get_git_transport_message_cb_stub_3 (){
+	return (void*) git_transport_message_cb_stub_3;
+}
+
+int call_git_transport_message_cb (void *a_function, char const *str, int len, void *payload)
+{
+	return ((int (*) (char const *str, int len, void *payload))a_function) (str, len, payload);
+}
+
 void* git_credential_acquire_cb_object =  NULL;
 git_credential_acquire_cb_eiffel_feature git_credential_acquire_cb_address_1 = NULL;
 git_credential_acquire_cb_eiffel_feature git_credential_acquire_cb_address_2 = NULL;

@@ -19,9 +19,9 @@ feature -- Access
 			Result := c_git_remote_create (a_out.item, repo.item, name_c_string.item, url_c_string.item)
 		end
 
-	git_remote_create_init_options (opts: GIT_REMOTE_CREATE_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
+	git_remote_create_options_init (opts: GIT_REMOTE_CREATE_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
-			Result := c_git_remote_create_init_options (opts.item, version)
+			Result := c_git_remote_create_options_init (opts.item, version)
 		end
 
 	git_remote_create_with_opts (a_out: GIT_REMOTE_STRUCT_API; url: STRING; opts: GIT_REMOTE_CREATE_OPTIONS_STRUCT_API): INTEGER 
@@ -166,14 +166,14 @@ feature -- Access
 			Result := c_git_remote_connected (remote.item)
 		end
 
-	git_remote_stop (remote: GIT_REMOTE_STRUCT_API) 
+	git_remote_stop (remote: GIT_REMOTE_STRUCT_API): INTEGER 
 		do
-			c_git_remote_stop (remote.item)
+			Result := c_git_remote_stop (remote.item)
 		end
 
-	git_remote_disconnect (remote: GIT_REMOTE_STRUCT_API) 
+	git_remote_disconnect (remote: GIT_REMOTE_STRUCT_API): INTEGER 
 		do
-			c_git_remote_disconnect (remote.item)
+			Result := c_git_remote_disconnect (remote.item)
 		end
 
 	git_remote_free (remote: GIT_REMOTE_STRUCT_API) 
@@ -189,11 +189,6 @@ feature -- Access
 	git_remote_init_callbacks (opts: GIT_REMOTE_CALLBACKS_STRUCT_API; version: INTEGER): INTEGER 
 		do
 			Result := c_git_remote_init_callbacks (opts.item, version)
-		end
-
-	git_push_init_options (opts: GIT_PUSH_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
-		do
-			Result := c_git_push_init_options (opts.item, version)
 		end
 
 	git_remote_download (remote: GIT_REMOTE_STRUCT_API; refspecs: GIT_STRARRAY_STRUCT_API; opts: GIT_FETCH_OPTIONS_STRUCT_API): INTEGER 
@@ -232,7 +227,7 @@ feature -- Access
 			Result := c_git_remote_push (remote.item, refspecs.item, opts.item)
 		end
 
-	git_remote_stats (remote: GIT_REMOTE_STRUCT_API): detachable GIT_TRANSFER_PROGRESS_STRUCT_API 
+	git_remote_stats (remote: GIT_REMOTE_STRUCT_API): detachable GIT_INDEXER_PROGRESS_STRUCT_API 
 		do
 			if attached c_git_remote_stats (remote.item) as l_ptr and then not l_ptr.is_default_pointer then
 				create Result.make_by_pointer ( l_ptr )
@@ -268,12 +263,13 @@ feature -- Access
 			Result := c_git_remote_rename (problems.item, repo.item, name_c_string.item, new_name_c_string.item)
 		end
 
-	git_remote_is_valid_name (remote_name: STRING): INTEGER 
-		local
-			remote_name_c_string: C_STRING
-		do
-			create remote_name_c_string.make (remote_name)
-			Result := c_git_remote_is_valid_name (remote_name_c_string.item)
+	git_remote_is_valid_name (remote_name: POINTER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_remote_is_valid_name ((char const*)$remote_name);
+			]"
 		end
 
 	git_remote_delete (repo: GIT_REPOSITORY_STRUCT_API; name: STRING): INTEGER 
@@ -289,6 +285,16 @@ feature -- Access
 			Result := c_git_remote_default_branch (a_out.item, remote.item)
 		end
 
+	git_push_init_options (opts: GIT_PUSH_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
+		do
+			Result := c_git_push_init_options (opts.item, version)
+		end
+
+	git_remote_create_init_options (opts: GIT_REMOTE_CREATE_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
+		do
+			Result := c_git_remote_create_init_options (opts.item, version)
+		end
+
 feature -- Externals
 
 	c_git_remote_create (a_out: POINTER; repo: POINTER; name: POINTER; url: POINTER): INTEGER
@@ -300,12 +306,12 @@ feature -- Externals
 			]"
 		end
 
-	c_git_remote_create_init_options (opts: POINTER; version: INTEGER): INTEGER
+	c_git_remote_create_options_init (opts: POINTER; version: INTEGER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
-				return git_remote_create_init_options ((git_remote_create_options*)$opts, (unsigned int)$version);
+				return git_remote_create_options_init ((git_remote_create_options*)$opts, (unsigned int)$version);
 			]"
 		end
 
@@ -489,21 +495,21 @@ feature -- Externals
 			]"
 		end
 
-	c_git_remote_stop (remote: POINTER)
+	c_git_remote_stop (remote: POINTER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
-				git_remote_stop ((git_remote*)$remote);
+				return git_remote_stop ((git_remote*)$remote);
 			]"
 		end
 
-	c_git_remote_disconnect (remote: POINTER)
+	c_git_remote_disconnect (remote: POINTER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
-				git_remote_disconnect ((git_remote*)$remote);
+				return git_remote_disconnect ((git_remote*)$remote);
 			]"
 		end
 
@@ -531,15 +537,6 @@ feature -- Externals
 		alias
 			"[
 				return git_remote_init_callbacks ((git_remote_callbacks*)$opts, (unsigned int)$version);
-			]"
-		end
-
-	c_git_push_init_options (opts: POINTER; version: INTEGER): INTEGER
-		external
-			"C inline use <git2.h>"
-		alias
-			"[
-				return git_push_init_options ((git_push_options*)$opts, (unsigned int)$version);
 			]"
 		end
 
@@ -642,15 +639,6 @@ feature -- Externals
 			]"
 		end
 
-	c_git_remote_is_valid_name (remote_name: POINTER): INTEGER
-		external
-			"C inline use <git2.h>"
-		alias
-			"[
-				return git_remote_is_valid_name ((char const*)$remote_name);
-			]"
-		end
-
 	c_git_remote_delete (repo: POINTER; name: POINTER): INTEGER
 		external
 			"C inline use <git2.h>"
@@ -666,6 +654,24 @@ feature -- Externals
 		alias
 			"[
 				return git_remote_default_branch ((git_buf*)$a_out, (git_remote*)$remote);
+			]"
+		end
+
+	c_git_push_init_options (opts: POINTER; version: INTEGER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_push_init_options ((git_push_options*)$opts, (unsigned int)$version);
+			]"
+		end
+
+	c_git_remote_create_init_options (opts: POINTER; version: INTEGER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_remote_create_init_options ((git_remote_create_options*)$opts, (unsigned int)$version);
 			]"
 		end
 

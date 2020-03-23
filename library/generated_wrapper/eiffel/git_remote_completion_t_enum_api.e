@@ -1,5 +1,5 @@
 -- enum wrapper
-class GIT_REMOTE_COMPLETION_TYPE_ENUM_API
+class GIT_REMOTE_COMPLETION_T_ENUM_API
 
 feature {ANY}
 

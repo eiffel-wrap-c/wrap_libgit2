@@ -266,14 +266,13 @@ feature -- Access
 			Result := c_git_reference_is_note (ref.item)
 		end
 
-	git_reference_normalize_name (buffer_out: STRING; buffer_size: INTEGER; name: STRING; flags: INTEGER): INTEGER 
-		local
-			buffer_out_c_string: C_STRING
-			name_c_string: C_STRING
-		do
-			create buffer_out_c_string.make (buffer_out)
-			create name_c_string.make (name)
-			Result := c_git_reference_normalize_name (buffer_out_c_string.item, buffer_size, name_c_string.item, flags)
+	git_reference_normalize_name (buffer_out: POINTER; buffer_size: INTEGER; name: POINTER; flags: INTEGER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_reference_normalize_name ((char*)$buffer_out, (size_t)$buffer_size, (char const*)$name, (unsigned int)$flags);
+			]"
 		end
 
 	git_reference_peel (a_out: GIT_OBJECT_STRUCT_API; ref: GIT_REFERENCE_STRUCT_API; type: INTEGER): INTEGER 
@@ -281,12 +280,13 @@ feature -- Access
 			Result := c_git_reference_peel (a_out.item, ref.item, type)
 		end
 
-	git_reference_is_valid_name (refname: STRING): INTEGER 
-		local
-			refname_c_string: C_STRING
-		do
-			create refname_c_string.make (refname)
-			Result := c_git_reference_is_valid_name (refname_c_string.item)
+	git_reference_is_valid_name (refname: POINTER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_reference_is_valid_name ((char const*)$refname);
+			]"
 		end
 
 	git_reference_shorthand (ref: GIT_REFERENCE_STRUCT_API): POINTER 
@@ -294,9 +294,9 @@ feature -- Access
 			Result := c_git_reference_shorthand (ref.item)
 		end
 
-	git_submodule_update_init_options (opts: GIT_SUBMODULE_UPDATE_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
+	git_submodule_update_options_init (opts: GIT_SUBMODULE_UPDATE_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
-			Result := c_git_submodule_update_init_options (opts.item, version)
+			Result := c_git_submodule_update_options_init (opts.item, version)
 		end
 
 	git_submodule_update (submodule: GIT_SUBMODULE_STRUCT_API; init: INTEGER; options: GIT_SUBMODULE_UPDATE_OPTIONS_STRUCT_API): INTEGER 
@@ -330,6 +330,11 @@ feature -- Access
 			create url_c_string.make (url)
 			create path_c_string.make (path)
 			Result := c_git_submodule_add_setup (a_out.item, repo.item, url_c_string.item, path_c_string.item, use_gitlink)
+		end
+
+	git_submodule_clone (a_out: GIT_REPOSITORY_STRUCT_API; submodule: GIT_SUBMODULE_STRUCT_API; opts: GIT_SUBMODULE_UPDATE_OPTIONS_STRUCT_API): INTEGER 
+		do
+			Result := c_git_submodule_clone (a_out.item, submodule.item, opts.item)
 		end
 
 	git_submodule_add_finalize (submodule: GIT_SUBMODULE_STRUCT_API): INTEGER 
@@ -497,6 +502,11 @@ feature -- Access
 	git_submodule_location (location_status: POINTER; submodule: GIT_SUBMODULE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_submodule_location (location_status, submodule.item)
+		end
+
+	git_submodule_update_init_options (opts: GIT_SUBMODULE_UPDATE_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
+		do
+			Result := c_git_submodule_update_init_options (opts.item, version)
 		end
 
 feature -- Externals
@@ -834,30 +844,12 @@ feature -- Externals
 			]"
 		end
 
-	c_git_reference_normalize_name (buffer_out: POINTER; buffer_size: INTEGER; name: POINTER; flags: INTEGER): INTEGER
-		external
-			"C inline use <git2.h>"
-		alias
-			"[
-				return git_reference_normalize_name ((char*)$buffer_out, (size_t)$buffer_size, (char const*)$name, (unsigned int)$flags);
-			]"
-		end
-
 	c_git_reference_peel (a_out: POINTER; ref: POINTER; type: INTEGER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
 				return git_reference_peel ((git_object**)$a_out, (git_reference const*)$ref, (git_object_t)$type);
-			]"
-		end
-
-	c_git_reference_is_valid_name (refname: POINTER): INTEGER
-		external
-			"C inline use <git2.h>"
-		alias
-			"[
-				return git_reference_is_valid_name ((char const*)$refname);
 			]"
 		end
 
@@ -870,12 +862,12 @@ feature -- Externals
 			]"
 		end
 
-	c_git_submodule_update_init_options (opts: POINTER; version: INTEGER): INTEGER
+	c_git_submodule_update_options_init (opts: POINTER; version: INTEGER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
-				return git_submodule_update_init_options ((git_submodule_update_options*)$opts, (unsigned int)$version);
+				return git_submodule_update_options_init ((git_submodule_update_options*)$opts, (unsigned int)$version);
 			]"
 		end
 
@@ -921,6 +913,15 @@ feature -- Externals
 		alias
 			"[
 				return git_submodule_add_setup ((git_submodule**)$a_out, (git_repository*)$repo, (char const*)$url, (char const*)$path, (int)$use_gitlink);
+			]"
+		end
+
+	c_git_submodule_clone (a_out: POINTER; submodule: POINTER; opts: POINTER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_submodule_clone ((git_repository**)$a_out, (git_submodule*)$submodule, (git_submodule_update_options const*)$opts);
 			]"
 		end
 
@@ -1155,6 +1156,15 @@ feature -- Externals
 		alias
 			"[
 				return git_submodule_location ((unsigned int*)$location_status, (git_submodule*)$submodule);
+			]"
+		end
+
+	c_git_submodule_update_init_options (opts: POINTER; version: INTEGER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_submodule_update_init_options ((git_submodule_update_options*)$opts, (unsigned int)$version);
 			]"
 		end
 

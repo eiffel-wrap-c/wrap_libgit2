@@ -26,12 +26,13 @@ feature -- Access
 			]"
 		end
 
-	git_error_set_str (error_class: INTEGER; string: STRING) 
-		local
-			string_c_string: C_STRING
-		do
-			create string_c_string.make (string)
-			c_git_error_set_str (error_class, string_c_string.item)
+	git_error_set_str (error_class: INTEGER; string: POINTER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_error_set_str ((int)$error_class, (char const*)$string);
+			]"
 		end
 
 	git_error_set_oom
@@ -51,15 +52,6 @@ feature -- Externals
 		alias
 			"[
 				return git_error_last ();
-			]"
-		end
-
-	c_git_error_set_str (error_class: INTEGER; string: POINTER)
-		external
-			"C inline use <git2.h>"
-		alias
-			"[
-				git_error_set_str ((int)$error_class, (char const*)$string);
 			]"
 		end
 

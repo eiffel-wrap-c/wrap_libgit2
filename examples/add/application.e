@@ -68,14 +68,15 @@ feature -- Repository
 
 				-- Setup a callback if the requested options need it.
 			if ((options & VERBOSE) /= 0 ) or ((options & SKIP) /= 0) then
-				create matched_cb.make (agent print_matched_cb)
+				create matched_cb.make
+				matched_cb.register_callback_1 (agent print_matched_cb)
 			end
 
 				-- Perform the requested action with the index and files.
 			payload.set_options (options)
 			payload.set_repository (repo)
 
-			callback := if attached matched_cb as l_matched_cb then l_matched_cb.c_dispatcher else default_pointer end
+			callback := if attached matched_cb as l_matched_cb then l_matched_cb.c_dispatcher_1 else default_pointer end
 
 			create git_index
 			if (options & UPDATE) /= 0 then

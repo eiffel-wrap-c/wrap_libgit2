@@ -67,17 +67,14 @@ feature {ANY} -- Member Access
 			set_c_email (item, (create {C_STRING}.make (a_value)).item )
 		end
 
-	a_when: detachable GIT_TIME_STRUCT_API
+	a_when: GIT_TIME_STRUCT_API
 			-- Access member `when`
 		require
 			exists: exists
 		do
-			if attached c_a_when (item) as l_ptr and then not l_ptr.is_default_pointer then
-				create Result.make_by_pointer (l_ptr)
-			end
+			create Result.make_by_pointer ( c_a_when(item) )
 		ensure
-			result_void: Result = Void implies c_a_when (item) = default_pointer 
-			result_not_void: attached Result as l_result implies l_result.item = c_a_when (item) 
+			result_not_void: Result.item = c_a_when (item) 
 		end
 
 	set_a_when (a_value: GIT_TIME_STRUCT_API) 
@@ -88,7 +85,7 @@ feature {ANY} -- Member Access
 		do
 			set_c_a_when (item, a_value.item)
 		ensure
-			a_when_set: attached a_when as l_value implies l_value.item = a_value.item
+			a_when_set: a_when.item = a_value.item
 		end
 
 feature {NONE} -- Implementation wrapper for struct struct git_signature

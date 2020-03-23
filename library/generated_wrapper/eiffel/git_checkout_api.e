@@ -9,9 +9,9 @@ class GIT_CHECKOUT_API
 
 feature -- Access
 
-	git_checkout_init_options (opts: GIT_CHECKOUT_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
+	git_checkout_options_init (opts: GIT_CHECKOUT_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
-			Result := c_git_checkout_init_options (opts.item, version)
+			Result := c_git_checkout_options_init (opts.item, version)
 		end
 
 	git_checkout_head (repo: GIT_REPOSITORY_STRUCT_API; opts: GIT_CHECKOUT_OPTIONS_STRUCT_API): INTEGER 
@@ -29,14 +29,19 @@ feature -- Access
 			Result := c_git_checkout_tree (repo.item, treeish.item, opts.item)
 		end
 
+	git_checkout_init_options (opts: GIT_CHECKOUT_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
+		do
+			Result := c_git_checkout_init_options (opts.item, version)
+		end
+
 feature -- Externals
 
-	c_git_checkout_init_options (opts: POINTER; version: INTEGER): INTEGER
+	c_git_checkout_options_init (opts: POINTER; version: INTEGER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
-				return git_checkout_init_options ((git_checkout_options*)$opts, (unsigned int)$version);
+				return git_checkout_options_init ((git_checkout_options*)$opts, (unsigned int)$version);
 			]"
 		end
 
@@ -64,6 +69,15 @@ feature -- Externals
 		alias
 			"[
 				return git_checkout_tree ((git_repository*)$repo, (git_object const*)$treeish, (git_checkout_options const*)$opts);
+			]"
+		end
+
+	c_git_checkout_init_options (opts: POINTER; version: INTEGER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_checkout_init_options ((git_checkout_options*)$opts, (unsigned int)$version);
 			]"
 		end
 

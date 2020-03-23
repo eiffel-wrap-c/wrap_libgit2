@@ -29,9 +29,10 @@ feature -- Access
 	git_oid_fmt (a_out: STRING; id: GIT_OID_STRUCT_API)
 		local
 			a_out_c_string: C_STRING
+			l_ret: INTEGER
 		do
 			create a_out_c_string.make (a_out)
-			c_git_oid_fmt (a_out_c_string.item, id.item)
+			l_ret := c_git_oid_fmt (a_out_c_string.item, id.item)
 			a_out.from_c (a_out_c_string.item)
 		end
 

@@ -4,7 +4,7 @@ note
 
 	generator: "Eiffel Wrapper Generator"
 
-class GIT_CRED_USERPASS_PLAINTEXT_STRUCT_API
+class GIT_CREDENTIAL_USERPASS_PAYLOAD_STRUCT_API
 
 inherit
 
@@ -24,30 +24,6 @@ feature -- Measurement
 		end
 
 feature {ANY} -- Member Access
-
-	parent: detachable GIT_CRED_STRUCT_API
-			-- Access member `parent`
-		require
-			exists: exists
-		do
-			if attached c_parent (item) as l_ptr and then not l_ptr.is_default_pointer then
-				create Result.make_by_pointer (l_ptr)
-			end
-		ensure
-			result_void: Result = Void implies c_parent (item) = default_pointer 
-			result_not_void: attached Result as l_result implies l_result.item = c_parent (item) 
-		end
-
-	set_parent (a_value: GIT_CRED_STRUCT_API) 
-			-- Set member `parent`
-		require
-			a_value_not_void: a_value /= Void
-			exists: exists
-		do
-			set_c_parent (item, a_value.item)
-		ensure
-			parent_set: attached parent as l_value implies l_value.item = a_value.item
-		end
 
 	username:  detachable STRING
 			-- Access member `username`
@@ -91,35 +67,13 @@ feature {ANY} -- Member Access
 			set_c_password (item, (create {C_STRING}.make (a_value)).item )
 		end
 
-feature {NONE} -- Implementation wrapper for struct git_cred_userpass_plaintext
+feature {NONE} -- Implementation wrapper for struct struct git_credential_userpass_payload
 
 	sizeof_external: INTEGER 
 		external
 			"C inline use <git2.h>"
 		alias
-			"sizeof(git_cred_userpass_plaintext)"
-		end
-
-	c_parent (an_item: POINTER): POINTER
-		require
-			an_item_not_null: an_item /= default_pointer
-		external
-			"C inline use <git2.h>"
-		alias
-			"[
-				&((git_cred_userpass_plaintext*)$an_item)->parent
-			]"
-		end
-
-	set_c_parent (an_item: POINTER; a_value: POINTER) 
-		require
-			an_item_not_null: an_item /= default_pointer
-		external
-			"C inline use <git2.h>"
-		alias
-			"[
-				((git_cred_userpass_plaintext*)$an_item)->parent =  *(git_cred*)$a_value
-			]"
+			"sizeof(struct git_credential_userpass_payload)"
 		end
 
 	c_username (an_item: POINTER): POINTER
@@ -129,7 +83,7 @@ feature {NONE} -- Implementation wrapper for struct git_cred_userpass_plaintext
 			"C inline use <git2.h>"
 		alias
 			"[
-				((git_cred_userpass_plaintext*)$an_item)->username
+				((struct git_credential_userpass_payload*)$an_item)->username
 			]"
 		end
 
@@ -140,7 +94,7 @@ feature {NONE} -- Implementation wrapper for struct git_cred_userpass_plaintext
 			"C inline use <git2.h>"
 		alias
 			"[
-				((git_cred_userpass_plaintext*)$an_item)->username =  (char*)$a_value
+				((struct git_credential_userpass_payload*)$an_item)->username =  (char const*)$a_value
 			]"
 		ensure
 			username_set: a_value = c_username (an_item)
@@ -153,7 +107,7 @@ feature {NONE} -- Implementation wrapper for struct git_cred_userpass_plaintext
 			"C inline use <git2.h>"
 		alias
 			"[
-				((git_cred_userpass_plaintext*)$an_item)->password
+				((struct git_credential_userpass_payload*)$an_item)->password
 			]"
 		end
 
@@ -164,7 +118,7 @@ feature {NONE} -- Implementation wrapper for struct git_cred_userpass_plaintext
 			"C inline use <git2.h>"
 		alias
 			"[
-				((git_cred_userpass_plaintext*)$an_item)->password =  (char*)$a_value
+				((struct git_credential_userpass_payload*)$an_item)->password =  (char const*)$a_value
 			]"
 		ensure
 			password_set: a_value = c_password (an_item)

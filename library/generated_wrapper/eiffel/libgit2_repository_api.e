@@ -68,9 +68,9 @@ feature -- Access
 			Result := c_git_repository_init (a_out.item, path_c_string.item, is_bare)
 		end
 
-	git_repository_init_init_options (opts: GIT_REPOSITORY_INIT_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
+	git_repository_init_options_init (opts: GIT_REPOSITORY_INIT_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
-			Result := c_git_repository_init_init_options (opts.item, version)
+			Result := c_git_repository_init_options_init (opts.item, version)
 		end
 
 	git_repository_init_ext (a_out: GIT_REPOSITORY_STRUCT_API; repo_path: STRING; opts: GIT_REPOSITORY_INIT_OPTIONS_STRUCT_API): INTEGER 
@@ -276,6 +276,11 @@ feature -- Access
 			Result := c_git_repository_set_ident (repo.item, name_c_string.item, email_c_string.item)
 		end
 
+	git_repository_init_init_options (opts: GIT_REPOSITORY_INIT_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
+		do
+			Result := c_git_repository_init_init_options (opts.item, version)
+		end
+
 feature -- Externals
 
 	c_git_repository_open (a_out: POINTER; path: POINTER): INTEGER
@@ -350,12 +355,12 @@ feature -- Externals
 			]"
 		end
 
-	c_git_repository_init_init_options (opts: POINTER; version: INTEGER): INTEGER
+	c_git_repository_init_options_init (opts: POINTER; version: INTEGER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
-				return git_repository_init_init_options ((git_repository_init_options*)$opts, (unsigned int)$version);
+				return git_repository_init_options_init ((git_repository_init_options*)$opts, (unsigned int)$version);
 			]"
 		end
 
@@ -671,6 +676,15 @@ feature -- Externals
 		alias
 			"[
 				return git_repository_set_ident ((git_repository*)$repo, (char const*)$name, (char const*)$email);
+			]"
+		end
+
+	c_git_repository_init_init_options (opts: POINTER; version: INTEGER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_repository_init_init_options ((git_repository_init_options*)$opts, (unsigned int)$version);
 			]"
 		end
 

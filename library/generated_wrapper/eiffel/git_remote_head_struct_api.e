@@ -45,17 +45,14 @@ feature {ANY} -- Member Access
 			a_local_set: a_value = a_local
 		end
 
-	oid: detachable GIT_OID_STRUCT_API
+	oid: GIT_OID_STRUCT_API
 			-- Access member `oid`
 		require
 			exists: exists
 		do
-			if attached c_oid (item) as l_ptr and then not l_ptr.is_default_pointer then
-				create Result.make_by_pointer (l_ptr)
-			end
+			create Result.make_by_pointer ( c_oid(item) )
 		ensure
-			result_void: Result = Void implies c_oid (item) = default_pointer 
-			result_not_void: attached Result as l_result implies l_result.item = c_oid (item) 
+			result_not_void: Result.item = c_oid (item) 
 		end
 
 	set_oid (a_value: GIT_OID_STRUCT_API) 
@@ -66,20 +63,17 @@ feature {ANY} -- Member Access
 		do
 			set_c_oid (item, a_value.item)
 		ensure
-			oid_set: attached oid as l_value implies l_value.item = a_value.item
+			oid_set: oid.item = a_value.item
 		end
 
-	loid: detachable GIT_OID_STRUCT_API
+	loid: GIT_OID_STRUCT_API
 			-- Access member `loid`
 		require
 			exists: exists
 		do
-			if attached c_loid (item) as l_ptr and then not l_ptr.is_default_pointer then
-				create Result.make_by_pointer (l_ptr)
-			end
+			create Result.make_by_pointer ( c_loid(item) )
 		ensure
-			result_void: Result = Void implies c_loid (item) = default_pointer 
-			result_not_void: attached Result as l_result implies l_result.item = c_loid (item) 
+			result_not_void: Result.item = c_loid (item) 
 		end
 
 	set_loid (a_value: GIT_OID_STRUCT_API) 
@@ -90,7 +84,7 @@ feature {ANY} -- Member Access
 		do
 			set_c_loid (item, a_value.item)
 		ensure
-			loid_set: attached loid as l_value implies l_value.item = a_value.item
+			loid_set: loid.item = a_value.item
 		end
 
 	name:  detachable STRING

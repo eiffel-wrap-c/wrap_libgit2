@@ -9,18 +9,60 @@ class EWG_LIBGIT2_CALLBACK_C_GLUE_CODE_FUNCTIONS_API
 
 feature -- Access
 
-	get_git_index_matched_path_cb_stub: POINTER
+	set_git_index_matched_path_cb_object (a_class: POINTER) 
+		do
+			c_set_git_index_matched_path_cb_object (a_class)
+		end
+
+	release_git_index_matched_path_cb_object
 		external
 			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
 		alias
 			"[
-				return get_git_index_matched_path_cb_stub ();
+				release_git_index_matched_path_cb_object ();
 			]"
 		end
 
-	set_git_index_matched_path_cb_entry (a_class: GIT_INDEX_MATCHED_PATH_CB_DISPATCHER; a_feature: POINTER) 
+	get_git_index_matched_path_cb_stub_1: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_index_matched_path_cb_stub_1 ();
+			]"
+		end
+
+	get_git_index_matched_path_cb_stub_2: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_index_matched_path_cb_stub_2 ();
+			]"
+		end
+
+	get_git_index_matched_path_cb_stub_3: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_index_matched_path_cb_stub_3 ();
+			]"
+		end
+
+	set_git_index_matched_path_cb_entry_1 (a_feature: POINTER) 
 		do
-			c_set_git_index_matched_path_cb_entry (a_class, a_feature)
+			c_set_git_index_matched_path_cb_entry_1 (a_feature)
+		end
+
+	set_git_index_matched_path_cb_entry_2 (a_feature: POINTER) 
+		do
+			c_set_git_index_matched_path_cb_entry_2 (a_feature)
+		end
+
+	set_git_index_matched_path_cb_entry_3 (a_feature: POINTER) 
+		do
+			c_set_git_index_matched_path_cb_entry_3 (a_feature)
 		end
 
 	call_git_index_matched_path_cb (a_function: POINTER; path: STRING; matched_pathspec: STRING; payload: POINTER): INTEGER 
@@ -33,18 +75,60 @@ feature -- Access
 			Result := c_call_git_index_matched_path_cb (a_function, path_c_string.item, matched_pathspec_c_string.item, payload)
 		end
 
-	get_git_status_cb_stub: POINTER
+	set_git_status_cb_object (a_class: POINTER) 
+		do
+			c_set_git_status_cb_object (a_class)
+		end
+
+	release_git_status_cb_object
 		external
 			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
 		alias
 			"[
-				return get_git_status_cb_stub ();
+				release_git_status_cb_object ();
 			]"
 		end
 
-	set_git_status_cb_entry (a_class: GIT_STATUS_CB_DISPATCHER; a_feature: POINTER) 
+	get_git_status_cb_stub_1: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_status_cb_stub_1 ();
+			]"
+		end
+
+	get_git_status_cb_stub_2: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_status_cb_stub_2 ();
+			]"
+		end
+
+	get_git_status_cb_stub_3: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_status_cb_stub_3 ();
+			]"
+		end
+
+	set_git_status_cb_entry_1 (a_feature: POINTER) 
 		do
-			c_set_git_status_cb_entry (a_class, a_feature)
+			c_set_git_status_cb_entry_1 (a_feature)
+		end
+
+	set_git_status_cb_entry_2 (a_feature: POINTER) 
+		do
+			c_set_git_status_cb_entry_2 (a_feature)
+		end
+
+	set_git_status_cb_entry_3 (a_feature: POINTER) 
+		do
+			c_set_git_status_cb_entry_3 (a_feature)
 		end
 
 	call_git_status_cb (a_function: POINTER; path: STRING; status_flags: INTEGER; payload: POINTER): INTEGER 
@@ -55,18 +139,60 @@ feature -- Access
 			Result := c_call_git_status_cb (a_function, path_c_string.item, status_flags, payload)
 		end
 
-	get_git_submodule_cb_stub: POINTER
+	set_git_submodule_cb_object (a_class: POINTER) 
+		do
+			c_set_git_submodule_cb_object (a_class)
+		end
+
+	release_git_submodule_cb_object
 		external
 			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
 		alias
 			"[
-				return get_git_submodule_cb_stub ();
+				release_git_submodule_cb_object ();
 			]"
 		end
 
-	set_git_submodule_cb_entry (a_class: GIT_SUBMODULE_CB_DISPATCHER; a_feature: POINTER) 
+	get_git_submodule_cb_stub_1: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_submodule_cb_stub_1 ();
+			]"
+		end
+
+	get_git_submodule_cb_stub_2: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_submodule_cb_stub_2 ();
+			]"
+		end
+
+	get_git_submodule_cb_stub_3: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_submodule_cb_stub_3 ();
+			]"
+		end
+
+	set_git_submodule_cb_entry_1 (a_feature: POINTER) 
 		do
-			c_set_git_submodule_cb_entry (a_class, a_feature)
+			c_set_git_submodule_cb_entry_1 (a_feature)
+		end
+
+	set_git_submodule_cb_entry_2 (a_feature: POINTER) 
+		do
+			c_set_git_submodule_cb_entry_2 (a_feature)
+		end
+
+	set_git_submodule_cb_entry_3 (a_feature: POINTER) 
+		do
+			c_set_git_submodule_cb_entry_3 (a_feature)
 		end
 
 	call_git_submodule_cb (a_function: POINTER; sm: GIT_SUBMODULE_STRUCT_API; name: STRING; payload: POINTER): INTEGER 
@@ -77,18 +203,60 @@ feature -- Access
 			Result := c_call_git_submodule_cb (a_function, sm.item, name_c_string.item, payload)
 		end
 
-	get_git_tag_foreach_cb_stub: POINTER
+	set_git_tag_foreach_cb_object (a_class: POINTER) 
+		do
+			c_set_git_tag_foreach_cb_object (a_class)
+		end
+
+	release_git_tag_foreach_cb_object
 		external
 			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
 		alias
 			"[
-				return get_git_tag_foreach_cb_stub ();
+				release_git_tag_foreach_cb_object ();
 			]"
 		end
 
-	set_git_tag_foreach_cb_entry (a_class: GIT_TAG_FOREACH_CB_DISPATCHER; a_feature: POINTER) 
+	get_git_tag_foreach_cb_stub_1: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_tag_foreach_cb_stub_1 ();
+			]"
+		end
+
+	get_git_tag_foreach_cb_stub_2: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_tag_foreach_cb_stub_2 ();
+			]"
+		end
+
+	get_git_tag_foreach_cb_stub_3: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_tag_foreach_cb_stub_3 ();
+			]"
+		end
+
+	set_git_tag_foreach_cb_entry_1 (a_feature: POINTER) 
 		do
-			c_set_git_tag_foreach_cb_entry (a_class, a_feature)
+			c_set_git_tag_foreach_cb_entry_1 (a_feature)
+		end
+
+	set_git_tag_foreach_cb_entry_2 (a_feature: POINTER) 
+		do
+			c_set_git_tag_foreach_cb_entry_2 (a_feature)
+		end
+
+	set_git_tag_foreach_cb_entry_3 (a_feature: POINTER) 
+		do
+			c_set_git_tag_foreach_cb_entry_3 (a_feature)
 		end
 
 	call_git_tag_foreach_cb (a_function: POINTER; name: STRING; oid: GIT_OID_STRUCT_API; payload: POINTER): INTEGER 
@@ -99,18 +267,60 @@ feature -- Access
 			Result := c_call_git_tag_foreach_cb (a_function, name_c_string.item, oid.item, payload)
 		end
 
-	get_git_checkout_progress_cb_stub: POINTER
+	set_git_checkout_progress_cb_object (a_class: POINTER) 
+		do
+			c_set_git_checkout_progress_cb_object (a_class)
+		end
+
+	release_git_checkout_progress_cb_object
 		external
 			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
 		alias
 			"[
-				return get_git_checkout_progress_cb_stub ();
+				release_git_checkout_progress_cb_object ();
 			]"
 		end
 
-	set_git_checkout_progress_cb_entry (a_class: GIT_CHECKOUT_PROGRESS_CB_DISPATCHER; a_feature: POINTER) 
+	get_git_checkout_progress_cb_stub_1: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_checkout_progress_cb_stub_1 ();
+			]"
+		end
+
+	get_git_checkout_progress_cb_stub_2: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_checkout_progress_cb_stub_2 ();
+			]"
+		end
+
+	get_git_checkout_progress_cb_stub_3: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_checkout_progress_cb_stub_3 ();
+			]"
+		end
+
+	set_git_checkout_progress_cb_entry_1 (a_feature: POINTER) 
 		do
-			c_set_git_checkout_progress_cb_entry (a_class, a_feature)
+			c_set_git_checkout_progress_cb_entry_1 (a_feature)
+		end
+
+	set_git_checkout_progress_cb_entry_2 (a_feature: POINTER) 
+		do
+			c_set_git_checkout_progress_cb_entry_2 (a_feature)
+		end
+
+	set_git_checkout_progress_cb_entry_3 (a_feature: POINTER) 
+		do
+			c_set_git_checkout_progress_cb_entry_3 (a_feature)
 		end
 
 	call_git_checkout_progress_cb (a_function: POINTER; path: STRING; completed_steps: INTEGER; total_steps: INTEGER; payload: POINTER) 
@@ -121,18 +331,60 @@ feature -- Access
 			c_call_git_checkout_progress_cb (a_function, path_c_string.item, completed_steps, total_steps, payload)
 		end
 
-	get_git_checkout_perfdata_cb_stub: POINTER
+	set_git_checkout_perfdata_cb_object (a_class: POINTER) 
+		do
+			c_set_git_checkout_perfdata_cb_object (a_class)
+		end
+
+	release_git_checkout_perfdata_cb_object
 		external
 			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
 		alias
 			"[
-				return get_git_checkout_perfdata_cb_stub ();
+				release_git_checkout_perfdata_cb_object ();
 			]"
 		end
 
-	set_git_checkout_perfdata_cb_entry (a_class: GIT_CHECKOUT_PERFDATA_CB_DISPATCHER; a_feature: POINTER) 
+	get_git_checkout_perfdata_cb_stub_1: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_checkout_perfdata_cb_stub_1 ();
+			]"
+		end
+
+	get_git_checkout_perfdata_cb_stub_2: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_checkout_perfdata_cb_stub_2 ();
+			]"
+		end
+
+	get_git_checkout_perfdata_cb_stub_3: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_checkout_perfdata_cb_stub_3 ();
+			]"
+		end
+
+	set_git_checkout_perfdata_cb_entry_1 (a_feature: POINTER) 
 		do
-			c_set_git_checkout_perfdata_cb_entry (a_class, a_feature)
+			c_set_git_checkout_perfdata_cb_entry_1 (a_feature)
+		end
+
+	set_git_checkout_perfdata_cb_entry_2 (a_feature: POINTER) 
+		do
+			c_set_git_checkout_perfdata_cb_entry_2 (a_feature)
+		end
+
+	set_git_checkout_perfdata_cb_entry_3 (a_feature: POINTER) 
+		do
+			c_set_git_checkout_perfdata_cb_entry_3 (a_feature)
 		end
 
 	call_git_checkout_perfdata_cb (a_function: POINTER; perfdata: GIT_CHECKOUT_PERFDATA_STRUCT_API; payload: POINTER) 
@@ -140,38 +392,232 @@ feature -- Access
 			c_call_git_checkout_perfdata_cb (a_function, perfdata.item, payload)
 		end
 
-	get_git_cred_acquire_cb_stub: POINTER
+	set_git_indexer_progress_cb_object (a_class: POINTER) 
+		do
+			c_set_git_indexer_progress_cb_object (a_class)
+		end
+
+	release_git_indexer_progress_cb_object
 		external
 			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
 		alias
 			"[
-				return get_git_cred_acquire_cb_stub ();
+				release_git_indexer_progress_cb_object ();
 			]"
 		end
 
-	set_git_cred_acquire_cb_entry (a_class: GIT_CRED_ACQUIRE_CB_DISPATCHER; a_feature: POINTER) 
-		do
-			c_set_git_cred_acquire_cb_entry (a_class, a_feature)
+	get_git_indexer_progress_cb_stub_1: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_indexer_progress_cb_stub_1 ();
+			]"
 		end
 
-	call_git_cred_acquire_cb (a_function: POINTER; cred: GIT_CRED_STRUCT_API; url: STRING; username_from_url: STRING; allowed_types: INTEGER; payload: POINTER): INTEGER 
+	get_git_indexer_progress_cb_stub_2: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_indexer_progress_cb_stub_2 ();
+			]"
+		end
+
+	get_git_indexer_progress_cb_stub_3: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_indexer_progress_cb_stub_3 ();
+			]"
+		end
+
+	set_git_indexer_progress_cb_entry_1 (a_feature: POINTER) 
+		do
+			c_set_git_indexer_progress_cb_entry_1 (a_feature)
+		end
+
+	set_git_indexer_progress_cb_entry_2 (a_feature: POINTER) 
+		do
+			c_set_git_indexer_progress_cb_entry_2 (a_feature)
+		end
+
+	set_git_indexer_progress_cb_entry_3 (a_feature: POINTER) 
+		do
+			c_set_git_indexer_progress_cb_entry_3 (a_feature)
+		end
+
+	call_git_indexer_progress_cb (a_function: POINTER; stats: GIT_INDEXER_PROGRESS_STRUCT_API; payload: POINTER): INTEGER 
+		do
+			Result := c_call_git_indexer_progress_cb (a_function, stats.item, payload)
+		end
+
+	set_git_transport_message_cb_object (a_class: POINTER) 
+		do
+			c_set_git_transport_message_cb_object (a_class)
+		end
+
+	release_git_transport_message_cb_object
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				release_git_transport_message_cb_object ();
+			]"
+		end
+
+	get_git_transport_message_cb_stub_1: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_transport_message_cb_stub_1 ();
+			]"
+		end
+
+	get_git_transport_message_cb_stub_2: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_transport_message_cb_stub_2 ();
+			]"
+		end
+
+	get_git_transport_message_cb_stub_3: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_transport_message_cb_stub_3 ();
+			]"
+		end
+
+	set_git_transport_message_cb_entry_1 (a_feature: POINTER) 
+		do
+			c_set_git_transport_message_cb_entry_1 (a_feature)
+		end
+
+	set_git_transport_message_cb_entry_2 (a_feature: POINTER) 
+		do
+			c_set_git_transport_message_cb_entry_2 (a_feature)
+		end
+
+	set_git_transport_message_cb_entry_3 (a_feature: POINTER) 
+		do
+			c_set_git_transport_message_cb_entry_3 (a_feature)
+		end
+
+	call_git_transport_message_cb (a_function: POINTER; str: STRING; len: INTEGER; payload: POINTER): INTEGER 
+		local
+			str_c_string: C_STRING
+		do
+			create str_c_string.make (str)
+			Result := c_call_git_transport_message_cb (a_function, str_c_string.item, len, payload)
+		end
+
+	set_git_credential_acquire_cb_object (a_class: POINTER) 
+		do
+			c_set_git_credential_acquire_cb_object (a_class)
+		end
+
+	release_git_credential_acquire_cb_object
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				release_git_credential_acquire_cb_object ();
+			]"
+		end
+
+	get_git_credential_acquire_cb_stub_1: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_credential_acquire_cb_stub_1 ();
+			]"
+		end
+
+	get_git_credential_acquire_cb_stub_2: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_credential_acquire_cb_stub_2 ();
+			]"
+		end
+
+	get_git_credential_acquire_cb_stub_3: POINTER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return get_git_credential_acquire_cb_stub_3 ();
+			]"
+		end
+
+	set_git_credential_acquire_cb_entry_1 (a_feature: POINTER) 
+		do
+			c_set_git_credential_acquire_cb_entry_1 (a_feature)
+		end
+
+	set_git_credential_acquire_cb_entry_2 (a_feature: POINTER) 
+		do
+			c_set_git_credential_acquire_cb_entry_2 (a_feature)
+		end
+
+	set_git_credential_acquire_cb_entry_3 (a_feature: POINTER) 
+		do
+			c_set_git_credential_acquire_cb_entry_3 (a_feature)
+		end
+
+	call_git_credential_acquire_cb (a_function: POINTER; a_out: GIT_CREDENTIAL_STRUCT_API; url: STRING; username_from_url: STRING; allowed_types: INTEGER; payload: POINTER): INTEGER 
 		local
 			url_c_string: C_STRING
 			username_from_url_c_string: C_STRING
 		do
 			create url_c_string.make (url)
 			create username_from_url_c_string.make (username_from_url)
-			Result := c_call_git_cred_acquire_cb (a_function, cred.item, url_c_string.item, username_from_url_c_string.item, allowed_types, payload)
+			Result := c_call_git_credential_acquire_cb (a_function, a_out.item, url_c_string.item, username_from_url_c_string.item, allowed_types, payload)
 		end
 
 feature -- Externals
 
-	c_set_git_index_matched_path_cb_entry (a_class: GIT_INDEX_MATCHED_PATH_CB_DISPATCHER; a_feature: POINTER)
+	c_set_git_index_matched_path_cb_object (a_class: POINTER)
 		external
 			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
 		alias
 			"[
-				set_git_index_matched_path_cb_entry ((void*)$a_class, (void*)$a_feature);
+				set_git_index_matched_path_cb_object ((void*)$a_class);
+			]"
+		end
+
+	c_set_git_index_matched_path_cb_entry_1 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_index_matched_path_cb_entry_1 ((void*)$a_feature);
+			]"
+		end
+
+	c_set_git_index_matched_path_cb_entry_2 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_index_matched_path_cb_entry_2 ((void*)$a_feature);
+			]"
+		end
+
+	c_set_git_index_matched_path_cb_entry_3 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_index_matched_path_cb_entry_3 ((void*)$a_feature);
 			]"
 		end
 
@@ -184,12 +630,39 @@ feature -- Externals
 			]"
 		end
 
-	c_set_git_status_cb_entry (a_class: GIT_STATUS_CB_DISPATCHER; a_feature: POINTER)
+	c_set_git_status_cb_object (a_class: POINTER)
 		external
 			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
 		alias
 			"[
-				set_git_status_cb_entry ((void*)$a_class, (void*)$a_feature);
+				set_git_status_cb_object ((void*)$a_class);
+			]"
+		end
+
+	c_set_git_status_cb_entry_1 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_status_cb_entry_1 ((void*)$a_feature);
+			]"
+		end
+
+	c_set_git_status_cb_entry_2 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_status_cb_entry_2 ((void*)$a_feature);
+			]"
+		end
+
+	c_set_git_status_cb_entry_3 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_status_cb_entry_3 ((void*)$a_feature);
 			]"
 		end
 
@@ -202,12 +675,39 @@ feature -- Externals
 			]"
 		end
 
-	c_set_git_submodule_cb_entry (a_class: GIT_SUBMODULE_CB_DISPATCHER; a_feature: POINTER)
+	c_set_git_submodule_cb_object (a_class: POINTER)
 		external
 			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
 		alias
 			"[
-				set_git_submodule_cb_entry ((void*)$a_class, (void*)$a_feature);
+				set_git_submodule_cb_object ((void*)$a_class);
+			]"
+		end
+
+	c_set_git_submodule_cb_entry_1 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_submodule_cb_entry_1 ((void*)$a_feature);
+			]"
+		end
+
+	c_set_git_submodule_cb_entry_2 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_submodule_cb_entry_2 ((void*)$a_feature);
+			]"
+		end
+
+	c_set_git_submodule_cb_entry_3 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_submodule_cb_entry_3 ((void*)$a_feature);
 			]"
 		end
 
@@ -220,12 +720,39 @@ feature -- Externals
 			]"
 		end
 
-	c_set_git_tag_foreach_cb_entry (a_class: GIT_TAG_FOREACH_CB_DISPATCHER; a_feature: POINTER)
+	c_set_git_tag_foreach_cb_object (a_class: POINTER)
 		external
 			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
 		alias
 			"[
-				set_git_tag_foreach_cb_entry ((void*)$a_class, (void*)$a_feature);
+				set_git_tag_foreach_cb_object ((void*)$a_class);
+			]"
+		end
+
+	c_set_git_tag_foreach_cb_entry_1 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_tag_foreach_cb_entry_1 ((void*)$a_feature);
+			]"
+		end
+
+	c_set_git_tag_foreach_cb_entry_2 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_tag_foreach_cb_entry_2 ((void*)$a_feature);
+			]"
+		end
+
+	c_set_git_tag_foreach_cb_entry_3 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_tag_foreach_cb_entry_3 ((void*)$a_feature);
 			]"
 		end
 
@@ -238,12 +765,39 @@ feature -- Externals
 			]"
 		end
 
-	c_set_git_checkout_progress_cb_entry (a_class: GIT_CHECKOUT_PROGRESS_CB_DISPATCHER; a_feature: POINTER)
+	c_set_git_checkout_progress_cb_object (a_class: POINTER)
 		external
 			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
 		alias
 			"[
-				set_git_checkout_progress_cb_entry ((void*)$a_class, (void*)$a_feature);
+				set_git_checkout_progress_cb_object ((void*)$a_class);
+			]"
+		end
+
+	c_set_git_checkout_progress_cb_entry_1 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_checkout_progress_cb_entry_1 ((void*)$a_feature);
+			]"
+		end
+
+	c_set_git_checkout_progress_cb_entry_2 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_checkout_progress_cb_entry_2 ((void*)$a_feature);
+			]"
+		end
+
+	c_set_git_checkout_progress_cb_entry_3 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_checkout_progress_cb_entry_3 ((void*)$a_feature);
 			]"
 		end
 
@@ -256,12 +810,39 @@ feature -- Externals
 			]"
 		end
 
-	c_set_git_checkout_perfdata_cb_entry (a_class: GIT_CHECKOUT_PERFDATA_CB_DISPATCHER; a_feature: POINTER)
+	c_set_git_checkout_perfdata_cb_object (a_class: POINTER)
 		external
 			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
 		alias
 			"[
-				set_git_checkout_perfdata_cb_entry ((void*)$a_class, (void*)$a_feature);
+				set_git_checkout_perfdata_cb_object ((void*)$a_class);
+			]"
+		end
+
+	c_set_git_checkout_perfdata_cb_entry_1 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_checkout_perfdata_cb_entry_1 ((void*)$a_feature);
+			]"
+		end
+
+	c_set_git_checkout_perfdata_cb_entry_2 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_checkout_perfdata_cb_entry_2 ((void*)$a_feature);
+			]"
+		end
+
+	c_set_git_checkout_perfdata_cb_entry_3 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_checkout_perfdata_cb_entry_3 ((void*)$a_feature);
 			]"
 		end
 
@@ -274,21 +855,138 @@ feature -- Externals
 			]"
 		end
 
-	c_set_git_cred_acquire_cb_entry (a_class: GIT_CRED_ACQUIRE_CB_DISPATCHER; a_feature: POINTER)
+	c_set_git_indexer_progress_cb_object (a_class: POINTER)
 		external
 			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
 		alias
 			"[
-				set_git_cred_acquire_cb_entry ((void*)$a_class, (void*)$a_feature);
+				set_git_indexer_progress_cb_object ((void*)$a_class);
 			]"
 		end
 
-	c_call_git_cred_acquire_cb (a_function: POINTER; cred: POINTER; url: POINTER; username_from_url: POINTER; allowed_types: INTEGER; payload: POINTER): INTEGER
+	c_set_git_indexer_progress_cb_entry_1 (a_feature: POINTER)
 		external
 			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
 		alias
 			"[
-				return call_git_cred_acquire_cb ((void*)$a_function, (git_cred**)$cred, (char const*)$url, (char const*)$username_from_url, (unsigned int)$allowed_types, (void*)$payload);
+				set_git_indexer_progress_cb_entry_1 ((void*)$a_feature);
+			]"
+		end
+
+	c_set_git_indexer_progress_cb_entry_2 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_indexer_progress_cb_entry_2 ((void*)$a_feature);
+			]"
+		end
+
+	c_set_git_indexer_progress_cb_entry_3 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_indexer_progress_cb_entry_3 ((void*)$a_feature);
+			]"
+		end
+
+	c_call_git_indexer_progress_cb (a_function: POINTER; stats: POINTER; payload: POINTER): INTEGER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return call_git_indexer_progress_cb ((void*)$a_function, (git_indexer_progress const*)$stats, (void*)$payload);
+			]"
+		end
+
+	c_set_git_transport_message_cb_object (a_class: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_transport_message_cb_object ((void*)$a_class);
+			]"
+		end
+
+	c_set_git_transport_message_cb_entry_1 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_transport_message_cb_entry_1 ((void*)$a_feature);
+			]"
+		end
+
+	c_set_git_transport_message_cb_entry_2 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_transport_message_cb_entry_2 ((void*)$a_feature);
+			]"
+		end
+
+	c_set_git_transport_message_cb_entry_3 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_transport_message_cb_entry_3 ((void*)$a_feature);
+			]"
+		end
+
+	c_call_git_transport_message_cb (a_function: POINTER; str: POINTER; len: INTEGER; payload: POINTER): INTEGER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return call_git_transport_message_cb ((void*)$a_function, (char const*)$str, (int)$len, (void*)$payload);
+			]"
+		end
+
+	c_set_git_credential_acquire_cb_object (a_class: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_credential_acquire_cb_object ((void*)$a_class);
+			]"
+		end
+
+	c_set_git_credential_acquire_cb_entry_1 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_credential_acquire_cb_entry_1 ((void*)$a_feature);
+			]"
+		end
+
+	c_set_git_credential_acquire_cb_entry_2 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_credential_acquire_cb_entry_2 ((void*)$a_feature);
+			]"
+		end
+
+	c_set_git_credential_acquire_cb_entry_3 (a_feature: POINTER)
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				set_git_credential_acquire_cb_entry_3 ((void*)$a_feature);
+			]"
+		end
+
+	c_call_git_credential_acquire_cb (a_function: POINTER; a_out: POINTER; url: POINTER; username_from_url: POINTER; allowed_types: INTEGER; payload: POINTER): INTEGER
+		external
+			"C inline use <ewg_libgit2_callback_c_glue_code.h>"
+		alias
+			"[
+				return call_git_credential_acquire_cb ((void*)$a_function, (git_credential**)$a_out, (char const*)$url, (char const*)$username_from_url, (unsigned int)$allowed_types, (void*)$payload);
 			]"
 		end
 

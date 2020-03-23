@@ -245,17 +245,14 @@ feature {ANY} -- Member Access
 			progress_payload_set: a_value = progress_payload
 		end
 
-	paths: detachable GIT_STRARRAY_STRUCT_API
+	paths: GIT_STRARRAY_STRUCT_API
 			-- Access member `paths`
 		require
 			exists: exists
 		do
-			if attached c_paths (item) as l_ptr and then not l_ptr.is_default_pointer then
-				create Result.make_by_pointer (l_ptr)
-			end
+			create Result.make_by_pointer ( c_paths(item) )
 		ensure
-			result_void: Result = Void implies c_paths (item) = default_pointer 
-			result_not_void: attached Result as l_result implies l_result.item = c_paths (item) 
+			result_not_void: Result.item = c_paths (item) 
 		end
 
 	set_paths (a_value: GIT_STRARRAY_STRUCT_API) 
@@ -266,7 +263,7 @@ feature {ANY} -- Member Access
 		do
 			set_c_paths (item, a_value.item)
 		ensure
-			paths_set: attached paths as l_value implies l_value.item = a_value.item
+			paths_set: paths.item = a_value.item
 		end
 
 	baseline: detachable GIT_TREE_STRUCT_API 

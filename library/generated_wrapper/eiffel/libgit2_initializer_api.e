@@ -9,9 +9,9 @@ class LIBGIT2_INITIALIZER_API
 
 feature -- Access
 
-	git_libgit2_version (major: POINTER; minor: POINTER; rev: POINTER) 
+	git_libgit2_version (major: POINTER; minor: POINTER; rev: POINTER): INTEGER 
 		do
-			c_git_libgit2_version (major, minor, rev)
+			Result := c_git_libgit2_version (major, minor, rev)
 		end
 
 	git_libgit2_features: INTEGER
@@ -52,12 +52,12 @@ feature -- Access
 
 feature -- Externals
 
-	c_git_libgit2_version (major: POINTER; minor: POINTER; rev: POINTER)
+	c_git_libgit2_version (major: POINTER; minor: POINTER; rev: POINTER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
-				git_libgit2_version ((int*)$major, (int*)$minor, (int*)$rev);
+				return git_libgit2_version ((int*)$major, (int*)$minor, (int*)$rev);
 			]"
 		end
 

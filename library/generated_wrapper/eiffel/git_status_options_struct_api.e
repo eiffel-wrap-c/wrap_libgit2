@@ -85,17 +85,14 @@ feature {ANY} -- Member Access
 			flags_set: a_value = flags
 		end
 
-	pathspec: detachable GIT_STRARRAY_STRUCT_API
+	pathspec: GIT_STRARRAY_STRUCT_API
 			-- Access member `pathspec`
 		require
 			exists: exists
 		do
-			if attached c_pathspec (item) as l_ptr and then not l_ptr.is_default_pointer then
-				create Result.make_by_pointer (l_ptr)
-			end
+			create Result.make_by_pointer ( c_pathspec(item) )
 		ensure
-			result_void: Result = Void implies c_pathspec (item) = default_pointer 
-			result_not_void: attached Result as l_result implies l_result.item = c_pathspec (item) 
+			result_not_void: Result.item = c_pathspec (item) 
 		end
 
 	set_pathspec (a_value: GIT_STRARRAY_STRUCT_API) 
@@ -106,7 +103,7 @@ feature {ANY} -- Member Access
 		do
 			set_c_pathspec (item, a_value.item)
 		ensure
-			pathspec_set: attached pathspec as l_value implies l_value.item = a_value.item
+			pathspec_set: pathspec.item = a_value.item
 		end
 
 	baseline: detachable GIT_TREE_STRUCT_API 

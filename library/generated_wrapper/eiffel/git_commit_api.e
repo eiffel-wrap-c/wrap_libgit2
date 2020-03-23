@@ -167,7 +167,7 @@ feature -- Access
 			create update_ref_c_string.make (update_ref)
 			create message_encoding_c_string.make (message_encoding)
 			create message_c_string.make (message)
-			Result := c_git_commit_create (id.item, repo.item, update_ref_c_string.item, author.item, committer.item, message_encoding_c_string.item, message_c_string.item, tree.item, parent_count, parents.item)
+			Result := c_git_commit_create (id.item, repo.item, update_ref_c_string.item, author.item, committer.item, message_encoding_c_string.item, message_c_string.item, tree.item, parent_count, parents)
 		end
 
 	git_commit_create_v (id: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; update_ref: STRING; author: GIT_SIGNATURE_STRUCT_API; committer: GIT_SIGNATURE_STRUCT_API; message_encoding: STRING; message: STRING; tree: GIT_TREE_STRUCT_API; parent_count: INTEGER): INTEGER 
@@ -201,7 +201,7 @@ feature -- Access
 		do
 			create message_encoding_c_string.make (message_encoding)
 			create message_c_string.make (message)
-			Result := c_git_commit_create_buffer (a_out.item, repo.item, author.item, committer.item, message_encoding_c_string.item, message_c_string.item, tree.item, parent_count, parents.item)
+			Result := c_git_commit_create_buffer (a_out.item, repo.item, author.item, committer.item, message_encoding_c_string.item, message_c_string.item, tree.item, parent_count, parents)
 		end
 
 	git_commit_create_with_signature (a_out: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; commit_content: STRING; signature: STRING; signature_field: STRING): INTEGER 

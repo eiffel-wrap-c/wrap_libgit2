@@ -1,6 +1,9 @@
 note
 	description: "[
 			libgit2 "push" example - shows how to git push <remote> <branch>
+			
+			TODO update
+			with https://github.com/libgit2/libgit2/blob/master/tests/online/push.c
 		]"
 
 class APPLICATION
@@ -44,9 +47,8 @@ feature -- Intiialize Repository
 			l_options: GIT_PUSH_OPTIONS_STRUCT_API
 			a_array: GIT_STRARRAY_STRUCT_API
 			callbacks: GIT_REMOTE_CALLBACKS_STRUCT_API
-			callback_dispatcher: GIT_CRED_ACQUIRE_CB_DISPATCHER
-
-		do
+			callback_dispatcher: GIT_CREDENTIAL_ACQUIRE_CB_DISPATCHER
+	do
 			ini := {LIBGIT2_INITIALIZER_API}.git_libgit2_init
 			print ("%N Intializing Libgit2")
 			create repo.make
@@ -72,8 +74,9 @@ feature -- Intiialize Repository
 				{EXCEPTIONS}.die (1)
 			end
 
-			create callback_dispatcher.make (agent cred_acquire_cb )
-			callbacks.set_credentials (callback_dispatcher.c_dispatcher)
+			create callback_dispatcher.make
+			callback_dispatcher.register_callback_1(agent cred_acquire_cb )
+			callbacks.set_credentials (callback_dispatcher.c_dispatcher_1)
 
 				-- connect to remote
 			if git_remote.git_remote_connect (l_remote, {GIT_DIRECTION_ENUM_API}.git_direction_push, callbacks, Void, Void) < 0 then
@@ -130,7 +133,7 @@ feature -- Intiialize Repository
 		local
 			l_user_name: STRING
 			exit: BOOLEAN
-			cred: GIT_CRED_STRUCT_API
+			cred: GIT_CREDENTIAL_STRUCT_API
 			git_cred: GIT_CREDENTIALS_API
 			l_password: STRING
 			l_privkey: STRING
@@ -147,7 +150,7 @@ feature -- Intiialize Repository
 				exit := l_user_name.is_empty
 			end
 
-			if not exit and then a_allowed_types & {GIT_CREDTYPE_T_ENUM_API}.GIT_CREDTYPE_SSH_KEY > 0 then
+			if not exit and then a_allowed_types & {GIT_CREDENTIAL_T_ENUM_API}.git_credential_ssh_key > 0 then
 				print ("%NSSH key:")
 				io.read_line
 				l_privkey := io.last_string.twin
@@ -161,7 +164,7 @@ feature -- Intiialize Repository
 				create git_cred
 				create cred.make_by_pointer (a_cred)
 				Result := git_cred.git_cred_ssh_key_new(cred, l_user_name, l_pubkey, l_privkey, l_password)
-			elseif not exit and then a_allowed_types & {GIT_CREDTYPE_T_ENUM_API}.GIT_CREDTYPE_USERPASS_PLAINTEXT > 0 then
+			elseif not exit and then a_allowed_types & {GIT_CREDENTIAL_T_ENUM_API}.git_credential_userpass_plaintext > 0 then
 				print ("%NPassword:")
 				l_password := read_password
 				exit := l_password.is_empty

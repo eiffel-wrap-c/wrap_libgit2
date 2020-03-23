@@ -80,11 +80,12 @@ feature {NONE} --Initialization
 				show_branch (repo)
 			end
 
-			create callback.make (agent print_submodule)
+			create callback.make
+			callback.register_callback_1(agent print_submodule)
 
 			if options.show_submodule then
 			   -- to be completed.
-			  if  git_ref.git_submodule_foreach (repo, callback.c_dispatcher, $count ) < 0 then
+			  if  git_ref.git_submodule_foreach (repo, callback.c_dispatcher_1, $count ) < 0 then
 			  	print ("%N# Cannot iterate submodules" + options.repodir)
 			  end
 			end

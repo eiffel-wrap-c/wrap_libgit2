@@ -96,7 +96,6 @@ feature -- Access
 			start_path_c_string: C_STRING
 			ceiling_dirs_c_string: C_STRING
 			l_ceiling_ptr: POINTER
-			l_ptr: POINTER
 		do
 			create start_path_c_string.make (start_path)
 			if attached ceiling_dirs then

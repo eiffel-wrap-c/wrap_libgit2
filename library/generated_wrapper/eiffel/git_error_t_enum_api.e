@@ -6,7 +6,7 @@ feature {ANY}
 	is_valid_enum (a_value: INTEGER): BOOLEAN 
 			-- Is `a_value' a valid integer code for this enum ?
 		do
-			Result := a_value = git_error_none or a_value = git_error_nomemory or a_value = git_error_os or a_value = git_error_invalid or a_value = git_error_reference or a_value = git_error_zlib or a_value = git_error_repository or a_value = git_error_config or a_value = git_error_regex or a_value = git_error_odb or a_value = git_error_index or a_value = git_error_object or a_value = git_error_net or a_value = git_error_tag or a_value = git_error_tree or a_value = git_error_indexer or a_value = git_error_ssl or a_value = git_error_submodule or a_value = git_error_thread or a_value = git_error_stash or a_value = git_error_checkout or a_value = git_error_fetchhead or a_value = git_error_merge or a_value = git_error_ssh or a_value = git_error_filter or a_value = git_error_revert or a_value = git_error_callback or a_value = git_error_cherrypick or a_value = git_error_describe or a_value = git_error_rebase or a_value = git_error_filesystem or a_value = git_error_patch or a_value = git_error_worktree or a_value = git_error_sha1
+			Result := a_value = git_error_none or a_value = git_error_nomemory or a_value = git_error_os or a_value = git_error_invalid or a_value = git_error_reference or a_value = git_error_zlib or a_value = git_error_repository or a_value = git_error_config or a_value = git_error_regex or a_value = git_error_odb or a_value = git_error_index or a_value = git_error_object or a_value = git_error_net or a_value = git_error_tag or a_value = git_error_tree or a_value = git_error_indexer or a_value = git_error_ssl or a_value = git_error_submodule or a_value = git_error_thread or a_value = git_error_stash or a_value = git_error_checkout or a_value = git_error_fetchhead or a_value = git_error_merge or a_value = git_error_ssh or a_value = git_error_filter or a_value = git_error_revert or a_value = git_error_callback or a_value = git_error_cherrypick or a_value = git_error_describe or a_value = git_error_rebase or a_value = git_error_filesystem or a_value = git_error_patch or a_value = git_error_worktree or a_value = git_error_sha1 or a_value = git_error_http
 		end
 
 	git_error_none: INTEGER 
@@ -245,6 +245,13 @@ feature {ANY}
 			"C inline use <git2.h>"
 		alias
 			"GIT_ERROR_SHA1"
+		end
+
+	git_error_http: INTEGER 
+		external
+			"C inline use <git2.h>"
+		alias
+			"GIT_ERROR_HTTP"
 		end
 
 end

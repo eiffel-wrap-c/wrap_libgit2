@@ -33,36 +33,36 @@ feature -- Access
 			Result := c_git_oid_fromstrn (a_out.item, str_c_string.item, length)
 		end
 
-	git_oid_fromraw (a_out: GIT_OID_STRUCT_API; raw: STRING) 
+	git_oid_fromraw (a_out: GIT_OID_STRUCT_API; raw: STRING): INTEGER 
 		local
 			raw_c_string: C_STRING
 		do
 			create raw_c_string.make (raw)
-			c_git_oid_fromraw (a_out.item, raw_c_string.item)
+			Result := c_git_oid_fromraw (a_out.item, raw_c_string.item)
 		end
 
-	git_oid_fmt (a_out: STRING; id: GIT_OID_STRUCT_API) 
+	git_oid_fmt (a_out: STRING; id: GIT_OID_STRUCT_API): INTEGER 
 		local
 			a_out_c_string: C_STRING
 		do
 			create a_out_c_string.make (a_out)
-			c_git_oid_fmt (a_out_c_string.item, id.item)
+			Result := c_git_oid_fmt (a_out_c_string.item, id.item)
 		end
 
-	git_oid_nfmt (a_out: STRING; n: INTEGER; id: GIT_OID_STRUCT_API) 
+	git_oid_nfmt (a_out: STRING; n: INTEGER; id: GIT_OID_STRUCT_API): INTEGER 
 		local
 			a_out_c_string: C_STRING
 		do
 			create a_out_c_string.make (a_out)
-			c_git_oid_nfmt (a_out_c_string.item, n, id.item)
+			Result := c_git_oid_nfmt (a_out_c_string.item, n, id.item)
 		end
 
-	git_oid_pathfmt (a_out: STRING; id: GIT_OID_STRUCT_API) 
+	git_oid_pathfmt (a_out: STRING; id: GIT_OID_STRUCT_API): INTEGER 
 		local
 			a_out_c_string: C_STRING
 		do
 			create a_out_c_string.make (a_out)
-			c_git_oid_pathfmt (a_out_c_string.item, id.item)
+			Result := c_git_oid_pathfmt (a_out_c_string.item, id.item)
 		end
 
 	git_oid_tostr_s (oid: GIT_OID_STRUCT_API): POINTER 
@@ -78,9 +78,9 @@ feature -- Access
 			Result := c_git_oid_tostr (a_out_c_string.item, n, id.item)
 		end
 
-	git_oid_cpy (a_out: GIT_OID_STRUCT_API; src: GIT_OID_STRUCT_API) 
+	git_oid_cpy (a_out: GIT_OID_STRUCT_API; src: GIT_OID_STRUCT_API): INTEGER 
 		do
-			c_git_oid_cpy (a_out.item, src.item)
+			Result := c_git_oid_cpy (a_out.item, src.item)
 		end
 
 	git_oid_cmp (a: GIT_OID_STRUCT_API; b: GIT_OID_STRUCT_API): INTEGER 
@@ -114,9 +114,9 @@ feature -- Access
 			Result := c_git_oid_strcmp (id.item, str_c_string.item)
 		end
 
-	git_oid_iszero (id: GIT_OID_STRUCT_API): INTEGER 
+	git_oid_is_zero (id: GIT_OID_STRUCT_API): INTEGER 
 		do
-			Result := c_git_oid_iszero (id.item)
+			Result := c_git_oid_is_zero (id.item)
 		end
 
 	git_oid_shorten_new (min_length: INTEGER): POINTER
@@ -139,6 +139,11 @@ feature -- Access
 	git_oid_shorten_free (os: GIT_OID_SHORTEN_STRUCT_API) 
 		do
 			c_git_oid_shorten_free (os.item)
+		end
+
+	git_oid_iszero (id: GIT_OID_STRUCT_API): INTEGER 
+		do
+			Result := c_git_oid_iszero (id.item)
 		end
 
 feature -- Externals
@@ -170,39 +175,39 @@ feature -- Externals
 			]"
 		end
 
-	c_git_oid_fromraw (a_out: POINTER; raw: POINTER)
+	c_git_oid_fromraw (a_out: POINTER; raw: POINTER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
-				git_oid_fromraw ((git_oid*)$a_out, (unsigned char const*)$raw);
+				return git_oid_fromraw ((git_oid*)$a_out, (unsigned char const*)$raw);
 			]"
 		end
 
-	c_git_oid_fmt (a_out: POINTER; id: POINTER)
+	c_git_oid_fmt (a_out: POINTER; id: POINTER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
-				git_oid_fmt ((char*)$a_out, (git_oid const*)$id);
+				return git_oid_fmt ((char*)$a_out, (git_oid const*)$id);
 			]"
 		end
 
-	c_git_oid_nfmt (a_out: POINTER; n: INTEGER; id: POINTER)
+	c_git_oid_nfmt (a_out: POINTER; n: INTEGER; id: POINTER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
-				git_oid_nfmt ((char*)$a_out, (size_t)$n, (git_oid const*)$id);
+				return git_oid_nfmt ((char*)$a_out, (size_t)$n, (git_oid const*)$id);
 			]"
 		end
 
-	c_git_oid_pathfmt (a_out: POINTER; id: POINTER)
+	c_git_oid_pathfmt (a_out: POINTER; id: POINTER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
-				git_oid_pathfmt ((char*)$a_out, (git_oid const*)$id);
+				return git_oid_pathfmt ((char*)$a_out, (git_oid const*)$id);
 			]"
 		end
 
@@ -224,12 +229,12 @@ feature -- Externals
 			]"
 		end
 
-	c_git_oid_cpy (a_out: POINTER; src: POINTER)
+	c_git_oid_cpy (a_out: POINTER; src: POINTER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
-				git_oid_cpy ((git_oid*)$a_out, (git_oid const*)$src);
+				return git_oid_cpy ((git_oid*)$a_out, (git_oid const*)$src);
 			]"
 		end
 
@@ -278,12 +283,12 @@ feature -- Externals
 			]"
 		end
 
-	c_git_oid_iszero (id: POINTER): INTEGER
+	c_git_oid_is_zero (id: POINTER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
-				return git_oid_iszero ((git_oid const*)$id);
+				return git_oid_is_zero ((git_oid const*)$id);
 			]"
 		end
 
@@ -302,6 +307,15 @@ feature -- Externals
 		alias
 			"[
 				git_oid_shorten_free ((git_oid_shorten*)$os);
+			]"
+		end
+
+	c_git_oid_iszero (id: POINTER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_oid_iszero ((git_oid const*)$id);
 			]"
 		end
 

@@ -9,6 +9,14 @@ class GIT_TAG_API
 
 feature -- Access
 
+	git_tag_create_frombuffer (oid: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; buffer: STRING; force: INTEGER): INTEGER 
+		local
+			buffer_c_string: C_STRING
+		do
+			create buffer_c_string.make (buffer)
+			Result := c_git_tag_create_frombuffer (oid.item, repo.item, buffer_c_string.item, force)
+		end
+
 	git_tag_lookup (a_out: GIT_TAG_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; id: GIT_OID_STRUCT_API): INTEGER 
 		do
 			Result := c_git_tag_lookup (a_out.item, repo.item, id.item)
@@ -96,12 +104,12 @@ feature -- Access
 			Result := c_git_tag_annotation_create (oid.item, repo.item, tag_name_c_string.item, target.item, tagger.item, message_c_string.item)
 		end
 
-	git_tag_create_frombuffer (oid: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; buffer: STRING; force: INTEGER): INTEGER 
+	git_tag_create_from_buffer (oid: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; buffer: STRING; force: INTEGER): INTEGER 
 		local
 			buffer_c_string: C_STRING
 		do
 			create buffer_c_string.make (buffer)
-			Result := c_git_tag_create_frombuffer (oid.item, repo.item, buffer_c_string.item, force)
+			Result := c_git_tag_create_from_buffer (oid.item, repo.item, buffer_c_string.item, force)
 		end
 
 	git_tag_create_lightweight (oid: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; tag_name: STRING; target: GIT_OBJECT_STRUCT_API; force: INTEGER): INTEGER 
@@ -149,6 +157,15 @@ feature -- Access
 		end
 
 feature -- Externals
+
+	c_git_tag_create_frombuffer (oid: POINTER; repo: POINTER; buffer: POINTER; force: INTEGER): INTEGER
+		external
+			"C inline use <git2.h>"
+		alias
+			"[
+				return git_tag_create_frombuffer ((git_oid*)$oid, (git_repository*)$repo, (char const*)$buffer, (int)$force);
+			]"
+		end
 
 	c_git_tag_lookup (a_out: POINTER; repo: POINTER; id: POINTER): INTEGER
 		external
@@ -267,12 +284,12 @@ feature -- Externals
 			]"
 		end
 
-	c_git_tag_create_frombuffer (oid: POINTER; repo: POINTER; buffer: POINTER; force: INTEGER): INTEGER
+	c_git_tag_create_from_buffer (oid: POINTER; repo: POINTER; buffer: POINTER; force: INTEGER): INTEGER
 		external
 			"C inline use <git2.h>"
 		alias
 			"[
-				return git_tag_create_frombuffer ((git_oid*)$oid, (git_repository*)$repo, (char const*)$buffer, (int)$force);
+				return git_tag_create_from_buffer ((git_oid*)$oid, (git_repository*)$repo, (char const*)$buffer, (int)$force);
 			]"
 		end
 

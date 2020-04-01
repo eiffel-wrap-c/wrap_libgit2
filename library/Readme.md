@@ -6,6 +6,19 @@ You need to have a binary version of WrapC tool and be able to execute it from t
 Before to regenerate the generated code, remove the folder `generated_wrapper`. If you are using geant, just run `geant clean` in other 
 case remove it manually.
 
+## Using Automated scripts
+Automated scripts will run wrapc with pre and post processing scripts and compiling the C glue code
+needed for the library.
+
+### Windows
+```
+generator.bat
+```
+### Linux
+```
+./generator.sh
+```
+
 ## Using WrapC with geant
 $LIB_PATH is the path to the library folder where you checkout the wrap_libgit2 library.
 
@@ -29,10 +42,12 @@ Go to the $LIB_PATH/library
 $LIB_PATH is the path to the library folder where you checkout the wrap_libgit2 library.
 At the moment the tool require --output-dir and --full-header to be full paths.
   
-### Wrap plplot library  
+### Wrap libgit2 library
+
   ```
-    wrap_c --verbose --output-dir=$LIB_PATH/library/generated_wrapper --full-header=$LIB_PATH/library/C/include/git2.h config.xml
+    wrap_c --verbose --output-dir=$LIB_PATH/library/generated_wrapper --full-header=$LIB_PATH/library/C/include/git2.h --config=$LIB_PATH/library/config.xml
   ```
+
 
 ### Compile the C library
 ```

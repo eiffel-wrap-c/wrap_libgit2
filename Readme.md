@@ -34,7 +34,10 @@ On Linux to install version 0.99.0 you will need to do the following.
 	$ cd build
 	$ cmake ..
 	$ sudo cmake --build . --target install
+
+Rebuild the ldconfig cache using
  
+ 	sudo ldconfig 
  
 Optionally you can use [vckpg](https://github.com/Microsoft/vcpkg), a C++ Library Manager for Windows, Linux, and MacOS.
 

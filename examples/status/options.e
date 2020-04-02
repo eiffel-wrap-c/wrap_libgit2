@@ -11,10 +11,16 @@ create
 
 feature
 	make
+		local
+			status: GIT_STATUS
 		do
 			create status_options.make
-			status_options.set_version ({LIBGIT2_CONSTANTS}.git_status_options_init)
+			create status
+			check
+				success_init: status.git_status_options_init (status_options, 1) = 0
+			end
 			create repodir.make_from_string (".")
+			set_format ({FORMAT_ENUM}.format_short)
 		end
 
 

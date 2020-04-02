@@ -27,7 +27,7 @@
 		
 		<!--  Useful when `pkg-config cflags libgit2` does not return the cflags.-->
 	
-		<external_include location="$ECF_CONFIG_PATH/C/include">
+		<external_include location="/usr/local/include">
 			<condition>
 				<platform excluded_value="windows"/>
 			</condition>
@@ -65,14 +65,13 @@
 				<platform excluded_value="windows"/>
 			</condition>
 		</external_object>
-		<!--
+                <!--
 		<external_object location="`pkg-config --libs libgit2`">
 			<condition>
 				<platform excluded_value="windows"/>
 			</condition>
 		</external_object>
-		-->
-
+		-->	
 		<library name="base" location="$ISE_LIBRARY\library\base\base.ecf"/>
 		<cluster name="src" location=".\" recursive="true">
 			<file_rule>

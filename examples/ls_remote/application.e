@@ -51,9 +51,6 @@ feature -- Intiialize Repository
 
 		do
 			ini := {LIBGIT2_INITIALIZER_API}.git_libgit2_init
-			debug
-				print ("%NIntializing Libgit2")
-			end
 			create repo.make
 
 			if git_repository.git_repository_open (repo, (create {PATH}.make_from_string (path)).out) < 0 then
@@ -85,15 +82,16 @@ feature -- Intiialize Repository
 				-- connect to remote
 			if git_remote.git_remote_connect (l_remote, {GIT_DIRECTION_ENUM_API}.git_direction_fetch, callbacks, Void, Void) < 0 then
 				print ("%NCould not connect to remote repository " + remote)
+				git_remote.git_remote_free (l_remote)
 				{EXCEPTIONS}.die (1)
 			end
-
 			create refs.make (1)
 				-- Get the list of references on the remote and print out
 				-- their name next to what they point to.
 
 			if git_remote.git_remote_ls (refs, l_remote) < 0 then
 				print ("%NCould not get the remote repository's reference advertisement list")
+				git_remote.git_remote_free (l_remote)
 				{EXCEPTIONS}.die (1)
 			end
 
@@ -103,7 +101,7 @@ feature -- Intiialize Repository
 			until
 				refs.after
 			loop
-				create oid.make ({LIBGIT2_CONSTANTS}.GIT_OID_HEXSZ + 1)
+				create oid.make_filled ('%U', {LIBGIT2_CONSTANTS}.GIT_OID_HEXSZ + 1)
 				if attached refs.item_for_iteration.oid as l_oid then
 					git_oid.git_oid_fmt (oid, l_oid)
 					if attached refs.item_for_iteration.name as l_name then
@@ -113,10 +111,8 @@ feature -- Intiialize Repository
 					end
 				end
 				refs.forth
-
 			end
 			git_repository.git_repository_free (repo)
-			git_remote.git_remote_free (l_remote)
 			ini := {LIBGIT2_INITIALIZER_API}.git_libgit2_shutdown
 			io.read_line
 		end
@@ -277,6 +273,7 @@ feature	{NONE} -- Process Arguments
 				#endif
 			]"
 		end
+
 
 feature -- Options
 

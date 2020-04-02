@@ -63,19 +63,22 @@ feature -- Access
 		end
 
 	git_remote_ls (a_out: LIST [GIT_REMOTE_HEAD_STRUCT_API]; remote: GIT_REMOTE_STRUCT_API): INTEGER
+			-- Get the remote repository's reference advertisement list.
 		local
 			l_ptr: POINTER
 			l_mgr: MANAGED_POINTER
 			i: INTEGER
-			l_size: INTEGER
+			l_size: INTEGER_64
 			l_item: POINTER
-			l_remote: GIT_REMOTE_HEAD_STRUCT_API
 		do
-			create l_remote.make
-			l_ptr := l_remote.item
 			Result := c_git_remote_ls ($l_ptr, $l_size, remote.item)
-			if l_ptr /= default_pointer then
-				create l_mgr.make_from_pointer (l_ptr, l_size * {PLATFORM}.pointer_bytes)
+			debug
+				print ("%NResult: " +  Result.out)
+				print ("%NSize: " +  l_size.out + "%N")
+			end
+			if Result= 0 and then l_ptr /= default_pointer then
+
+				create l_mgr.make_from_pointer (l_ptr, l_size.to_integer_32 * {PLATFORM}.pointer_bytes)
 				from
 					i := 0
 				until
@@ -87,9 +90,11 @@ feature -- Access
 					end
 					i := i + {PLATFORM}.pointer_bytes
 				end
-
 			end
 		end
+
+
+
 
 
 end

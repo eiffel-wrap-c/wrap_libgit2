@@ -27,13 +27,15 @@ feature -- Access
 		end
 
 	git_oid_fmt (a_out: STRING; id: GIT_OID_STRUCT_API)
+			-- Format a git_oid into a hex string.
+--		require
+--			has_null_terminator: a_out.at (a_out.count).is_equal ('%U')
 		local
-			a_out_c_string: C_STRING
 			l_ret: INTEGER
 		do
-			create a_out_c_string.make (a_out)
-			l_ret := c_git_oid_fmt (a_out_c_string.item, id.item)
-			a_out.from_c (a_out_c_string.item)
+			-- TODO if it's ok to add a precondition to this feature
+			--  '\0' terminator must be added by the caller if it is required
+			l_ret := c_git_oid_fmt (a_out.area.base_address, id.item)
 		end
 
 

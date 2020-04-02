@@ -16,9 +16,12 @@ feature
 		do
 			create status_options.make
 			create status
-			check
-				success_init: status.git_status_options_init (status_options, 1) = 0
+
+			if status.git_status_options_init (status_options, 1) < 0 then
+				 print ("%NCannot initializes a git_status_options with default values")
+				{EXCEPTIONS}.die (1)
 			end
+
 			create repodir.make_from_string (".")
 			set_format ({FORMAT_ENUM}.format_short)
 		end

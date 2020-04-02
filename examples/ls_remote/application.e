@@ -51,7 +51,9 @@ feature -- Intiialize Repository
 
 		do
 			ini := {LIBGIT2_INITIALIZER_API}.git_libgit2_init
-			print ("%NIntializing Libgit2")
+			debug
+				print ("%NIntializing Libgit2")
+			end
 			create repo.make
 
 			if git_repository.git_repository_open (repo, (create {PATH}.make_from_string (path)).out) < 0 then
@@ -216,7 +218,7 @@ feature	{NONE} -- Process Arguments
 			str: STRING
 		do
 			str := "[
-				lxs [--git-dir=<directory>]
+				[--git-dir=<directory>]
 				<remote>
 				]"
 

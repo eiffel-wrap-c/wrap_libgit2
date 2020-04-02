@@ -552,7 +552,7 @@ feature -- Print
 					end
 				end
 			end
-
+			print ("%N")
 		end
 
 	print_submodule (sm: POINTER; name: POINTER; payload: POINTER): INTEGER

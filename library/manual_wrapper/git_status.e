@@ -1,6 +1,5 @@
 note
 	description: "Summary description for {GIT_STATUS}."
-	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 

@@ -258,7 +258,7 @@ feature -- Print
 					if not continue then
 						if not header then
 							print("%N# Changes to be committed:%N")
-							print("%N#(use %"git reset HEAD <file>...%" to unstage)%N")
+							print("%N# (use %"git reset HEAD <file>...%" to unstage)%N")
 							print("%N#%N");
 							header := True
 						end
@@ -579,7 +579,6 @@ feature -- Usage
 			str: STRING
 		do
 			str := "[
-				%N
 				git_status [--short] [--long] [--porcelain]
 					 [--branch] [--z] [--ignored] [--uno] [--unormal] [--uall]
 					 [--ignore-submodules] [--git-dir=<dir>]
@@ -587,6 +586,7 @@ feature -- Usage
 					 ]"
 			print("%N")
 			print (str)
+			print("%N")
 		end
 
 feature -- Options

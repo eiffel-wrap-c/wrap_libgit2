@@ -42,7 +42,9 @@ feature -- Repository
 			count: INTEGER
 		do
 			ini := {LIBGIT2_INITIALIZER_API}.git_libgit2_init
-			print ("%NIntializing Libgit2%N")
+			debug
+				print ("%NIntializing Libgit2%N")
+			end
 
 			create index.make
 			create repo.make
@@ -89,8 +91,6 @@ feature -- Repository
 			git_repository.git_repository_free (repo)
 		end
 
-
-
 feature	{NONE} -- Process Arguments
 
 
@@ -127,6 +127,10 @@ feature	{NONE} -- Process Arguments
 				if has_next_option and then not is_next_option_long_option then
 					options.add_file (next_option)
 					consume_option
+				else
+					print("%N Wrong command line parameter")
+					usage
+					{EXCEPTIONS}.die (1)
 				end
 			end
 		end
@@ -136,7 +140,7 @@ feature	{NONE} -- Process Arguments
 			str: STRING
 		do
 			str := "[
-				git_add [--git-dir] [unmatch] [files]
+				ls_files [--git-dir] [unmatch] [files]
 					[--git-dir]: use the following git repository. 
 					[--unmatch]: show unmatched files
 					[files]
@@ -144,6 +148,7 @@ feature	{NONE} -- Process Arguments
 
 			print("%N")
 			print (str)
+			print("%N")
 		end
 
 feature -- Options

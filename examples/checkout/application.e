@@ -42,9 +42,12 @@ feature -- Intiialize Repository
 			l_state: INTEGER
 			checkout_target: GIT_ANNOTATED_COMMIT_STRUCT_API
 			commit: GIT_ANNOTATED_COMMIT_API
+
 		do
 			ini := {LIBGIT2_INITIALIZER_API}.git_libgit2_init
-			print ("%N Intializing Libgit2")
+			debug
+				print ("%N Intializing Libgit2")
+			end
 			create repo.make
 			create commit
 			if git_repository.git_repository_open (repo, (create {PATH}.make_from_string (path)).out) < 0 then
@@ -64,8 +67,15 @@ feature -- Intiialize Repository
 			end
 
 			if attached checkout as l_checkout and then resolve_refish (checkout_target, repo, l_checkout ) /= 0 then
-				print ("%NFailed to resolve")
-				commit.git_annotated_commit_free(checkout_target)
+				print ("%NFailed to resolve: ")
+				if attached (create {LIBGIT2_ERROR_API}).git_error_last as last_error and then
+				   attached last_error.message as l_message
+				then
+					print (l_message + "%N")
+				else
+					print ("missing message" + "%N")
+				end
+
 			else
 				error := perform_checkout_ref (repo, checkout_target, options)
 			end
@@ -230,6 +240,7 @@ feature	{NONE} -- Process Arguments
 
 			print("%N")
 			print (str)
+			print("%N")
 		end
 
 
@@ -264,6 +275,7 @@ feature	{NONE} -- Process Arguments
 				end
 			end
 		end
+
 
 feature -- Options
 

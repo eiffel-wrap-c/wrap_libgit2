@@ -1,6 +1,5 @@
 note
 	description: "Summary description for {PROGRESS_DATA}."
-	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 
@@ -19,6 +18,7 @@ feature -- Intialization
 	make
 		do
 			create managed_data.make (structure_size)
+			set_fetch_progress (create {GIT_INDEXER_PROGRESS_STRUCT_API}.make )
 		end
 
 	make_by_pointer (a_pointer: POINTER)
@@ -38,12 +38,12 @@ feature -- Access
 			end
 		end
 
-	completed_steps: INTEGER
+	completed_steps: INTEGER_32
 		do
 			Result := managed_data.read_integer_32 ({PLATFORM}.pointer_bytes)
 		end
 
-	total_steps: INTEGER
+	total_steps: INTEGER_32
 		do
 			Result := managed_data.read_integer_32 ({PLATFORM}.pointer_bytes + {PLATFORM}.integer_32_bytes )
 		end

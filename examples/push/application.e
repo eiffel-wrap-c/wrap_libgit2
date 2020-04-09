@@ -50,7 +50,9 @@ feature -- Intiialize Repository
 			callback_dispatcher: GIT_CREDENTIAL_ACQUIRE_CB_DISPATCHER
 	do
 			ini := {LIBGIT2_INITIALIZER_API}.git_libgit2_init
-			print ("%N Intializing Libgit2")
+			debug
+				print ("%N Intializing Libgit2")
+			end
 			create repo.make
 
 			if git_repository.git_repository_open (repo, (create {PATH}.make_from_string (path)).out) < 0 then
@@ -230,6 +232,7 @@ feature	{NONE} -- Process Arguments
 
 			print("%N")
 			print (str)
+			print("%N")
 		end
 
 	read_password: STRING
@@ -248,36 +251,41 @@ feature	{NONE} -- Process Arguments
 		external "C inline"
 		alias
 			"[
-				#define ENTER 13
-				#define TAB 9
-				#define BKSP 8
+				#ifdef _WIN32
+					#define ENTER 13
+					#define TAB 9
+					#define BKSP 8
 
-				char* pwd;
+					char* pwd;
 
-				int i = 0;
-				char ch;
+					int i = 0;
+					char ch;
 
-				while(1){
-					ch = getch();	//get key
+					while(1){
+						ch = getch();	//get key
 
-					if(ch == ENTER || ch == TAB){
-						pwd[i] = '\0';
-						break;
-					}else if(ch == BKSP){
-						if(i > 0){
-							i--;
-							printf("\b \b");		//for backspace
+						if(ch == ENTER || ch == TAB){
+							pwd[i] = '\0';
+							break;
+						}else if(ch == BKSP){
+							if(i > 0){
+								i--;
+								printf("\b \b");		//for backspace
+							}
+						}else{
+							pwd[i++] = ch;
+							printf("* \b");				//to replace password character with *
 						}
-					}else{
-						pwd[i++] = ch;
-						printf("* \b");				//to replace password character with *
-					}
-				}//while ends here
+					}//while ends here
 
-				return pwd;
+					return pwd;
+				#else
+					#include <unistd.h>
+					char *password = getpass("");
+					return password;
+				#endif
 			]"
 		end
-
 
 feature -- Options
 

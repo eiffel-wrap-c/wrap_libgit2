@@ -38,9 +38,9 @@ feature -- Test routines
 
 	test_version
 		local
-			major, minor, rev: INTEGER
+			i, major, minor, rev: INTEGER
 		do
-			{LIBGIT2_INITIALIZER_API}.c_git_libgit2_version ($major, $minor, $rev)
+			i := {LIBGIT2_INITIALIZER_API}.c_git_libgit2_version ($major, $minor, $rev)
 			assert ("Expected grether than or equal than zero", major >= 0 and then minor >=0 and then rev >=0)
 		end
 end

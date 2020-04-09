@@ -46,7 +46,9 @@ feature -- Repository
 			callback: POINTER
 		do
 			ini := {LIBGIT2_INITIALIZER_API}.git_libgit2_init
-			print ("%NIntializing Libgit2%N")
+			debug
+				print ("%NIntializing Libgit2%N")
+			end
 
 			create index.make
 			create array.make
@@ -115,7 +117,7 @@ feature -- Repository
 		 	end
 
 			if ((( status & {GIT_STATUS_T_ENUM_API}.GIT_STATUS_WT_MODIFIED )/= 0 ) or ( status & ({GIT_STATUS_T_ENUM_API}.GIT_STATUS_WT_NEW) /= 0 )) and (Result /= -1) then
-				print ("add " + (create {C_STRING}.make_by_pointer (a_path)).string  )
+				print ("add " + (create {C_STRING}.make_by_pointer (a_path)).string + "%N" )
 				Result := 0
 			else
 				Result := 1
@@ -200,6 +202,7 @@ feature	{NONE} -- Process Arguments
 
 			print("%N")
 			print (str)
+			print("%N")
 		end
 
 	init_array (a_array: GIT_STRARRAY_STRUCT_API)
@@ -218,7 +221,6 @@ feature	{NONE} -- Process Arguments
 			a_array.set_count (l_array.count)
 			a_array.set_strings (mp.item)
 		end
-
 
 	 git_array_to_eiffel_array (a_array: GIT_STRARRAY_STRUCT_API)
 	 	local

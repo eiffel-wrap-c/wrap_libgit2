@@ -1,6 +1,5 @@
 note
 	description: "Summary description for {GIT_TREE}."
-	author: ""
 	date: "$Date$"
 	revision: "$Revision$"
 

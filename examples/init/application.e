@@ -40,7 +40,9 @@ feature -- Intiialize Repository
 			iniopts: GIT_REPOSITORY_INIT_OPTIONS_STRUCT_API
 		do
 			ini := {LIBGIT2_INITIALIZER_API}.git_libgit2_init
-			print ("%N Intializing Libgit2")
+			debug
+				print ("%N Intializing Libgit2")
+			end
 			create repo.make
 			if options.no_options then
 					-- No options were specified, so lets demonstrate the default
@@ -90,7 +92,7 @@ feature -- Intiialize Repository
 					options.set_dir ((create {C_STRING}.make_by_pointer (grepository.git_repository_workdir (repo))).string)
 				end
 				if attached options.dir as l_dir then
-					print("%N Initialized empty Git Repository in " + l_dir + "%N")
+					print("%NInitialized empty Git Repository in " + l_dir + "%N")
 				end
 			end
 				-- As an extension to the basic git init this example
@@ -245,13 +247,13 @@ feature	{NONE} -- Process Arguments
 			str: STRING
 		do
 			str := "[
-				%N
 				git_init [--q] [--bare] [--template=<dir>]
 					 [--shared[=perms]] [--initial-commit]
 					 [--separate-git-dir] <directory>
 					 ]"
 			print("%N")
 			print (str)
+			print("%N")
 		end
 
 feature -- Options

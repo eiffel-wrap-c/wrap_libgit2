@@ -93,8 +93,4 @@ feature -- Access
 			end
 		end
 
-
-
-
-
 end

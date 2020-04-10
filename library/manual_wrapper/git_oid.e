@@ -28,14 +28,18 @@ feature -- Access
 
 	git_oid_fmt (a_out: STRING; id: GIT_OID_STRUCT_API)
 			-- Format a git_oid into a hex string.
---		require
---			has_null_terminator: a_out.at (a_out.count).is_equal ('%U')
+		require
+			valid_length: a_out.count = {LIBGIT2_CONSTANTS}.GIT_OID_HEXSZ + 1
+			--has_null_terminator: a_out.at (a_out.count).is_equal ('%U')
 		local
 			l_ret: INTEGER
+			c_str: C_STRING
 		do
 			-- TODO if it's ok to add a precondition to this feature
 			--  '\0' terminator must be added by the caller if it is required
-			l_ret := c_git_oid_fmt (a_out.area.base_address, id.item)
+			create c_str.make (a_out)
+			l_ret := c_git_oid_fmt (c_str.item, id.item)
+			a_out.from_c (c_str.item)
 		end
 
 

@@ -38,7 +38,9 @@ feature -- Describe
 			options: OPTIONS
 		do
 			ini := {LIBGIT2_INITIALIZER_API}.git_libgit2_init
-			print ("%NIntializing Libgit2%N")
+			debug
+				print ("%NIntializing Libgit2%N")
+			end
 
 			create options.make
 			create repo.make
@@ -182,7 +184,7 @@ feature	{NONE} -- Process Arguments
 			str: STRING
 		do
 			str := "[
-				git_add [--git-dir] [options] file [file] 
+				git_describe [--git-dir] [options] file [file] 
 					[--git-dir]: use the following git repository. 
 					[--dry-run]: dry-run
 					[--verbose]: be verbose
@@ -192,6 +194,7 @@ feature	{NONE} -- Process Arguments
 
 			print("%N")
 			print (str)
+			print("%N")
 		end
 
 

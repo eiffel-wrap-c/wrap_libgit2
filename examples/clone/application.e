@@ -35,7 +35,7 @@ feature -- Intiialize Repository
 		local
 			ini: INTEGER
 			error: INTEGER
-			clone_repo: GIT_REPOSITORY_STRUCT_API
+			cloned_repo: GIT_REPOSITORY_STRUCT_API
 			clone_opts: GIT_CLONE_OPTIONS_STRUCT_API
 			checkout_opts: GIT_CHECKOUT_OPTIONS_STRUCT_API
 			git_clone: GIT_CLONE
@@ -45,10 +45,14 @@ feature -- Intiialize Repository
 			pd: PROGRESS_DATA
 			git_indexer_progress_cb: GIT_INDEXER_PROGRESS_CB_DISPATCHER
 			git_credential_acquire_cb: GIT_CREDENTIAL_ACQUIRE_CB_DISPATCHER
+			git_error: LIBGIT2_ERROR_API
+			l_ptr:POINTER
 
 		do
 			ini := {LIBGIT2_INITIALIZER_API}.git_libgit2_init
-			print ("%N Intializing Libgit2")
+			debug
+				print ("%N Intializing Libgit2")
+			end
 
 			create clone_opts.make
 			create checkout_opts.make
@@ -60,9 +64,7 @@ feature -- Intiialize Repository
 
 			-- Setup options
 
-
 			create pd.make
-			pd.set_fetch_progress ((create {GIT_INDEXER_PROGRESS_STRUCT_API}.make))
 			create git_checkout_progress_cb.make
 			git_checkout_progress_cb.register_callback_1 (agent checkout_progress)
 
@@ -78,26 +80,30 @@ feature -- Intiialize Repository
 
 			create git_credential_acquire_cb.make
 			git_credential_acquire_cb.register_callback_1 (agent cred_acquire_cb )
+
 			clone_opts.set_checkout_opts (checkout_opts)
 			clone_opts.fetch_opts.callbacks.set_sideband_progress (git_transport_message_cb.c_dispatcher_1)
 			clone_opts.fetch_opts.callbacks.set_transfer_progress (git_indexer_progress_cb.c_dispatcher_1)
 			clone_opts.fetch_opts.callbacks.set_credentials (git_credential_acquire_cb.c_dispatcher_1)
 			clone_opts.fetch_opts.callbacks.set_payload (pd.item)
 
-			create clone_repo.make
+			create cloned_repo.make
 
-			error := git_clone.git_clone (clone_repo, url, path,  clone_opts)
+			error := git_clone.git_clone (cloned_repo, url, path,  clone_opts)
 			print ("%N")
 			if error /= 0 then
-
+				create git_error
+				if attached {GIT_ERROR_STRUCT_API} git_error.git_error_last as last_error and then
+					attached last_error.message as l_message
+				then
+					print ("%NERROR " + last_error.klass.out + " : " + l_message + "%N")
+				else
+					print("%NERROR Can't clone the repository: " + url + "%N")
+				end
+				{EXCEPTIONS}.die (1)
+			else
+				git_repository.git_repository_free(cloned_repo);
 			end
-
-
---			if git_repository.git_repository_open (repo, (create {PATH}.make_from_string (path)).out) < 0 then
---				print ("%NCould not open repository")
---				{EXCEPTIONS}.die (1)
---			end
-
 
 			ini := {LIBGIT2_INITIALIZER_API}.git_libgit2_shutdown
 		end
@@ -230,22 +236,34 @@ feature -- Intiialize Repository
 				network_percent := 0
 			end
 
+			if attached pd.fetch_progress as l_fetch_progress and then
+				l_fetch_progress.total_objects > 0
+			then
+				index_percent := (100 * l_fetch_progress.indexed_objects) // l_fetch_progress.total_objects
+			else
+				index_percent := 0
+			end
+
+
 			if pd.total_steps > 0 then
 				checkout_percent := (100 * pd.completed_steps) // pd.total_steps
 			end
 
 			if attached pd.fetch_progress as l_fetch_progress then
 				kbytes := l_fetch_progress.received_bytes // 1024
+			else
+				kbytes := 0
 			end
 
 			if attached pd.fetch_progress as l_fetch_progress then
 				if
+					l_fetch_progress.total_objects > 0 and then
 					l_fetch_progress.total_objects = l_fetch_progress.received_objects
 				then
-					print ("%N Resolving Detlas " + l_fetch_progress.indexed_deltas.out + "/" + l_fetch_progress.total_deltas.out)
+					print ("Resolving Detlas " + l_fetch_progress.indexed_deltas.out + "/" + l_fetch_progress.total_deltas.out + "%N")
 				else
 					print ("net :[" +network_percent.out +"] (" + kbytes.out+ " PRIuZ kb, " + l_fetch_progress.received_objects.out + "/" + l_fetch_progress.total_objects.out +")  / idx " +index_percent.out + "(" +
-						l_fetch_progress.indexed_objects.out + "/" + l_fetch_progress.total_objects.out + ") / chk " + checkout_percent.out + " ( " + pd.completed_steps.out + "PRIuZ /" + pd.total_steps.out + "PRIuZ) " + l_path)
+						l_fetch_progress.indexed_objects.out + "/" + l_fetch_progress.total_objects.out + ") / chk " + checkout_percent.out + " ( " + pd.completed_steps.out + "PRIuZ /" + pd.total_steps.out + "PRIuZ) " + l_path + "%N")
 				end
 			end
 		end
@@ -264,7 +282,7 @@ feature -- Intiialize Repository
 		end
 
 
-	sideband_progress (a_str: POINTER; a_len: INTEGER; a_payload: POINTER): INTEGER
+	sideband_progress (a_str: POINTER; a_len: INTEGER_32; a_payload: POINTER): INTEGER
 		local
 			l_str: STRING
 		do
@@ -273,7 +291,7 @@ feature -- Intiialize Repository
 			else
 				l_str := ""
 			end
-			print ("%NRemote: " + a_len.out + ".*" +  l_str)
+			print ("%NRemote: " + a_len.out + "%N" +  l_str +"%N")
 			Result := 0
 		end
 
@@ -330,9 +348,8 @@ feature	{NONE} -- Process Arguments
 
 			print("%N")
 			print (str)
+			print("%N")
 		end
-
-
 
 feature -- Options
 

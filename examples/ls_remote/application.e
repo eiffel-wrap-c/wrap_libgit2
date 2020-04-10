@@ -214,12 +214,14 @@ feature	{NONE} -- Process Arguments
 			str: STRING
 		do
 			str := "[
+				ls-remote
 				[--git-dir=<directory>]
 				<remote>
 				]"
 
 			print("%N")
 			print (str)
+			print("%N")	
 		end
 
 	read_password: STRING

@@ -25,6 +25,8 @@ feature -- Access
 			"GIT_OID_HEXSZ"
 		end
 
+	-- TODO wrap LIBGIT2 constants with WrapC	
+
 
 --	/** Size (in bytes) of a raw/binary oid */
 --#define GIT_OID_RAWSZ 20

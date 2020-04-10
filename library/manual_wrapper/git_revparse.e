@@ -30,7 +30,7 @@ feature -- Access
 		end
 
 
-	git_revparse_ext (object_out: GIT_OBJECT_STRUCT_API; reference_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; spec: detachable STRING): INTEGER
+	git_revparse_ext (object_out: GIT_OBJECT_STRUCT_API; reference_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; spec: STRING): INTEGER
 			-- Find a single object and intermediate reference by a revision string.
 		local
 			spec_c_string: C_STRING

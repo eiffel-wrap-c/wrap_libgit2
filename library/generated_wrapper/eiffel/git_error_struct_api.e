@@ -25,25 +25,25 @@ feature -- Measurement
 
 feature {ANY} -- Member Access
 
-	message:  detachable STRING
+	message:  detachable C_STRING
 			-- Access member `message`
 		require
 			exists: exists
 		do
 			if attached c_message (item) as l_ptr then
-				Result := (create {C_STRING}.make_by_pointer (l_ptr)).string
+				create Result.make_by_pointer (l_ptr)
 			end
 		ensure
 			result_void: Result = Void implies c_message (item) = default_pointer
-			result_not_void: attached Result as l_result implies l_result.same_string ((create {C_STRING}.make_by_pointer (item)).string)
+			result_not_void: attached Result as l_result implies l_result.string.same_string ((create {C_STRING}.make_by_pointer (item)).string)
 		end
 
-	set_message (a_value: STRING) 
+	set_message (a_value: C_STRING) 
 			-- Change the value of member `message` to `a_value`.
 		require
 			exists: exists
 		do
-			set_c_message (item, (create {C_STRING}.make (a_value)).item )
+			set_c_message (item, a_value.item )
 		end
 
 	klass: INTEGER

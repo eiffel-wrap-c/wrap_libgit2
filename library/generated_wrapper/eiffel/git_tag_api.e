@@ -15,21 +15,29 @@ feature -- Access
 		do
 			create buffer_c_string.make (buffer)
 			Result := c_git_tag_create_frombuffer (oid.item, repo.item, buffer_c_string.item, force)
+		ensure
+			instance_free: class
 		end
 
 	git_tag_lookup (a_out: GIT_TAG_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; id: GIT_OID_STRUCT_API): INTEGER 
 		do
 			Result := c_git_tag_lookup (a_out.item, repo.item, id.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tag_lookup_prefix (a_out: GIT_TAG_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; id: GIT_OID_STRUCT_API; len: INTEGER): INTEGER 
 		do
 			Result := c_git_tag_lookup_prefix (a_out.item, repo.item, id.item, len)
+		ensure
+			instance_free: class
 		end
 
 	git_tag_free (tag: GIT_TAG_STRUCT_API) 
 		do
 			c_git_tag_free (tag.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tag_id (tag: GIT_TAG_STRUCT_API): detachable GIT_OID_STRUCT_API 
@@ -38,6 +46,8 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_tag_owner (tag: GIT_TAG_STRUCT_API): detachable GIT_REPOSITORY_STRUCT_API 
@@ -46,11 +56,15 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_tag_target (target_out: GIT_OBJECT_STRUCT_API; tag: GIT_TAG_STRUCT_API): INTEGER 
 		do
 			Result := c_git_tag_target (target_out.item, tag.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tag_target_id (tag: GIT_TAG_STRUCT_API): detachable GIT_OID_STRUCT_API 
@@ -59,16 +73,22 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_tag_target_type (tag: GIT_TAG_STRUCT_API): INTEGER 
 		do
 			Result := c_git_tag_target_type (tag.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tag_name (tag: GIT_TAG_STRUCT_API): POINTER 
 		do
 			Result := c_git_tag_name (tag.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tag_tagger (tag: GIT_TAG_STRUCT_API): detachable GIT_SIGNATURE_STRUCT_API 
@@ -77,11 +97,15 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_tag_message (tag: GIT_TAG_STRUCT_API): POINTER 
 		do
 			Result := c_git_tag_message (tag.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tag_create (oid: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; tag_name: STRING; target: GIT_OBJECT_STRUCT_API; tagger: GIT_SIGNATURE_STRUCT_API; message: STRING; force: INTEGER): INTEGER 
@@ -92,6 +116,8 @@ feature -- Access
 			create tag_name_c_string.make (tag_name)
 			create message_c_string.make (message)
 			Result := c_git_tag_create (oid.item, repo.item, tag_name_c_string.item, target.item, tagger.item, message_c_string.item, force)
+		ensure
+			instance_free: class
 		end
 
 	git_tag_annotation_create (oid: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; tag_name: STRING; target: GIT_OBJECT_STRUCT_API; tagger: GIT_SIGNATURE_STRUCT_API; message: STRING): INTEGER 
@@ -102,6 +128,8 @@ feature -- Access
 			create tag_name_c_string.make (tag_name)
 			create message_c_string.make (message)
 			Result := c_git_tag_annotation_create (oid.item, repo.item, tag_name_c_string.item, target.item, tagger.item, message_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tag_create_from_buffer (oid: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; buffer: STRING; force: INTEGER): INTEGER 
@@ -110,6 +138,8 @@ feature -- Access
 		do
 			create buffer_c_string.make (buffer)
 			Result := c_git_tag_create_from_buffer (oid.item, repo.item, buffer_c_string.item, force)
+		ensure
+			instance_free: class
 		end
 
 	git_tag_create_lightweight (oid: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; tag_name: STRING; target: GIT_OBJECT_STRUCT_API; force: INTEGER): INTEGER 
@@ -118,6 +148,8 @@ feature -- Access
 		do
 			create tag_name_c_string.make (tag_name)
 			Result := c_git_tag_create_lightweight (oid.item, repo.item, tag_name_c_string.item, target.item, force)
+		ensure
+			instance_free: class
 		end
 
 	git_tag_delete (repo: GIT_REPOSITORY_STRUCT_API; tag_name: STRING): INTEGER 
@@ -126,11 +158,15 @@ feature -- Access
 		do
 			create tag_name_c_string.make (tag_name)
 			Result := c_git_tag_delete (repo.item, tag_name_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tag_list (tag_names: GIT_STRARRAY_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_tag_list (tag_names.item, repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tag_list_match (tag_names: GIT_STRARRAY_STRUCT_API; pattern: STRING; repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
@@ -139,21 +175,29 @@ feature -- Access
 		do
 			create pattern_c_string.make (pattern)
 			Result := c_git_tag_list_match (tag_names.item, pattern_c_string.item, repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tag_foreach (repo: GIT_REPOSITORY_STRUCT_API; callback: POINTER; payload: POINTER): INTEGER 
 		do
 			Result := c_git_tag_foreach (repo.item, callback, payload)
+		ensure
+			instance_free: class
 		end
 
 	git_tag_peel (tag_target_out: GIT_OBJECT_STRUCT_API; tag: GIT_TAG_STRUCT_API): INTEGER 
 		do
 			Result := c_git_tag_peel (tag_target_out.item, tag.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tag_dup (a_out: GIT_TAG_STRUCT_API; source: GIT_TAG_STRUCT_API): INTEGER 
 		do
 			Result := c_git_tag_dup (a_out.item, source.item)
+		ensure
+			instance_free: class
 		end
 
 feature -- Externals

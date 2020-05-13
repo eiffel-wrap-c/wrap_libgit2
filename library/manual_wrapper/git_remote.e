@@ -1,8 +1,8 @@
 note
-	description: "Summary description for {GIT_REMOTE}."
+	description: "Obect representing remote functions"
 	date: "$Date$"
 	revision: "$Revision$"
-
+	EIS: "name=Remote functions", "src=https://libgit2.org/libgit2/#v1.0.0/group/remote", "protocol=uri"
 class
 	GIT_REMOTE
 
@@ -20,6 +20,8 @@ inherit
 feature -- Access
 
 	git_remote_lookup (a_out: GIT_REMOTE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING): INTEGER
+		note
+			eis:"name=git_remote_lookup", "src=https://libgit2.org/libgit2/#v1.0.0/group/remote/git_remote_lookup", "protocol=uri"
 		local
 			name_c_string: C_STRING
 			l_ptr: POINTER
@@ -29,9 +31,13 @@ feature -- Access
 			if l_ptr /= default_pointer then
 				a_out.make_by_pointer (l_ptr)
 			end
+		ensure
+			instance_free: class
 		end
 
 	git_remote_create_anonymous (a_out: GIT_REMOTE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; url: STRING): INTEGER
+		note
+			eis:"name=git_remote_create_anonymous","src=https://libgit2.org/libgit2/#v1.0.0/group/remote/git_remote_create_anonymous", "protocol=uri"
 		local
 			url_c_string: C_STRING
 			l_ptr: POINTER
@@ -41,10 +47,13 @@ feature -- Access
 			if l_ptr /= default_pointer then
 				a_out.make_by_pointer (l_ptr)
 			end
-
+		ensure
+			instance_free: class
 		end
 
 	git_remote_connect (remote: GIT_REMOTE_STRUCT_API; direction: INTEGER; callbacks: detachable GIT_REMOTE_CALLBACKS_STRUCT_API; proxy_opts: detachable GIT_PROXY_OPTIONS_STRUCT_API; custom_headers: detachable GIT_STRARRAY_STRUCT_API): INTEGER
+		note
+			eis:"name=git_remote_connect", "src=https://libgit2.org/libgit2/#v1.0.0/group/remote/git_remote_connect", "protocol=uri"
 		local
 			l_callbacks: POINTER
 			l_proxy_opts: POINTER
@@ -60,10 +69,14 @@ feature -- Access
 				l_custom_header := custom_headers.item
 			end
 			Result := c_git_remote_connect (remote.item, direction, l_callbacks, l_proxy_opts, l_custom_header)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_ls (a_out: LIST [GIT_REMOTE_HEAD_STRUCT_API]; remote: GIT_REMOTE_STRUCT_API): INTEGER
 			-- Get the remote repository's reference advertisement list.
+		note
+			eis: "name=git_remote_ls", "src=https://libgit2.org/libgit2/#v1.0.0/group/remote/git_remote_ls", "protocol=uri"
 		local
 			l_ptr: POINTER
 			l_mgr: MANAGED_POINTER
@@ -91,6 +104,8 @@ feature -- Access
 					i := i + {PLATFORM}.pointer_bytes
 				end
 			end
+		ensure
+			instance_free: class
 		end
 
 end

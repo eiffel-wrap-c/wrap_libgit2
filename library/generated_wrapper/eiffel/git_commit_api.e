@@ -12,16 +12,22 @@ feature -- Access
 	git_commit_lookup (commit: GIT_COMMIT_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; id: GIT_OID_STRUCT_API): INTEGER 
 		do
 			Result := c_git_commit_lookup (commit.item, repo.item, id.item)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_lookup_prefix (commit: GIT_COMMIT_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; id: GIT_OID_STRUCT_API; len: INTEGER): INTEGER 
 		do
 			Result := c_git_commit_lookup_prefix (commit.item, repo.item, id.item, len)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_free (commit: GIT_COMMIT_STRUCT_API) 
 		do
 			c_git_commit_free (commit.item)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_id (commit: GIT_COMMIT_STRUCT_API): detachable GIT_OID_STRUCT_API 
@@ -30,6 +36,8 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_commit_owner (commit: GIT_COMMIT_STRUCT_API): detachable GIT_REPOSITORY_STRUCT_API 
@@ -38,41 +46,57 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_commit_message_encoding (commit: GIT_COMMIT_STRUCT_API): POINTER 
 		do
 			Result := c_git_commit_message_encoding (commit.item)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_message (commit: GIT_COMMIT_STRUCT_API): POINTER 
 		do
 			Result := c_git_commit_message (commit.item)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_message_raw (commit: GIT_COMMIT_STRUCT_API): POINTER 
 		do
 			Result := c_git_commit_message_raw (commit.item)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_summary (commit: GIT_COMMIT_STRUCT_API): POINTER 
 		do
 			Result := c_git_commit_summary (commit.item)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_body (commit: GIT_COMMIT_STRUCT_API): POINTER 
 		do
 			Result := c_git_commit_body (commit.item)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_time (commit: GIT_COMMIT_STRUCT_API): INTEGER 
 		do
 			Result := c_git_commit_time (commit.item)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_time_offset (commit: GIT_COMMIT_STRUCT_API): INTEGER 
 		do
 			Result := c_git_commit_time_offset (commit.item)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_committer (commit: GIT_COMMIT_STRUCT_API): detachable GIT_SIGNATURE_STRUCT_API 
@@ -81,6 +105,8 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_commit_author (commit: GIT_COMMIT_STRUCT_API): detachable GIT_SIGNATURE_STRUCT_API 
@@ -89,26 +115,36 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_commit_committer_with_mailmap (a_out: GIT_SIGNATURE_STRUCT_API; commit: GIT_COMMIT_STRUCT_API; mailmap: GIT_MAILMAP_STRUCT_API): INTEGER 
 		do
 			Result := c_git_commit_committer_with_mailmap (a_out.item, commit.item, mailmap.item)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_author_with_mailmap (a_out: GIT_SIGNATURE_STRUCT_API; commit: GIT_COMMIT_STRUCT_API; mailmap: GIT_MAILMAP_STRUCT_API): INTEGER 
 		do
 			Result := c_git_commit_author_with_mailmap (a_out.item, commit.item, mailmap.item)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_raw_header (commit: GIT_COMMIT_STRUCT_API): POINTER 
 		do
 			Result := c_git_commit_raw_header (commit.item)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_tree (tree_out: GIT_TREE_STRUCT_API; commit: GIT_COMMIT_STRUCT_API): INTEGER 
 		do
 			Result := c_git_commit_tree (tree_out.item, commit.item)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_tree_id (commit: GIT_COMMIT_STRUCT_API): detachable GIT_OID_STRUCT_API 
@@ -117,16 +153,22 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_commit_parentcount (commit: GIT_COMMIT_STRUCT_API): INTEGER 
 		do
 			Result := c_git_commit_parentcount (commit.item)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_parent (a_out: GIT_COMMIT_STRUCT_API; commit: GIT_COMMIT_STRUCT_API; n: INTEGER): INTEGER 
 		do
 			Result := c_git_commit_parent (a_out.item, commit.item, n)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_parent_id (commit: GIT_COMMIT_STRUCT_API; n: INTEGER): detachable GIT_OID_STRUCT_API 
@@ -135,11 +177,15 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_commit_nth_gen_ancestor (ancestor: GIT_COMMIT_STRUCT_API; commit: GIT_COMMIT_STRUCT_API; n: INTEGER): INTEGER 
 		do
 			Result := c_git_commit_nth_gen_ancestor (ancestor.item, commit.item, n)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_header_field (a_out: GIT_BUF_STRUCT_API; commit: GIT_COMMIT_STRUCT_API; field: STRING): INTEGER 
@@ -148,6 +194,8 @@ feature -- Access
 		do
 			create field_c_string.make (field)
 			Result := c_git_commit_header_field (a_out.item, commit.item, field_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_extract_signature (signature: GIT_BUF_STRUCT_API; signed_data: GIT_BUF_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; commit_id: GIT_OID_STRUCT_API; field: STRING): INTEGER 
@@ -156,6 +204,8 @@ feature -- Access
 		do
 			create field_c_string.make (field)
 			Result := c_git_commit_extract_signature (signature.item, signed_data.item, repo.item, commit_id.item, field_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_create (id: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; update_ref: STRING; author: GIT_SIGNATURE_STRUCT_API; committer: GIT_SIGNATURE_STRUCT_API; message_encoding: STRING; message: STRING; tree: GIT_TREE_STRUCT_API; parent_count: INTEGER; parents: POINTER): INTEGER 
@@ -168,6 +218,8 @@ feature -- Access
 			create message_encoding_c_string.make (message_encoding)
 			create message_c_string.make (message)
 			Result := c_git_commit_create (id.item, repo.item, update_ref_c_string.item, author.item, committer.item, message_encoding_c_string.item, message_c_string.item, tree.item, parent_count, parents)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_create_v (id: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; update_ref: STRING; author: GIT_SIGNATURE_STRUCT_API; committer: GIT_SIGNATURE_STRUCT_API; message_encoding: STRING; message: STRING; tree: GIT_TREE_STRUCT_API; parent_count: INTEGER): INTEGER 
@@ -180,6 +232,8 @@ feature -- Access
 			create message_encoding_c_string.make (message_encoding)
 			create message_c_string.make (message)
 			Result := c_git_commit_create_v (id.item, repo.item, update_ref_c_string.item, author.item, committer.item, message_encoding_c_string.item, message_c_string.item, tree.item, parent_count)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_amend (id: GIT_OID_STRUCT_API; commit_to_amend: GIT_COMMIT_STRUCT_API; update_ref: STRING; author: GIT_SIGNATURE_STRUCT_API; committer: GIT_SIGNATURE_STRUCT_API; message_encoding: STRING; message: STRING; tree: GIT_TREE_STRUCT_API): INTEGER 
@@ -192,6 +246,8 @@ feature -- Access
 			create message_encoding_c_string.make (message_encoding)
 			create message_c_string.make (message)
 			Result := c_git_commit_amend (id.item, commit_to_amend.item, update_ref_c_string.item, author.item, committer.item, message_encoding_c_string.item, message_c_string.item, tree.item)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_create_buffer (a_out: GIT_BUF_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; author: GIT_SIGNATURE_STRUCT_API; committer: GIT_SIGNATURE_STRUCT_API; message_encoding: STRING; message: STRING; tree: GIT_TREE_STRUCT_API; parent_count: INTEGER; parents: POINTER): INTEGER 
@@ -202,6 +258,8 @@ feature -- Access
 			create message_encoding_c_string.make (message_encoding)
 			create message_c_string.make (message)
 			Result := c_git_commit_create_buffer (a_out.item, repo.item, author.item, committer.item, message_encoding_c_string.item, message_c_string.item, tree.item, parent_count, parents)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_create_with_signature (a_out: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; commit_content: STRING; signature: STRING; signature_field: STRING): INTEGER 
@@ -214,11 +272,15 @@ feature -- Access
 			create signature_c_string.make (signature)
 			create signature_field_c_string.make (signature_field)
 			Result := c_git_commit_create_with_signature (a_out.item, repo.item, commit_content_c_string.item, signature_c_string.item, signature_field_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_commit_dup (a_out: GIT_COMMIT_STRUCT_API; source: GIT_COMMIT_STRUCT_API): INTEGER 
 		do
 			Result := c_git_commit_dup (a_out.item, source.item)
+		ensure
+			instance_free: class
 		end
 
 feature -- Externals

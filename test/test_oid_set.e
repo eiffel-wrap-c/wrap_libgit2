@@ -15,12 +15,6 @@ inherit
 		redefine
 			on_prepare,
 			on_clean
-		select
-			default_create
-		end
-	GIT_OID
-		rename
-			default_create as default_create_oid
 		end
 
 feature {NONE} -- Events
@@ -56,7 +50,7 @@ feature -- Test routines
 				-- SHA-1 hashes are usually written as 40 characters of hexadecimal. These are converted to a binary representation internally, called git_oid, and there are routines for converting back and forth.
 			sha := "4a202b346bb0fb0db7eff3cffeb3c70babbd2045"
 			create oid.make
-			error := git_oid_fromstr (oid, sha)
+			error := {GIT_OID}.git_oid_fromstr (oid, sha)
 			assert ("Expected error=0", error =0)
 			create mp.make_from_pointer (oid.id, 20)
 		end

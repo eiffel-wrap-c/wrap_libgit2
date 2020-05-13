@@ -12,16 +12,22 @@ feature -- Access
 	git_status_options_init (opts: GIT_STATUS_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
 			Result := c_git_status_options_init (opts.item, version)
+		ensure
+			instance_free: class
 		end
 
 	git_status_foreach (repo: GIT_REPOSITORY_STRUCT_API; callback: POINTER; payload: POINTER): INTEGER 
 		do
 			Result := c_git_status_foreach (repo.item, callback, payload)
+		ensure
+			instance_free: class
 		end
 
 	git_status_foreach_ext (repo: GIT_REPOSITORY_STRUCT_API; opts: GIT_STATUS_OPTIONS_STRUCT_API; callback: POINTER; payload: POINTER): INTEGER 
 		do
 			Result := c_git_status_foreach_ext (repo.item, opts.item, callback, payload)
+		ensure
+			instance_free: class
 		end
 
 	git_status_file (status_flags: POINTER; repo: GIT_REPOSITORY_STRUCT_API; path: STRING): INTEGER 
@@ -30,16 +36,22 @@ feature -- Access
 		do
 			create path_c_string.make (path)
 			Result := c_git_status_file (status_flags, repo.item, path_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_status_list_new (a_out: GIT_STATUS_LIST_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; opts: GIT_STATUS_OPTIONS_STRUCT_API): INTEGER 
 		do
 			Result := c_git_status_list_new (a_out.item, repo.item, opts.item)
+		ensure
+			instance_free: class
 		end
 
 	git_status_list_entrycount (statuslist: GIT_STATUS_LIST_STRUCT_API): INTEGER 
 		do
 			Result := c_git_status_list_entrycount (statuslist.item)
+		ensure
+			instance_free: class
 		end
 
 	git_status_byindex (statuslist: GIT_STATUS_LIST_STRUCT_API; idx: INTEGER): detachable GIT_STATUS_ENTRY_STRUCT_API 
@@ -48,11 +60,15 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_status_list_free (statuslist: GIT_STATUS_LIST_STRUCT_API) 
 		do
 			c_git_status_list_free (statuslist.item)
+		ensure
+			instance_free: class
 		end
 
 	git_status_should_ignore (ignored: POINTER; repo: GIT_REPOSITORY_STRUCT_API; path: STRING): INTEGER 
@@ -61,11 +77,15 @@ feature -- Access
 		do
 			create path_c_string.make (path)
 			Result := c_git_status_should_ignore (ignored, repo.item, path_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_status_init_options (opts: GIT_STATUS_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
 			Result := c_git_status_init_options (opts.item, version)
+		ensure
+			instance_free: class
 		end
 
 feature -- Externals

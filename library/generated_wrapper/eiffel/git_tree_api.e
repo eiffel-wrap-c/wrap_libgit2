@@ -12,16 +12,22 @@ feature -- Access
 	git_tree_lookup (a_out: GIT_TREE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; id: GIT_OID_STRUCT_API): INTEGER 
 		do
 			Result := c_git_tree_lookup (a_out.item, repo.item, id.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tree_lookup_prefix (a_out: GIT_TREE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; id: GIT_OID_STRUCT_API; len: INTEGER): INTEGER 
 		do
 			Result := c_git_tree_lookup_prefix (a_out.item, repo.item, id.item, len)
+		ensure
+			instance_free: class
 		end
 
 	git_tree_free (tree: GIT_TREE_STRUCT_API) 
 		do
 			c_git_tree_free (tree.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tree_id (tree: GIT_TREE_STRUCT_API): detachable GIT_OID_STRUCT_API 
@@ -30,6 +36,8 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_tree_owner (tree: GIT_TREE_STRUCT_API): detachable GIT_REPOSITORY_STRUCT_API 
@@ -38,11 +46,15 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_tree_entrycount (tree: GIT_TREE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_tree_entrycount (tree.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tree_entry_byname (tree: GIT_TREE_STRUCT_API; filename: STRING): detachable GIT_TREE_ENTRY_STRUCT_API 
@@ -54,6 +66,8 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_tree_entry_byindex (tree: GIT_TREE_STRUCT_API; idx: INTEGER): detachable GIT_TREE_ENTRY_STRUCT_API 
@@ -62,6 +76,8 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_tree_entry_byid (tree: GIT_TREE_STRUCT_API; id: GIT_OID_STRUCT_API): detachable GIT_TREE_ENTRY_STRUCT_API 
@@ -70,6 +86,8 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_tree_entry_bypath (a_out: GIT_TREE_ENTRY_STRUCT_API; root: GIT_TREE_STRUCT_API; path: STRING): INTEGER 
@@ -78,21 +96,29 @@ feature -- Access
 		do
 			create path_c_string.make (path)
 			Result := c_git_tree_entry_bypath (a_out.item, root.item, path_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tree_entry_dup (dest: GIT_TREE_ENTRY_STRUCT_API; source: GIT_TREE_ENTRY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_tree_entry_dup (dest.item, source.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tree_entry_free (entry: GIT_TREE_ENTRY_STRUCT_API) 
 		do
 			c_git_tree_entry_free (entry.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tree_entry_name (entry: GIT_TREE_ENTRY_STRUCT_API): POINTER 
 		do
 			Result := c_git_tree_entry_name (entry.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tree_entry_id (entry: GIT_TREE_ENTRY_STRUCT_API): detachable GIT_OID_STRUCT_API 
@@ -101,46 +127,64 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_tree_entry_type (entry: GIT_TREE_ENTRY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_tree_entry_type (entry.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tree_entry_filemode (entry: GIT_TREE_ENTRY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_tree_entry_filemode (entry.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tree_entry_filemode_raw (entry: GIT_TREE_ENTRY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_tree_entry_filemode_raw (entry.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tree_entry_cmp (e1: GIT_TREE_ENTRY_STRUCT_API; e2: GIT_TREE_ENTRY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_tree_entry_cmp (e1.item, e2.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tree_entry_to_object (object_out: GIT_OBJECT_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; entry: GIT_TREE_ENTRY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_tree_entry_to_object (object_out.item, repo.item, entry.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tree_walk (tree: GIT_TREE_STRUCT_API; mode: INTEGER; callback: POINTER; payload: POINTER): INTEGER 
 		do
 			Result := c_git_tree_walk (tree.item, mode, callback, payload)
+		ensure
+			instance_free: class
 		end
 
 	git_tree_dup (a_out: GIT_TREE_STRUCT_API; source: GIT_TREE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_tree_dup (a_out.item, source.item)
+		ensure
+			instance_free: class
 		end
 
 	git_tree_create_updated (a_out: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; baseline: GIT_TREE_STRUCT_API; nupdates: INTEGER; updates: GIT_TREE_UPDATE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_tree_create_updated (a_out.item, repo.item, baseline.item, nupdates, updates.item)
+		ensure
+			instance_free: class
 		end
 
 feature -- Externals

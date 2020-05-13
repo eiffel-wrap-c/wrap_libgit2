@@ -12,6 +12,8 @@ feature -- Access
 	git_libgit2_version (major: POINTER; minor: POINTER; rev: POINTER): INTEGER 
 		do
 			Result := c_git_libgit2_version (major, minor, rev)
+		ensure
+			instance_free: class
 		end
 
 	git_libgit2_features: INTEGER

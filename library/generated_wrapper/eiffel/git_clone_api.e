@@ -12,6 +12,8 @@ feature -- Access
 	git_clone_options_init (opts: GIT_CLONE_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
 			Result := c_git_clone_options_init (opts.item, version)
+		ensure
+			instance_free: class
 		end
 
 	git_clone (a_out: GIT_REPOSITORY_STRUCT_API; url: STRING; local_path: STRING; options: GIT_CLONE_OPTIONS_STRUCT_API): INTEGER 
@@ -22,11 +24,15 @@ feature -- Access
 			create url_c_string.make (url)
 			create local_path_c_string.make (local_path)
 			Result := c_git_clone (a_out.item, url_c_string.item, local_path_c_string.item, options.item)
+		ensure
+			instance_free: class
 		end
 
 	git_clone_init_options (opts: GIT_CLONE_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
 			Result := c_git_clone_init_options (opts.item, version)
+		ensure
+			instance_free: class
 		end
 
 feature -- Externals

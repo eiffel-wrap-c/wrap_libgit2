@@ -17,6 +17,8 @@ feature -- Access
 			create name_c_string.make (name)
 			create email_c_string.make (email)
 			Result := c_git_signature_new (a_out.item, name_c_string.item, email_c_string.item, time, offset)
+		ensure
+			instance_free: class
 		end
 
 	git_signature_now (a_out: GIT_SIGNATURE_STRUCT_API; name: STRING; email: STRING): INTEGER 
@@ -27,11 +29,15 @@ feature -- Access
 			create name_c_string.make (name)
 			create email_c_string.make (email)
 			Result := c_git_signature_now (a_out.item, name_c_string.item, email_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_signature_default (a_out: GIT_SIGNATURE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_signature_default (a_out.item, repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_signature_from_buffer (a_out: GIT_SIGNATURE_STRUCT_API; buf: STRING): INTEGER 
@@ -40,16 +46,22 @@ feature -- Access
 		do
 			create buf_c_string.make (buf)
 			Result := c_git_signature_from_buffer (a_out.item, buf_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_signature_dup (dest: GIT_SIGNATURE_STRUCT_API; sig: GIT_SIGNATURE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_signature_dup (dest.item, sig.item)
+		ensure
+			instance_free: class
 		end
 
 	git_signature_free (sig: GIT_SIGNATURE_STRUCT_API) 
 		do
 			c_git_signature_free (sig.item)
+		ensure
+			instance_free: class
 		end
 
 feature -- Externals

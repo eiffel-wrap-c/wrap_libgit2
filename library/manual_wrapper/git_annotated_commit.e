@@ -1,7 +1,8 @@
 note
-	description: "Summary description for {GIT_ANNOTATED_COMMIT}."
+	description: "Object representing annotated functions"
 	date: "$Date$"
 	revision: "$Revision$"
+	EIS: "name=Annotated functions", "src=https://libgit2.org/libgit2/#v1.0.0/group/annotated", "protocol=uri"
 
 class
 	GIT_ANNOTATED_COMMIT
@@ -17,6 +18,8 @@ inherit
 feature -- Acceess
 
 	git_annotated_commit_from_ref (a_out: GIT_ANNOTATED_COMMIT_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; ref: GIT_REFERENCE_STRUCT_API): INTEGER
+		note
+			EIS: "name=git_annotated_commit_from_ref", "src=https://libgit2.org/libgit2/#v1.0.0/group/annotated/git_annotated_commit_from_ref", "protocol=uri"
 		local
 			l_ptr: POINTER
 		do
@@ -24,9 +27,13 @@ feature -- Acceess
 			if l_ptr /= default_pointer then
 				a_out.make_by_pointer (l_ptr)
 			end
+		ensure
+			instance_free: class
 		end
 
 	git_annotated_commit_ref (commit: GIT_ANNOTATED_COMMIT_STRUCT_API): detachable STRING
+		note
+			EIS: "name=git_annotated_commit_ref", "src=https://libgit2.org/libgit2/#v1.0.0/group/annotated/git_annotated_commit_ref", "protocol=uri"
 		local
 			l_ptr: POINTER
 		do
@@ -34,6 +41,8 @@ feature -- Acceess
 			if l_ptr /= default_pointer then
 				Result := (create {C_STRING}.make_by_pointer (l_ptr)).string
 			end
+		ensure
+			instance_free: class
 		end
 
 

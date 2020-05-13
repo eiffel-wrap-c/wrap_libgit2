@@ -15,6 +15,8 @@ feature -- Access
 		do
 			create str_c_string.make (str)
 			Result := c_git_oid_fromstr (a_out.item, str_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_oid_fromstrp (a_out: GIT_OID_STRUCT_API; str: STRING): INTEGER 
@@ -23,6 +25,8 @@ feature -- Access
 		do
 			create str_c_string.make (str)
 			Result := c_git_oid_fromstrp (a_out.item, str_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_oid_fromstrn (a_out: GIT_OID_STRUCT_API; str: STRING; length: INTEGER): INTEGER 
@@ -31,6 +35,8 @@ feature -- Access
 		do
 			create str_c_string.make (str)
 			Result := c_git_oid_fromstrn (a_out.item, str_c_string.item, length)
+		ensure
+			instance_free: class
 		end
 
 	git_oid_fromraw (a_out: GIT_OID_STRUCT_API; raw: STRING): INTEGER 
@@ -39,6 +45,8 @@ feature -- Access
 		do
 			create raw_c_string.make (raw)
 			Result := c_git_oid_fromraw (a_out.item, raw_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_oid_fmt (a_out: STRING; id: GIT_OID_STRUCT_API): INTEGER 
@@ -47,6 +55,8 @@ feature -- Access
 		do
 			create a_out_c_string.make (a_out)
 			Result := c_git_oid_fmt (a_out_c_string.item, id.item)
+		ensure
+			instance_free: class
 		end
 
 	git_oid_nfmt (a_out: STRING; n: INTEGER; id: GIT_OID_STRUCT_API): INTEGER 
@@ -55,6 +65,8 @@ feature -- Access
 		do
 			create a_out_c_string.make (a_out)
 			Result := c_git_oid_nfmt (a_out_c_string.item, n, id.item)
+		ensure
+			instance_free: class
 		end
 
 	git_oid_pathfmt (a_out: STRING; id: GIT_OID_STRUCT_API): INTEGER 
@@ -63,11 +75,15 @@ feature -- Access
 		do
 			create a_out_c_string.make (a_out)
 			Result := c_git_oid_pathfmt (a_out_c_string.item, id.item)
+		ensure
+			instance_free: class
 		end
 
 	git_oid_tostr_s (oid: GIT_OID_STRUCT_API): POINTER 
 		do
 			Result := c_git_oid_tostr_s (oid.item)
+		ensure
+			instance_free: class
 		end
 
 	git_oid_tostr (a_out: STRING; n: INTEGER; id: GIT_OID_STRUCT_API): POINTER 
@@ -76,26 +92,36 @@ feature -- Access
 		do
 			create a_out_c_string.make (a_out)
 			Result := c_git_oid_tostr (a_out_c_string.item, n, id.item)
+		ensure
+			instance_free: class
 		end
 
 	git_oid_cpy (a_out: GIT_OID_STRUCT_API; src: GIT_OID_STRUCT_API): INTEGER 
 		do
 			Result := c_git_oid_cpy (a_out.item, src.item)
+		ensure
+			instance_free: class
 		end
 
 	git_oid_cmp (a: GIT_OID_STRUCT_API; b: GIT_OID_STRUCT_API): INTEGER 
 		do
 			Result := c_git_oid_cmp (a.item, b.item)
+		ensure
+			instance_free: class
 		end
 
 	git_oid_equal (a: GIT_OID_STRUCT_API; b: GIT_OID_STRUCT_API): INTEGER 
 		do
 			Result := c_git_oid_equal (a.item, b.item)
+		ensure
+			instance_free: class
 		end
 
 	git_oid_ncmp (a: GIT_OID_STRUCT_API; b: GIT_OID_STRUCT_API; len: INTEGER): INTEGER 
 		do
 			Result := c_git_oid_ncmp (a.item, b.item, len)
+		ensure
+			instance_free: class
 		end
 
 	git_oid_streq (id: GIT_OID_STRUCT_API; str: STRING): INTEGER 
@@ -104,6 +130,8 @@ feature -- Access
 		do
 			create str_c_string.make (str)
 			Result := c_git_oid_streq (id.item, str_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_oid_strcmp (id: GIT_OID_STRUCT_API; str: STRING): INTEGER 
@@ -112,11 +140,15 @@ feature -- Access
 		do
 			create str_c_string.make (str)
 			Result := c_git_oid_strcmp (id.item, str_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_oid_is_zero (id: GIT_OID_STRUCT_API): INTEGER 
 		do
 			Result := c_git_oid_is_zero (id.item)
+		ensure
+			instance_free: class
 		end
 
 	git_oid_shorten_new (min_length: INTEGER): POINTER
@@ -134,16 +166,22 @@ feature -- Access
 		do
 			create text_id_c_string.make (text_id)
 			Result := c_git_oid_shorten_add (os.item, text_id_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_oid_shorten_free (os: GIT_OID_SHORTEN_STRUCT_API) 
 		do
 			c_git_oid_shorten_free (os.item)
+		ensure
+			instance_free: class
 		end
 
 	git_oid_iszero (id: GIT_OID_STRUCT_API): INTEGER 
 		do
 			Result := c_git_oid_iszero (id.item)
+		ensure
+			instance_free: class
 		end
 
 feature -- Externals

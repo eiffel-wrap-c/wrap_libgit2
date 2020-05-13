@@ -85,25 +85,25 @@ feature {ANY} -- Member Access
 			always_use_long_format_set: a_value = always_use_long_format
 		end
 
-	dirty_suffix:  detachable STRING
+	dirty_suffix:  detachable C_STRING
 			-- Access member `dirty_suffix`
 		require
 			exists: exists
 		do
 			if attached c_dirty_suffix (item) as l_ptr then
-				Result := (create {C_STRING}.make_by_pointer (l_ptr)).string
+				create Result.make_by_pointer (l_ptr)
 			end
 		ensure
 			result_void: Result = Void implies c_dirty_suffix (item) = default_pointer
-			result_not_void: attached Result as l_result implies l_result.same_string ((create {C_STRING}.make_by_pointer (item)).string)
+			result_not_void: attached Result as l_result implies l_result.string.same_string ((create {C_STRING}.make_by_pointer (item)).string)
 		end
 
-	set_dirty_suffix (a_value: STRING) 
+	set_dirty_suffix (a_value: C_STRING) 
 			-- Change the value of member `dirty_suffix` to `a_value`.
 		require
 			exists: exists
 		do
-			set_c_dirty_suffix (item, (create {C_STRING}.make (a_value)).item )
+			set_c_dirty_suffix (item, a_value.item )
 		end
 
 feature {NONE} -- Implementation wrapper for struct git_describe_format_options

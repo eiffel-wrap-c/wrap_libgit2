@@ -1,7 +1,8 @@
 note
-	description: "Summary description for {GIT_COMMIT}."
+	description: "Object representing commit functions"
 	date: "$Date$"
 	revision: "$Revision$"
+	EIS: "name=Commit functions", "src=https://libgit2.org/libgit2/#v1.0.0/group/commit","protocol=uri"
 
 class
 	GIT_COMMIT
@@ -12,13 +13,14 @@ inherit
 		rename
 			git_commit_create_v as git_commit_create_v_api,
 			git_commit_lookup as git_commit_lookup_api
-
 		end
 
 
 feature -- Access
 
 	git_commit_create_v (id: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; update_ref: STRING; author: GIT_SIGNATURE_STRUCT_API; committer: GIT_SIGNATURE_STRUCT_API; message_encoding: detachable STRING; message: STRING; tree: GIT_TREE_STRUCT_API; parent_count: INTEGER): INTEGER
+		note
+			eis:"name=git_commit_create_v", "src=https://libgit2.org/libgit2/#v1.0.0/group/commit/git_commit_create_v", "protocol=uri"
 		local
 			l_ptr: POINTER
 			update_ref_c_string: C_STRING
@@ -37,10 +39,14 @@ feature -- Access
 			if l_ptr /= default_pointer then
 				id.make_by_pointer (l_ptr)
 			end
+		ensure
+			instance_free: class
 		end
 
 
 	git_commit_lookup (commit: GIT_COMMIT_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; id: GIT_OID_STRUCT_API): INTEGER
+		note
+			eis:"name=git_commit_lookup", "src=https://libgit2.org/libgit2/#v1.0.0/group/commit/git_commit_lookup", "protocol=uri"
 		local
 			l_ptr: POINTER
 		do
@@ -48,6 +54,8 @@ feature -- Access
 			if l_ptr /= default_pointer then
 				commit.make_by_pointer (l_ptr)
 			end
+		ensure
+			instance_free: class
 		end
 
 

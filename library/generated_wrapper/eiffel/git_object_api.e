@@ -12,11 +12,15 @@ feature -- Access
 	git_object_lookup (object: GIT_OBJECT_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; id: GIT_OID_STRUCT_API; type: INTEGER): INTEGER 
 		do
 			Result := c_git_object_lookup (object.item, repo.item, id.item, type)
+		ensure
+			instance_free: class
 		end
 
 	git_object_lookup_prefix (object_out: GIT_OBJECT_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; id: GIT_OID_STRUCT_API; len: INTEGER; type: INTEGER): INTEGER 
 		do
 			Result := c_git_object_lookup_prefix (object_out.item, repo.item, id.item, len, type)
+		ensure
+			instance_free: class
 		end
 
 	git_object_lookup_bypath (a_out: GIT_OBJECT_STRUCT_API; treeish: GIT_OBJECT_STRUCT_API; path: STRING; type: INTEGER): INTEGER 
@@ -25,6 +29,8 @@ feature -- Access
 		do
 			create path_c_string.make (path)
 			Result := c_git_object_lookup_bypath (a_out.item, treeish.item, path_c_string.item, type)
+		ensure
+			instance_free: class
 		end
 
 	git_object_id (obj: GIT_OBJECT_STRUCT_API): detachable GIT_OID_STRUCT_API 
@@ -33,16 +39,22 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_object_short_id (a_out: GIT_BUF_STRUCT_API; obj: GIT_OBJECT_STRUCT_API): INTEGER 
 		do
 			Result := c_git_object_short_id (a_out.item, obj.item)
+		ensure
+			instance_free: class
 		end
 
 	git_object_type (obj: GIT_OBJECT_STRUCT_API): INTEGER 
 		do
 			Result := c_git_object_type (obj.item)
+		ensure
+			instance_free: class
 		end
 
 	git_object_owner (obj: GIT_OBJECT_STRUCT_API): detachable GIT_REPOSITORY_STRUCT_API 
@@ -51,16 +63,22 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_object_free (object: GIT_OBJECT_STRUCT_API) 
 		do
 			c_git_object_free (object.item)
+		ensure
+			instance_free: class
 		end
 
 	git_object_type2string (type: INTEGER): POINTER 
 		do
 			Result := c_git_object_type2string (type)
+		ensure
+			instance_free: class
 		end
 
 	git_object_string2type (str: POINTER): INTEGER
@@ -75,21 +93,29 @@ feature -- Access
 	git_object_typeisloose (type: INTEGER): INTEGER 
 		do
 			Result := c_git_object_typeisloose (type)
+		ensure
+			instance_free: class
 		end
 
 	git_object_peel (peeled: GIT_OBJECT_STRUCT_API; object: GIT_OBJECT_STRUCT_API; target_type: INTEGER): INTEGER 
 		do
 			Result := c_git_object_peel (peeled.item, object.item, target_type)
+		ensure
+			instance_free: class
 		end
 
 	git_object_dup (dest: GIT_OBJECT_STRUCT_API; source: GIT_OBJECT_STRUCT_API): INTEGER 
 		do
 			Result := c_git_object_dup (dest.item, source.item)
+		ensure
+			instance_free: class
 		end
 
 	git_object__size (type: INTEGER): INTEGER 
 		do
 			Result := c_git_object__size (type)
+		ensure
+			instance_free: class
 		end
 
 feature -- Externals

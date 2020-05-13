@@ -12,16 +12,22 @@ feature -- Access
 	git_blob_lookup (blob: GIT_BLOB_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; id: GIT_OID_STRUCT_API): INTEGER 
 		do
 			Result := c_git_blob_lookup (blob.item, repo.item, id.item)
+		ensure
+			instance_free: class
 		end
 
 	git_blob_lookup_prefix (blob: GIT_BLOB_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; id: GIT_OID_STRUCT_API; len: INTEGER): INTEGER 
 		do
 			Result := c_git_blob_lookup_prefix (blob.item, repo.item, id.item, len)
+		ensure
+			instance_free: class
 		end
 
 	git_blob_free (blob: GIT_BLOB_STRUCT_API) 
 		do
 			c_git_blob_free (blob.item)
+		ensure
+			instance_free: class
 		end
 
 	git_blob_id (blob: GIT_BLOB_STRUCT_API): detachable GIT_OID_STRUCT_API 
@@ -30,6 +36,8 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_blob_owner (blob: GIT_BLOB_STRUCT_API): detachable GIT_REPOSITORY_STRUCT_API 
@@ -38,16 +46,22 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_blob_rawcontent (blob: GIT_BLOB_STRUCT_API): POINTER 
 		do
 			Result := c_git_blob_rawcontent (blob.item)
+		ensure
+			instance_free: class
 		end
 
 	git_blob_rawsize (blob: GIT_BLOB_STRUCT_API): INTEGER 
 		do
 			Result := c_git_blob_rawsize (blob.item)
+		ensure
+			instance_free: class
 		end
 
 	git_blob_filter (a_out: GIT_BUF_STRUCT_API; blob: GIT_BLOB_STRUCT_API; as_path: STRING; opts: GIT_BLOB_FILTER_OPTIONS_STRUCT_API): INTEGER 
@@ -56,6 +70,8 @@ feature -- Access
 		do
 			create as_path_c_string.make (as_path)
 			Result := c_git_blob_filter (a_out.item, blob.item, as_path_c_string.item, opts.item)
+		ensure
+			instance_free: class
 		end
 
 	git_blob_create_from_workdir (id: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; relative_path: STRING): INTEGER 
@@ -64,6 +80,8 @@ feature -- Access
 		do
 			create relative_path_c_string.make (relative_path)
 			Result := c_git_blob_create_from_workdir (id.item, repo.item, relative_path_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_blob_create_from_disk (id: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; path: STRING): INTEGER 
@@ -72,6 +90,8 @@ feature -- Access
 		do
 			create path_c_string.make (path)
 			Result := c_git_blob_create_from_disk (id.item, repo.item, path_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_blob_create_from_stream (a_out: GIT_WRITESTREAM_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; hintpath: STRING): INTEGER 
@@ -80,26 +100,36 @@ feature -- Access
 		do
 			create hintpath_c_string.make (hintpath)
 			Result := c_git_blob_create_from_stream (a_out.item, repo.item, hintpath_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_blob_create_from_stream_commit (a_out: GIT_OID_STRUCT_API; stream: GIT_WRITESTREAM_STRUCT_API): INTEGER 
 		do
 			Result := c_git_blob_create_from_stream_commit (a_out.item, stream.item)
+		ensure
+			instance_free: class
 		end
 
 	git_blob_create_from_buffer (id: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; buffer: POINTER; len: INTEGER): INTEGER 
 		do
 			Result := c_git_blob_create_from_buffer (id.item, repo.item, buffer, len)
+		ensure
+			instance_free: class
 		end
 
 	git_blob_is_binary (blob: GIT_BLOB_STRUCT_API): INTEGER 
 		do
 			Result := c_git_blob_is_binary (blob.item)
+		ensure
+			instance_free: class
 		end
 
 	git_blob_dup (a_out: GIT_BLOB_STRUCT_API; source: GIT_BLOB_STRUCT_API): INTEGER 
 		do
 			Result := c_git_blob_dup (a_out.item, source.item)
+		ensure
+			instance_free: class
 		end
 
 	git_blob_create_fromworkdir (id: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; relative_path: STRING): INTEGER 
@@ -108,6 +138,8 @@ feature -- Access
 		do
 			create relative_path_c_string.make (relative_path)
 			Result := c_git_blob_create_fromworkdir (id.item, repo.item, relative_path_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_blob_create_fromdisk (id: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; path: STRING): INTEGER 
@@ -116,6 +148,8 @@ feature -- Access
 		do
 			create path_c_string.make (path)
 			Result := c_git_blob_create_fromdisk (id.item, repo.item, path_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_blob_create_fromstream (a_out: GIT_WRITESTREAM_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; hintpath: STRING): INTEGER 
@@ -124,16 +158,22 @@ feature -- Access
 		do
 			create hintpath_c_string.make (hintpath)
 			Result := c_git_blob_create_fromstream (a_out.item, repo.item, hintpath_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_blob_create_fromstream_commit (a_out: GIT_OID_STRUCT_API; stream: GIT_WRITESTREAM_STRUCT_API): INTEGER 
 		do
 			Result := c_git_blob_create_fromstream_commit (a_out.item, stream.item)
+		ensure
+			instance_free: class
 		end
 
 	git_blob_create_frombuffer (id: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; buffer: POINTER; len: INTEGER): INTEGER 
 		do
 			Result := c_git_blob_create_frombuffer (id.item, repo.item, buffer, len)
+		ensure
+			instance_free: class
 		end
 
 	git_blob_filtered_content (a_out: GIT_BUF_STRUCT_API; blob: GIT_BLOB_STRUCT_API; as_path: STRING; check_for_binary_data: INTEGER): INTEGER 
@@ -142,6 +182,8 @@ feature -- Access
 		do
 			create as_path_c_string.make (as_path)
 			Result := c_git_blob_filtered_content (a_out.item, blob.item, as_path_c_string.item, check_for_binary_data)
+		ensure
+			instance_free: class
 		end
 
 feature -- Externals

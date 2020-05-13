@@ -15,12 +15,6 @@ inherit
 		redefine
 			on_prepare,
 			on_clean
-		select
-			default_create
-		end
-	GIT_CLONE
-		rename
-			default_create as default_create_cl
 		end
 
 
@@ -61,7 +55,7 @@ feature -- Test routines
 			error: INTEGER
 		do
 			create rep.make
-			error := git_clone (rep, "https://github.com/eiffel-wrap-c/WrapC",  (create {PATH}.make_current).extended ("test_wrapc").out, Void)
+			error := {GIT_CLONE}.git_clone (rep, "https://github.com/eiffel-wrap-c/WrapC",  (create {PATH}.make_current).extended ("test_wrapc").out, Void)
 			assert ("Expected 0 ", error = 0)
 		end
 

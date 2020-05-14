@@ -22,7 +22,6 @@ feature {NONE} --Initialization
 
 		do
 			create options.make
-			create grepository
 
 			make_command_line_parser
 			process_arguments
@@ -48,7 +47,7 @@ feature -- Intiialize Repository
 					-- No options were specified, so lets demonstrate the default
 					-- simple case of git_repositoy_init API usage.
 				if attached options.dir as l_dir then
-					error := grepository.git_repository_init (repo, l_dir, False)
+					error := {LIBGIT2_REPOSITORY}.git_repository_init (repo, l_dir, False)
 					if error /= 0 then
 						print ("Could not initialise repository , error code " + error.out)
 					end
@@ -65,14 +64,14 @@ feature -- Intiialize Repository
 
 				if attached options.template  as l_template then
 					iniopts.set_flags (iniopts.flags | {GIT_REPOSITORY_INIT_FLAG_T_ENUM_API}.git_repository_init_external_template)
-					iniopts.set_template_path (l_template)
+					iniopts.set_template_path (create {C_STRING}.make (l_template))
 				end
 
 				if attached options.gitdir as l_gitdir and then attached options.dir as l_dir then
 						-- If you specified a separate git directory, then initialize
 						-- the repository at the path and use the second path as the working directory of the
 						-- repository (with a git-link file)
-					iniopts.set_workdir_path (l_dir)
+					iniopts.set_workdir_path (create {C_STRING}.make (l_dir))
 					options.set_dir (l_gitdir)
 				end
 				if options.shared /= 0 then
@@ -80,16 +79,16 @@ feature -- Intiialize Repository
 				end
 
 				if attached options.dir as l_dir then
-					error := grepository.git_repository_init_ext (repo, l_dir, iniopts)
+					error := {LIBGIT2_REPOSITORY}.git_repository_init_ext (repo, l_dir, iniopts)
 				end
 			end
 
 				-- Print a message to the stdout like git init does
 			if not options.quiet then
 				if options.bare or attached options.gitdir then
-					options.set_dir (grepository.git_repository_path (repo))
+					options.set_dir ({LIBGIT2_REPOSITORY}.git_repository_path (repo))
 				else
-					options.set_dir ((create {C_STRING}.make_by_pointer (grepository.git_repository_workdir (repo))).string)
+					options.set_dir ((create {C_STRING}.make_by_pointer ({LIBGIT2_REPOSITORY}.git_repository_workdir (repo))).string)
 				end
 				if attached options.dir as l_dir then
 					print("%NInitialized empty Git Repository in " + l_dir + "%N")
@@ -102,7 +101,7 @@ feature -- Intiialize Repository
 			if	options.initial_commit then
 				create_initial_commit (repo)
 			end
-			grepository.git_repository_free (repo)
+			{LIBGIT2_REPOSITORY}.git_repository_free (repo)
 		end
 
 
@@ -115,27 +114,19 @@ feature -- Intiialize Repository
 			index: GIT_INDEX_STRUCT_API
 			tree_id, commit_id: GIT_OID_STRUCT_API
 			tree: GIT_TREE_STRUCT_API
-			signature: GIT_SIGNATURE
-			gitindex: GIT_INDEX
-			gittree: GIT_TREE
-			gitcommit: GIT_COMMIT
-
 		do
-			create signature
 			create sig.make
 			create index.make
-			create gitindex
-			create gittree
 
 				-- First use the config to initialize a commit signature for the user.		
-			if signature.git_signature_default (sig, a_repo) < 0 then
+			if {GIT_SIGNATURE}.git_signature_default (sig, a_repo) < 0 then
 				print ("%N Unable to create a commit signature.%NPherhaps 'user.name' and 'user.email' are not set")
 				{EXCEPTIONS}.die (1)
 			end
 
 				-- 	Now	let's create an empty tree for this commit
 
-			if grepository.git_repository_index (index, a_repo) < 0 then
+			if {LIBGIT2_REPOSITORY}.git_repository_index (index, a_repo) < 0 then
 				print ("%N Could not open repository index%N")
 				{EXCEPTIONS}.die (1)
 			end
@@ -145,15 +136,15 @@ feature -- Intiialize Repository
 			 	-- leave it empty for now.
 
 			create tree_id.make
-			if gitindex.git_index_write_tree (tree_id, index) < 0 then
+			if {GIT_INDEX}.git_index_write_tree (tree_id, index) < 0 then
 				print ("%NUnable to write initial tree from index%N")
 				{EXCEPTIONS}.die (1)
 			end
 
-			gitindex.git_index_free (index)
+			{GIT_INDEX}.git_index_free (index)
 
 			create tree.make
-			if gittree.git_tree_lookup (tree, a_repo, tree_id) < 0 then
+			if {GIT_TREE}.git_tree_lookup (tree, a_repo, tree_id) < 0 then
 				print ("%N Could not look up initial tree%N")
 				{EXCEPTIONS}.die (1)
 			end
@@ -164,15 +155,14 @@ feature -- Intiialize Repository
 				-- but here this is the first commit so there will be no parent.
 
 			create commit_id.make
-			create gitcommit
-			if gitcommit.git_commit_create_v (commit_id,
+			if {GIT_COMMIT}.git_commit_create_v (commit_id,
 						a_repo, "HEAD", sig, sig, Void, "Initial commmit", tree, 0) < 0
 			then
 				print ("Could not create the initial commit")
 				{EXCEPTIONS}.die (1)
 			end
-			gittree.git_tree_free (tree)
-			signature.git_signature_free (sig)
+			{GIT_TREE}.git_tree_free (tree)
+			{GIT_SIGNATURE}.git_signature_free (sig)
 		end
 
 
@@ -195,7 +185,7 @@ feature	{NONE} -- Process Arguments
 			end
 			if match_long_option ("template") then
 				if is_next_option_long_option and then has_next_option_value then
-					options.set_template (next_option_value)
+					options.set_template (next_option_value.to_string_8)
 					consume_option
 				else
 					print("%N Missing command line parameter --template=<dir>")
@@ -207,7 +197,7 @@ feature	{NONE} -- Process Arguments
 			if match_long_option ("shared") then
 				options.set_shared ({GIT_REPOSITORY_INIT_MODE_T_ENUM_API}.git_repository_init_shared_group)
 				if is_next_option_long_option and then has_next_option_value then
-					shared_value := next_option_value
+					shared_value := next_option_value.to_string_8
 					if shared_value.is_case_insensitive_equal_general ("false") or else shared_value.is_case_insensitive_equal_general ("umask") then
 						options.set_shared ({GIT_REPOSITORY_INIT_MODE_T_ENUM_API}.git_repository_init_shared_umask)
 					elseif shared_value.is_case_insensitive_equal_general ("true") or else shared_value.is_case_insensitive_equal_general ("group") then
@@ -229,11 +219,11 @@ feature	{NONE} -- Process Arguments
 			end
 
 			if match_long_option ("separate-git-dir") then
-				options.set_gitdir (next_option_value)
+				options.set_gitdir (next_option_value.to_string_8)
 				consume_option
 			end
 			if  has_next_option and then not is_next_option_long_option then
-				options.set_dir (next_option)
+				options.set_dir (next_option.to_string_8)
 			else
 				print("%N Missing command line parameter <directory>%N")
 				usage
@@ -259,6 +249,5 @@ feature	{NONE} -- Process Arguments
 feature -- Options
 
 	options: OPTIONS
-	grepository: LIBGIT2_REPOSITORY
 
 end

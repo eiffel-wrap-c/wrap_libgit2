@@ -21,7 +21,6 @@ feature {NONE} --Initialization
 	make
 
 		do
-			create git_repository
 			create options.make
 			create path.make_from_string (".")
 			make_command_line_parser
@@ -38,7 +37,6 @@ feature -- Repository
 			index: GIT_INDEX_STRUCT_API
 			repo: GIT_REPOSITORY_STRUCT_API
 			entry: GIT_INDEX_ENTRY_STRUCT_API
-			git_index: GIT_INDEX
 			count: INTEGER
 		do
 			ini := {LIBGIT2_INITIALIZER_API}.git_libgit2_init
@@ -48,14 +46,13 @@ feature -- Repository
 
 			create index.make
 			create repo.make
-			create git_index
 
-			if git_repository.git_repository_open_ext (repo, (create {PATH}.make_from_string (path)).out, 0, Void) < 0 then
+			if {LIBGIT2_REPOSITORY}.git_repository_open_ext (repo, (create {PATH}.make_from_string (path)).out, 0, Void) < 0 then
 				print ("%NCould not open repository")
 				{EXCEPTIONS}.die (1)
 			end
 
-			if git_repository.git_repository_index (index, repo) < 0 then
+			if {LIBGIT2_REPOSITORY}.git_repository_index (index, repo) < 0 then
 				print ("%NCould not open repository index")
 				{EXCEPTIONS}.die (1)
 			end
@@ -64,10 +61,10 @@ feature -- Repository
 
 				--  if there are no files explicitly listed by the user print all entries in the index
 			if options.files.is_empty then
-				count := git_index.git_index_entrycount (index)
+				count := {GIT_INDEX}.git_index_entrycount (index)
 
 				across 1 |..| count as ic loop
-					if attached {GIT_INDEX_ENTRY_STRUCT_API} git_index.git_index_get_byindex (index, ic.item - 1) as l_entry and then
+					if attached {GIT_INDEX_ENTRY_STRUCT_API} {GIT_INDEX}.git_index_get_byindex (index, ic.item - 1) as l_entry and then
 						attached l_entry.path as l_path
 					then
 						print (l_path)
@@ -77,7 +74,7 @@ feature -- Repository
 			else
 				-- loop through the files found in the args and print them if they exist */
 				across options.files as ic loop
-					if attached {GIT_INDEX_ENTRY_STRUCT_API} git_index.git_index_get_bypath (index, ic.item, {GIT_INDEX_STAGE_T_ENUM_API}.git_index_stage_normal)  then
+					if attached {GIT_INDEX_ENTRY_STRUCT_API} {GIT_INDEX}.git_index_get_bypath (index, ic.item, {GIT_INDEX_STAGE_T_ENUM_API}.git_index_stage_normal)  then
 						print (path)
 						io.put_new_line
 					elseif options.error_unmatch then
@@ -87,8 +84,8 @@ feature -- Repository
 				end
 			end
 
-			git_index.git_index_free (index)
-			git_repository.git_repository_free (repo)
+			{GIT_INDEX}.git_index_free (index)
+			{LIBGIT2_REPOSITORY}.git_repository_free (repo)
 		end
 
 feature	{NONE} -- Process Arguments
@@ -96,12 +93,10 @@ feature	{NONE} -- Process Arguments
 
 	process_arguments
 			-- Process command line arguments
-		local
-			shared_value: STRING
 		do
 			if match_long_option ("git-dir") then
 				if is_next_option_long_option and then has_next_option_value then
-					create path.make_from_string (next_option_value)
+					create path.make_from_string (next_option_value.to_string_8)
 					consume_option
 				else
 					print("%N Missing command line parameter --git-dir=<dir>")
@@ -118,14 +113,14 @@ feature	{NONE} -- Process Arguments
 
 			from
 				if  has_next_option and then not is_next_option_long_option then
-					options.add_file (next_option)
+					options.add_file (next_option.to_string_8)
 					consume_option
 				end
 			until
 				not has_next_option
 			loop
 				if has_next_option and then not is_next_option_long_option then
-					options.add_file (next_option)
+					options.add_file (next_option.to_string_8)
 					consume_option
 				else
 					print("%N Wrong command line parameter")
@@ -153,7 +148,6 @@ feature	{NONE} -- Process Arguments
 
 feature -- Options
 
-	git_repository: LIBGIT2_REPOSITORY
 	path: STRING
 	options: OPTIONS
 

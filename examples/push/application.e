@@ -23,7 +23,6 @@ feature {NONE} --Initialization
 	make
 
 		do
-			create git_repository
 			path := "."
 			remote := ""
 			branch := ""
@@ -40,9 +39,7 @@ feature -- Intiialize Repository
 		local
 			ini: INTEGER
 			repo: GIT_REPOSITORY_STRUCT_API
-			iniopts: GIT_REPOSITORY_INIT_OPTIONS_STRUCT_API
 			l_remote: GIT_REMOTE_STRUCT_API
-			git_remote: GIT_REMOTE
 			refspec: STRING
 			l_options: GIT_PUSH_OPTIONS_STRUCT_API
 			a_array: GIT_STRARRAY_STRUCT_API
@@ -55,7 +52,7 @@ feature -- Intiialize Repository
 			end
 			create repo.make
 
-			if git_repository.git_repository_open (repo, (create {PATH}.make_from_string (path)).out) < 0 then
+			if {LIBGIT2_REPOSITORY}.git_repository_open (repo, (create {PATH}.make_from_string (path)).out) < 0 then
 				print ("%NCould not open repository")
 				{EXCEPTIONS}.die (1)
 			end
@@ -64,14 +61,13 @@ feature -- Intiialize Repository
 				-- get the remote
 			create l_remote.make
 
-			create git_remote
-			if git_remote.git_remote_lookup (l_remote, repo, remote) < 0 then
+			if {GIT_REMOTE}.git_remote_lookup (l_remote, repo, remote) < 0 then
 				print ("%NCould not get remote repository " + remote)
 				{EXCEPTIONS}.die (1)
 			end
 
 			create callbacks.make
-			if git_remote.git_remote_init_callbacks (callbacks, 1) < 0 then
+			if {GIT_REMOTE}.git_remote_init_callbacks (callbacks, 1) < 0 then
 				print ("%NCould not intialize callback ")
 				{EXCEPTIONS}.die (1)
 			end
@@ -81,7 +77,7 @@ feature -- Intiialize Repository
 			callbacks.set_credentials (callback_dispatcher.c_dispatcher_1)
 
 				-- connect to remote
-			if git_remote.git_remote_connect (l_remote, {GIT_DIRECTION_ENUM_API}.git_direction_push, callbacks, Void, Void) < 0 then
+			if {GIT_REMOTE}.git_remote_connect (l_remote, {GIT_DIRECTION_ENUM_API}.git_direction_push, callbacks, Void, Void) < 0 then
 				print ("%NCould not connect to remote repository " + remote)
 				{EXCEPTIONS}.die (1)
 			end
@@ -91,14 +87,14 @@ feature -- Intiialize Repository
 			create refspec.make_from_string ("refs/heads/")
 			refspec.append (branch)
 
-			if git_remote.git_remote_add_push (repo, remote, refspec + ":" + refspec) < 0 then
+			if {GIT_REMOTE}.git_remote_add_push (repo, remote, refspec + ":" + refspec) < 0 then
 				print ("%NCould not add push ")
 				{EXCEPTIONS}.die (1)
 			end
 
 				-- configure options
 			create l_options.make
-			if git_remote.git_push_init_options (l_options, 1) < 0 then
+			if {GIT_REMOTE}.git_push_init_options (l_options, 1) < 0 then
 				print ("%NCould not configure options ")
 				{EXCEPTIONS}.die (1)
 			end
@@ -107,13 +103,13 @@ feature -- Intiialize Repository
 			init_array (a_array, {ARRAY [STRING]}<<refspec + ":" + refspec>>)
 
 				-- do the push
-			if git_remote.git_remote_upload (l_remote, a_array, l_options) < 0 then
+			if {GIT_REMOTE}.git_remote_upload (l_remote, a_array, l_options) < 0 then
 				print ("%NCould not do push ")
 				{EXCEPTIONS}.die (1)
 			end
 
-			git_repository.git_repository_free (repo)
-			git_remote.git_remote_free (l_remote)
+			{LIBGIT2_REPOSITORY}.git_repository_free (repo)
+			{GIT_REMOTE}.git_remote_free (l_remote)
 
 		end
 
@@ -136,7 +132,6 @@ feature -- Intiialize Repository
 			l_user_name: STRING
 			exit: BOOLEAN
 			cred: GIT_CREDENTIAL_STRUCT_API
-			git_cred: GIT_CREDENTIALS_API
 			l_password: STRING
 			l_privkey: STRING
 			l_pubkey: STRING
@@ -163,23 +158,20 @@ feature -- Intiialize Repository
 				end
 				create l_pubkey.make_from_string (l_password)
 				l_pubkey.append_string (".pub")
-				create git_cred
 				create cred.make_by_pointer (a_cred)
-				Result := git_cred.git_cred_ssh_key_new(cred, l_user_name, l_pubkey, l_privkey, l_password)
+				Result := {GIT_CREDENTIALS_API}.git_cred_ssh_key_new(cred, l_user_name, l_pubkey, l_privkey, l_password)
 			elseif not exit and then a_allowed_types & {GIT_CREDENTIAL_T_ENUM_API}.git_credential_userpass_plaintext > 0 then
 				print ("%NPassword:")
 				l_password := read_password
 				exit := l_password.is_empty
 				if not exit then
-					create git_cred
 					create cred.make_by_pointer (a_cred)
-					Result := git_cred.git_cred_userpass_plaintext_new(cred, l_user_name, l_password)
+					Result := {GIT_CREDENTIALS_API}.git_cred_userpass_plaintext_new(cred, l_user_name, l_password)
 				end
 			else
 				if not exit then
-					create git_cred
 					create cred.make_by_pointer (a_cred)
-					Result := git_cred.git_cred_username_new (cred, l_user_name)
+					Result := {GIT_CREDENTIALS_API}.git_cred_username_new (cred, l_user_name)
 				end
 			end
 
@@ -189,12 +181,10 @@ feature	{NONE} -- Process Arguments
 
 	process_arguments
 			-- Process command line arguments
-		local
-			shared_value: STRING
 		do
 			if match_long_option ("git-dir") then
 				if is_next_option_long_option and then has_next_option_value then
-					create path.make_from_string (next_option_value)
+					create path.make_from_string (next_option_value.to_string_8)
 					consume_option
 				else
 					print("%N Missing command line parameter --git-dir=<dir>")
@@ -203,7 +193,7 @@ feature	{NONE} -- Process Arguments
 				end
 			end
 			if  has_next_option and then not is_next_option_long_option then
-				create remote.make_from_string (next_option)
+				create remote.make_from_string (next_option.to_string_8)
 				consume_option
 			else
 				print("%N Missing command line parameter <remote>%N")
@@ -211,7 +201,7 @@ feature	{NONE} -- Process Arguments
 				{EXCEPTIONS}.die (1)
 			end
 			if  has_next_option and then not is_next_option_long_option then
-				create branch.make_from_string (next_option)
+				create branch.make_from_string (next_option.to_string_8)
 				consume_option
 			else
 				print("%N Missing command line parameter <branch>%N")
@@ -292,6 +282,5 @@ feature -- Options
 	path: STRING
 	remote: STRING
 	branch: STRING
-	git_repository: LIBGIT2_REPOSITORY
 
 end

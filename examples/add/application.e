@@ -21,7 +21,6 @@ feature {NONE} --Initialization
 	make
 
 		do
-			create git_repository
 			create path.make_from_string (".")
 			create files.make (1)
 
@@ -38,11 +37,9 @@ feature -- Repository
 			ini: INTEGER
 			index: GIT_INDEX_STRUCT_API
 			array: GIT_STRARRAY_STRUCT_API
-			count: INTEGER
 			payload: PAYLOAD
 			matched_cb: GIT_INDEX_MATCHED_PATH_CB_DISPATCHER
 			repo: GIT_REPOSITORY_STRUCT_API
-			git_index: GIT_INDEX_API
 			callback: POINTER
 		do
 			ini := {LIBGIT2_INITIALIZER_API}.git_libgit2_init
@@ -55,12 +52,12 @@ feature -- Repository
 			create payload
 			create repo.make
 
-			if git_repository.git_repository_open (repo, (create {PATH}.make_from_string (path)).out) < 0 then
+			if {LIBGIT2_REPOSITORY}.git_repository_open (repo, (create {PATH}.make_from_string (path)).out) < 0 then
 				print ("%NCould not open repository")
 				{EXCEPTIONS}.die (1)
 			end
 
-			if git_repository.git_repository_index (index, repo) < 0 then
+			if {LIBGIT2_REPOSITORY}.git_repository_index (index, repo) < 0 then
 				print ("%NCould not open repository index")
 				{EXCEPTIONS}.die (1)
 			end
@@ -80,16 +77,15 @@ feature -- Repository
 
 			callback := if attached matched_cb as l_matched_cb then l_matched_cb.c_dispatcher_1 else default_pointer end
 
-			create git_index
 			if (options & UPDATE) /= 0 then
-				ini := git_index.git_index_update_all (index, array, callback, serialize (payload))
+				ini := {GIT_INDEX_API}.git_index_update_all (index, array, callback, serialize (payload))
 			else
-				ini := git_index.git_index_add_all (index, array, 0,  callback, serialize (payload))
+				ini := {GIT_INDEX_API}.git_index_add_all (index, array, 0,  callback, serialize (payload))
 			end
 
 				-- Clenup memory
-			ini := git_index.git_index_write (index)
-			git_index.git_index_free (index)
+			ini := {GIT_INDEX_API}.git_index_write (index)
+			{GIT_INDEX_API}.git_index_free (index)
 		end
 
 	print_matched_cb (a_path: POINTER; a_matched_pathspec: POINTER; a_payload: POINTER): INTEGER
@@ -98,13 +94,9 @@ feature -- Repository
 			--  It makes uses of the callback's ability to abort the action.
 		local
 			l_payload: PAYLOAD
-			ret: INTEGER
 			status: INTEGER
-			git_status: GIT_STATUS
 			repo: GIT_REPOSITORY_STRUCT_API
-
 		do
-			create git_status
 			l_payload := deserialize (a_payload)
 			if attached l_payload then
 				repo := if attached l_payload.repo as l_repo then l_repo else create {GIT_REPOSITORY_STRUCT_API}.make end
@@ -112,7 +104,7 @@ feature -- Repository
 				create repo.make
 			end
 		 		--	Get the file status
-		 	if git_status.git_status_file ($status, repo, (create {C_STRING}.make_by_pointer (a_path)).string) < 0 then
+		 	if {GIT_STATUS}.git_status_file ($status, repo, (create {C_STRING}.make_by_pointer (a_path)).string) < 0 then
 				Result := -1
 		 	end
 
@@ -135,8 +127,6 @@ feature	{NONE} -- Process Arguments
 
 	process_arguments
 			-- Process command line arguments
-		local
-			shared_value: STRING
 		do
 			if match_long_option ("git-dir") then
 				if is_next_option_long_option and then has_next_option_value then
@@ -207,7 +197,7 @@ feature	{NONE} -- Process Arguments
 
 	init_array (a_array: GIT_STRARRAY_STRUCT_API)
 		local
-			l_array: ARRAY [STRING]
+			l_array: ARRAY [STRING_32]
 			mp: MANAGED_POINTER
 
 		do
@@ -263,9 +253,8 @@ feature	{NONE} -- Process Arguments
 
 feature -- Options
 
-	git_repository: LIBGIT2_REPOSITORY
-	path: STRING
-	files: ARRAYED_LIST [STRING]
+	path: STRING_32
+	files: ARRAYED_LIST [STRING_32]
 	options: INTEGER
 
 	SKIP: INTEGER = 1

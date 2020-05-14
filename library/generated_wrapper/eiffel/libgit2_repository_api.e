@@ -15,16 +15,22 @@ feature -- Access
 		do
 			create path_c_string.make (path)
 			Result := c_git_repository_open (a_out.item, path_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_open_from_worktree (a_out: GIT_REPOSITORY_STRUCT_API; wt: GIT_WORKTREE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_repository_open_from_worktree (a_out.item, wt.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_wrap_odb (a_out: GIT_REPOSITORY_STRUCT_API; odb: GIT_ODB_STRUCT_API): INTEGER 
 		do
 			Result := c_git_repository_wrap_odb (a_out.item, odb.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_discover (a_out: GIT_BUF_STRUCT_API; start_path: STRING; across_fs: INTEGER; ceiling_dirs: STRING): INTEGER 
@@ -35,6 +41,8 @@ feature -- Access
 			create start_path_c_string.make (start_path)
 			create ceiling_dirs_c_string.make (ceiling_dirs)
 			Result := c_git_repository_discover (a_out.item, start_path_c_string.item, across_fs, ceiling_dirs_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_open_ext (a_out: GIT_REPOSITORY_STRUCT_API; path: STRING; flags: INTEGER; ceiling_dirs: STRING): INTEGER 
@@ -45,6 +53,8 @@ feature -- Access
 			create path_c_string.make (path)
 			create ceiling_dirs_c_string.make (ceiling_dirs)
 			Result := c_git_repository_open_ext (a_out.item, path_c_string.item, flags, ceiling_dirs_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_open_bare (a_out: GIT_REPOSITORY_STRUCT_API; bare_path: STRING): INTEGER 
@@ -53,11 +63,15 @@ feature -- Access
 		do
 			create bare_path_c_string.make (bare_path)
 			Result := c_git_repository_open_bare (a_out.item, bare_path_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_free (repo: GIT_REPOSITORY_STRUCT_API) 
 		do
 			c_git_repository_free (repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_init (a_out: GIT_REPOSITORY_STRUCT_API; path: STRING; is_bare: INTEGER): INTEGER 
@@ -66,11 +80,15 @@ feature -- Access
 		do
 			create path_c_string.make (path)
 			Result := c_git_repository_init (a_out.item, path_c_string.item, is_bare)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_init_options_init (opts: GIT_REPOSITORY_INIT_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
 			Result := c_git_repository_init_options_init (opts.item, version)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_init_ext (a_out: GIT_REPOSITORY_STRUCT_API; repo_path: STRING; opts: GIT_REPOSITORY_INIT_OPTIONS_STRUCT_API): INTEGER 
@@ -79,11 +97,15 @@ feature -- Access
 		do
 			create repo_path_c_string.make (repo_path)
 			Result := c_git_repository_init_ext (a_out.item, repo_path_c_string.item, opts.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_head (a_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_repository_head (a_out.item, repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_head_for_worktree (a_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING): INTEGER 
@@ -92,11 +114,15 @@ feature -- Access
 		do
 			create name_c_string.make (name)
 			Result := c_git_repository_head_for_worktree (a_out.item, repo.item, name_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_head_detached (repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_repository_head_detached (repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_head_detached_for_worktree (repo: GIT_REPOSITORY_STRUCT_API; name: STRING): INTEGER 
@@ -105,36 +131,50 @@ feature -- Access
 		do
 			create name_c_string.make (name)
 			Result := c_git_repository_head_detached_for_worktree (repo.item, name_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_head_unborn (repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_repository_head_unborn (repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_is_empty (repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_repository_is_empty (repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_item_path (a_out: GIT_BUF_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; item: INTEGER): INTEGER 
 		do
 			Result := c_git_repository_item_path (a_out.item, repo.item, item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_path (repo: GIT_REPOSITORY_STRUCT_API): POINTER 
 		do
 			Result := c_git_repository_path (repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_workdir (repo: GIT_REPOSITORY_STRUCT_API): POINTER 
 		do
 			Result := c_git_repository_workdir (repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_commondir (repo: GIT_REPOSITORY_STRUCT_API): POINTER 
 		do
 			Result := c_git_repository_commondir (repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_set_workdir (repo: GIT_REPOSITORY_STRUCT_API; workdir: STRING; update_gitlink: INTEGER): INTEGER 
@@ -143,66 +183,92 @@ feature -- Access
 		do
 			create workdir_c_string.make (workdir)
 			Result := c_git_repository_set_workdir (repo.item, workdir_c_string.item, update_gitlink)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_is_bare (repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_repository_is_bare (repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_is_worktree (repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_repository_is_worktree (repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_config (a_out: GIT_CONFIG_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_repository_config (a_out.item, repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_config_snapshot (a_out: GIT_CONFIG_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_repository_config_snapshot (a_out.item, repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_odb (a_out: GIT_ODB_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_repository_odb (a_out.item, repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_refdb (a_out: GIT_REFDB_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_repository_refdb (a_out.item, repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_index (a_out: GIT_INDEX_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_repository_index (a_out.item, repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_message (a_out: GIT_BUF_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_repository_message (a_out.item, repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_message_remove (repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_repository_message_remove (repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_state_cleanup (repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_repository_state_cleanup (repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_fetchhead_foreach (repo: GIT_REPOSITORY_STRUCT_API; callback: POINTER; payload: POINTER): INTEGER 
 		do
 			Result := c_git_repository_fetchhead_foreach (repo.item, callback, payload)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_mergehead_foreach (repo: GIT_REPOSITORY_STRUCT_API; callback: POINTER; payload: POINTER): INTEGER 
 		do
 			Result := c_git_repository_mergehead_foreach (repo.item, callback, payload)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_hashfile (a_out: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; path: STRING; type: INTEGER; as_path: STRING): INTEGER 
@@ -213,6 +279,8 @@ feature -- Access
 			create path_c_string.make (path)
 			create as_path_c_string.make (as_path)
 			Result := c_git_repository_hashfile (a_out.item, repo.item, path_c_string.item, type, as_path_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_set_head (repo: GIT_REPOSITORY_STRUCT_API; refname: STRING): INTEGER 
@@ -221,26 +289,36 @@ feature -- Access
 		do
 			create refname_c_string.make (refname)
 			Result := c_git_repository_set_head (repo.item, refname_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_set_head_detached (repo: GIT_REPOSITORY_STRUCT_API; commitish: GIT_OID_STRUCT_API): INTEGER 
 		do
 			Result := c_git_repository_set_head_detached (repo.item, commitish.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_set_head_detached_from_annotated (repo: GIT_REPOSITORY_STRUCT_API; commitish: GIT_ANNOTATED_COMMIT_STRUCT_API): INTEGER 
 		do
 			Result := c_git_repository_set_head_detached_from_annotated (repo.item, commitish.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_detach_head (repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_repository_detach_head (repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_state (repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_repository_state (repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_set_namespace (repo: GIT_REPOSITORY_STRUCT_API; nmspace: STRING): INTEGER 
@@ -249,21 +327,29 @@ feature -- Access
 		do
 			create nmspace_c_string.make (nmspace)
 			Result := c_git_repository_set_namespace (repo.item, nmspace_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_get_namespace (repo: GIT_REPOSITORY_STRUCT_API): POINTER 
 		do
 			Result := c_git_repository_get_namespace (repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_is_shallow (repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_repository_is_shallow (repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_ident (name: POINTER; email: POINTER; repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_repository_ident (name, email, repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_set_ident (repo: GIT_REPOSITORY_STRUCT_API; name: STRING; email: STRING): INTEGER 
@@ -274,11 +360,15 @@ feature -- Access
 			create name_c_string.make (name)
 			create email_c_string.make (email)
 			Result := c_git_repository_set_ident (repo.item, name_c_string.item, email_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_init_init_options (opts: GIT_REPOSITORY_INIT_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
 			Result := c_git_repository_init_init_options (opts.item, version)
+		ensure
+			instance_free: class
 		end
 
 feature -- Externals

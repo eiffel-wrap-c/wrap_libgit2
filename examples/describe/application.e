@@ -21,10 +21,9 @@ feature {NONE} --Initialization
 	make
 
 		do
-			create git_repository
 
 			make_command_line_parser
---			process_arguments
+			process_arguments
 			describe_options
 		end
 
@@ -45,7 +44,7 @@ feature -- Describe
 			create options.make
 			create repo.make
 
-			if git_repository.git_repository_open_ext (repo, ".", 0, Void) < 0 then
+			if {LIBGIT2_REPOSITORY}.git_repository_open_ext (repo, ".", 0, Void) < 0 then
 				print ("%NCould not open repository")
 				{EXCEPTIONS}.die (1)
 			end
@@ -106,19 +105,17 @@ feature -- Describe
 			commit: GIT_OBJECT_STRUCT_API
 			describe_result: GIT_DESCRIBE_RESULT_STRUCT_API
 			buf: GIT_BUF_STRUCT_API
-			git_describe: GIT_DESCRIBE
 		do
-			create git_describe
 			if attached a_rev then
 
 			else
 				create describe_result.make
-				if git_describe.git_describe_workdir (describe_result, a_repo, a_options.describe_options) < 0 then
+				if {GIT_DESCRIBE}.git_describe_workdir (describe_result, a_repo, a_options.describe_options) < 0 then
 					print ("%NFailed to describe workdir")
 					{EXCEPTIONS}.die (1)
 				end
 				create buf.make
-				if git_describe.git_describe_format (buf, describe_result, a_options.format_options) < 0 then
+				if {GIT_DESCRIBE}.git_describe_format (buf, describe_result, a_options.format_options) < 0 then
 					print ("%NFailed to describe rev")
 				end
 				if attached buf.ptr as l_string then
@@ -196,12 +193,5 @@ feature	{NONE} -- Process Arguments
 			print (str)
 			print("%N")
 		end
-
-
-
-feature -- Options
-
-	git_repository: LIBGIT2_REPOSITORY
-
 
 end

@@ -1,7 +1,8 @@
 note
-	description: "Summary description for {GIT_CLONE}."
+	description: "Object representing clone functions"
 	date: "$Date$"
 	revision: "$Revision$"
+	EIS: "name=clone functions", "src=https://libgit2.org/libgit2/#v1.0.0/group/clone", "protocol=uri"
 
 class
 	GIT_CLONE
@@ -17,6 +18,8 @@ inherit
 feature -- Access
 
 	git_clone (a_out: GIT_REPOSITORY_STRUCT_API; url: STRING; local_path: STRING; options: detachable GIT_CLONE_OPTIONS_STRUCT_API): INTEGER
+		note
+			EIS:"name=git_clone", "src=https://libgit2.org/libgit2/#v1.0.0/group/clone/git_clone", "protocol=uri"
 		local
 			url_c_string: C_STRING
 			local_path_c_string: C_STRING
@@ -32,6 +35,8 @@ feature -- Access
 			if l_ptr /= default_pointer then
 				a_out.make_by_pointer (l_ptr)
 			end
+		ensure
+			instance_free: class
 		end
 
 

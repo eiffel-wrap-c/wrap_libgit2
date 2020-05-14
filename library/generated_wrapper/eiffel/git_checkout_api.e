@@ -12,26 +12,36 @@ feature -- Access
 	git_checkout_options_init (opts: GIT_CHECKOUT_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
 			Result := c_git_checkout_options_init (opts.item, version)
+		ensure
+			instance_free: class
 		end
 
 	git_checkout_head (repo: GIT_REPOSITORY_STRUCT_API; opts: GIT_CHECKOUT_OPTIONS_STRUCT_API): INTEGER 
 		do
 			Result := c_git_checkout_head (repo.item, opts.item)
+		ensure
+			instance_free: class
 		end
 
 	git_checkout_index (repo: GIT_REPOSITORY_STRUCT_API; index: GIT_INDEX_STRUCT_API; opts: GIT_CHECKOUT_OPTIONS_STRUCT_API): INTEGER 
 		do
 			Result := c_git_checkout_index (repo.item, index.item, opts.item)
+		ensure
+			instance_free: class
 		end
 
 	git_checkout_tree (repo: GIT_REPOSITORY_STRUCT_API; treeish: GIT_OBJECT_STRUCT_API; opts: GIT_CHECKOUT_OPTIONS_STRUCT_API): INTEGER 
 		do
 			Result := c_git_checkout_tree (repo.item, treeish.item, opts.item)
+		ensure
+			instance_free: class
 		end
 
 	git_checkout_init_options (opts: GIT_CHECKOUT_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
 			Result := c_git_checkout_init_options (opts.item, version)
+		ensure
+			instance_free: class
 		end
 
 feature -- Externals

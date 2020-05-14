@@ -314,88 +314,88 @@ feature {ANY} -- Member Access
 			baseline_index_set: attached baseline_index as l_value implies l_value.item = a_value.item
 		end
 
-	target_directory:  detachable STRING
+	target_directory:  detachable C_STRING
 			-- Access member `target_directory`
 		require
 			exists: exists
 		do
 			if attached c_target_directory (item) as l_ptr then
-				Result := (create {C_STRING}.make_by_pointer (l_ptr)).string
+				create Result.make_by_pointer (l_ptr)
 			end
 		ensure
 			result_void: Result = Void implies c_target_directory (item) = default_pointer
-			result_not_void: attached Result as l_result implies l_result.same_string ((create {C_STRING}.make_by_pointer (item)).string)
+			result_not_void: attached Result as l_result implies l_result.string.same_string ((create {C_STRING}.make_by_pointer (item)).string)
 		end
 
-	set_target_directory (a_value: STRING) 
+	set_target_directory (a_value: C_STRING) 
 			-- Change the value of member `target_directory` to `a_value`.
 		require
 			exists: exists
 		do
-			set_c_target_directory (item, (create {C_STRING}.make (a_value)).item )
+			set_c_target_directory (item, a_value.item )
 		end
 
-	ancestor_label:  detachable STRING
+	ancestor_label:  detachable C_STRING
 			-- Access member `ancestor_label`
 		require
 			exists: exists
 		do
 			if attached c_ancestor_label (item) as l_ptr then
-				Result := (create {C_STRING}.make_by_pointer (l_ptr)).string
+				create Result.make_by_pointer (l_ptr)
 			end
 		ensure
 			result_void: Result = Void implies c_ancestor_label (item) = default_pointer
-			result_not_void: attached Result as l_result implies l_result.same_string ((create {C_STRING}.make_by_pointer (item)).string)
+			result_not_void: attached Result as l_result implies l_result.string.same_string ((create {C_STRING}.make_by_pointer (item)).string)
 		end
 
-	set_ancestor_label (a_value: STRING) 
+	set_ancestor_label (a_value: C_STRING) 
 			-- Change the value of member `ancestor_label` to `a_value`.
 		require
 			exists: exists
 		do
-			set_c_ancestor_label (item, (create {C_STRING}.make (a_value)).item )
+			set_c_ancestor_label (item, a_value.item )
 		end
 
-	our_label:  detachable STRING
+	our_label:  detachable C_STRING
 			-- Access member `our_label`
 		require
 			exists: exists
 		do
 			if attached c_our_label (item) as l_ptr then
-				Result := (create {C_STRING}.make_by_pointer (l_ptr)).string
+				create Result.make_by_pointer (l_ptr)
 			end
 		ensure
 			result_void: Result = Void implies c_our_label (item) = default_pointer
-			result_not_void: attached Result as l_result implies l_result.same_string ((create {C_STRING}.make_by_pointer (item)).string)
+			result_not_void: attached Result as l_result implies l_result.string.same_string ((create {C_STRING}.make_by_pointer (item)).string)
 		end
 
-	set_our_label (a_value: STRING) 
+	set_our_label (a_value: C_STRING) 
 			-- Change the value of member `our_label` to `a_value`.
 		require
 			exists: exists
 		do
-			set_c_our_label (item, (create {C_STRING}.make (a_value)).item )
+			set_c_our_label (item, a_value.item )
 		end
 
-	their_label:  detachable STRING
+	their_label:  detachable C_STRING
 			-- Access member `their_label`
 		require
 			exists: exists
 		do
 			if attached c_their_label (item) as l_ptr then
-				Result := (create {C_STRING}.make_by_pointer (l_ptr)).string
+				create Result.make_by_pointer (l_ptr)
 			end
 		ensure
 			result_void: Result = Void implies c_their_label (item) = default_pointer
-			result_not_void: attached Result as l_result implies l_result.same_string ((create {C_STRING}.make_by_pointer (item)).string)
+			result_not_void: attached Result as l_result implies l_result.string.same_string ((create {C_STRING}.make_by_pointer (item)).string)
 		end
 
-	set_their_label (a_value: STRING) 
+	set_their_label (a_value: C_STRING) 
 			-- Change the value of member `their_label` to `a_value`.
 		require
 			exists: exists
 		do
-			set_c_their_label (item, (create {C_STRING}.make (a_value)).item )
+			set_c_their_label (item, a_value.item )
 		end
 
 	perfdata_cb: POINTER

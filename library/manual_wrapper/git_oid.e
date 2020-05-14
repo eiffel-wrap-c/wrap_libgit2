@@ -1,7 +1,8 @@
 note
-	description: "Summary description for {GIT_OID}."
+	description: "Object representing OID functions"
 	date: "$Date$"
 	revision: "$Revision$"
+	eis: "name=Oid functions", "src=https://libgit2.org/libgit2/#v1.0.0/group/oid", "protocol=uri"
 
 class
 	GIT_OID
@@ -18,16 +19,21 @@ inherit
 feature -- Access
 
 	git_oid_fromstr (a_out: GIT_OID_STRUCT_API; str: STRING): INTEGER
+		note
+			eis: "name=git_oid_fromstr", "src=https://libgit2.org/libgit2/#v1.0.0/group/oid/git_oid_fromstr", "protocol=uri"
 		local
 			str_c_string: C_STRING
-			l_ptr: POINTER
 		do
 			create str_c_string.make (str)
 			Result := c_git_oid_fromstr (a_out.item, str_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_oid_fmt (a_out: STRING; id: GIT_OID_STRUCT_API)
 			-- Format a git_oid into a hex string.
+		note
+			eis: "name=git_oid_fmt", "src=https://libgit2.org/libgit2/#v1.0.0/group/oid/git_oid_fmt", "protocol=uri"
 		require
 			valid_length: a_out.count = {LIBGIT2_CONSTANTS}.GIT_OID_HEXSZ + 1
 			--has_null_terminator: a_out.at (a_out.count).is_equal ('%U')
@@ -40,6 +46,8 @@ feature -- Access
 			create c_str.make (a_out)
 			l_ret := c_git_oid_fmt (c_str.item, id.item)
 			a_out.from_c (c_str.item)
+		ensure
+			instance_free: class
 		end
 
 

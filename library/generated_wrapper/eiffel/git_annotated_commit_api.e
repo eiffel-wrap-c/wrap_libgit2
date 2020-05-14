@@ -12,6 +12,8 @@ feature -- Access
 	git_annotated_commit_from_ref (a_out: GIT_ANNOTATED_COMMIT_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; ref: GIT_REFERENCE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_annotated_commit_from_ref (a_out.item, repo.item, ref.item)
+		ensure
+			instance_free: class
 		end
 
 	git_annotated_commit_from_fetchhead (a_out: GIT_ANNOTATED_COMMIT_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; branch_name: STRING; remote_url: STRING; id: GIT_OID_STRUCT_API): INTEGER 
@@ -22,11 +24,15 @@ feature -- Access
 			create branch_name_c_string.make (branch_name)
 			create remote_url_c_string.make (remote_url)
 			Result := c_git_annotated_commit_from_fetchhead (a_out.item, repo.item, branch_name_c_string.item, remote_url_c_string.item, id.item)
+		ensure
+			instance_free: class
 		end
 
 	git_annotated_commit_lookup (a_out: GIT_ANNOTATED_COMMIT_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; id: GIT_OID_STRUCT_API): INTEGER 
 		do
 			Result := c_git_annotated_commit_lookup (a_out.item, repo.item, id.item)
+		ensure
+			instance_free: class
 		end
 
 	git_annotated_commit_from_revspec (a_out: GIT_ANNOTATED_COMMIT_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; revspec: STRING): INTEGER 
@@ -35,6 +41,8 @@ feature -- Access
 		do
 			create revspec_c_string.make (revspec)
 			Result := c_git_annotated_commit_from_revspec (a_out.item, repo.item, revspec_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_annotated_commit_id (commit: GIT_ANNOTATED_COMMIT_STRUCT_API): detachable GIT_OID_STRUCT_API 
@@ -43,16 +51,22 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_annotated_commit_ref (commit: GIT_ANNOTATED_COMMIT_STRUCT_API): POINTER 
 		do
 			Result := c_git_annotated_commit_ref (commit.item)
+		ensure
+			instance_free: class
 		end
 
 	git_annotated_commit_free (commit: GIT_ANNOTATED_COMMIT_STRUCT_API) 
 		do
 			c_git_annotated_commit_free (commit.item)
+		ensure
+			instance_free: class
 		end
 
 feature -- Externals

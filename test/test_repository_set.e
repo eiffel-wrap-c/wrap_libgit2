@@ -15,17 +15,6 @@ inherit
 		redefine
 			on_prepare,
 			on_clean
-		select
-			default_create
-		end
-
-	LIBGIT2_REPOSITORY
-		rename
-			default_create as default_create_rp
-		end
-	GIT_CLONE
-		rename
-			default_create as default_create_cl
 		end
 
 
@@ -67,7 +56,7 @@ feature -- Test routines
 			error: INTEGER
 		do
 			create l_rep.make
-			error := git_repository_init (l_rep, (create {PATH}.make_current).extended ("tmp").out,False)
+			error := {LIBGIT2_REPOSITORY}.git_repository_init (l_rep, (create {PATH}.make_current).extended ("tmp").out,False)
 			assert ("Expected 0", error = 0)
 		end
 
@@ -77,7 +66,7 @@ feature -- Test routines
 			error: INTEGER
 		do
 			create l_rep.make
-			error := git_repository_init (l_rep, (create {PATH}.make_current).extended ("tmp").out,True)
+			error := {LIBGIT2_REPOSITORY}.git_repository_init (l_rep, (create {PATH}.make_current).extended ("tmp").out,True)
 			assert ("Expected 0", error = 0)
 		end
 
@@ -92,9 +81,9 @@ feature -- Test routines
 			opts.set_version (1)
 				--Mkdir as needed to create repo
 			opts.set_flags (opts.flags| {GIT_REPOSITORY_INIT_FLAG_T_ENUM_API}.git_repository_init_mkpath)
-			opts.set_description ("My repository has a custom description")
+			opts.set_description (create {C_STRING}.make ("My repository has a custom description"))
 			create l_rep.make
-			error := git_repository_init_ext (l_rep, (create {PATH}.make_current).extended ("tmp").out, opts)
+			error := {LIBGIT2_REPOSITORY}.git_repository_init_ext (l_rep, (create {PATH}.make_current).extended ("tmp").out, opts)
 			assert ("Expected 0", error = 0)
 		end
 
@@ -105,11 +94,11 @@ feature -- Test routines
 			error: INTEGER
 		do
 			create l_rep.make
-			error := git_repository_init (l_rep, (create {PATH}.make_current).extended ("tmp").out,False)
+			error := {LIBGIT2_REPOSITORY}.git_repository_init (l_rep, (create {PATH}.make_current).extended ("tmp").out,False)
 			assert ("Expected 0", error = 0)
 
 			create l_rep.make
-			error := git_repository_open (l_rep, (create {PATH}.make_current).extended ("tmp").out)
+			error := {LIBGIT2_REPOSITORY}.git_repository_open (l_rep, (create {PATH}.make_current).extended ("tmp").out)
 			assert ("Expected 0", error = 0)
 		end
 
@@ -121,11 +110,11 @@ feature -- Test routines
 			error: INTEGER
 		do
 			create l_rep.make
-			error := git_repository_init (l_rep, (create {PATH}.make_current).extended ("tmp").out,True)
+			error := {LIBGIT2_REPOSITORY}.git_repository_init (l_rep, (create {PATH}.make_current).extended ("tmp").out,True)
 			assert ("Expected 0", error = 0)
 
 			create l_rep.make
-			error := git_repository_open (l_rep, (create {PATH}.make_current).extended ("tmp").out)
+			error := {LIBGIT2_REPOSITORY}.git_repository_open (l_rep, (create {PATH}.make_current).extended ("tmp").out)
 			assert ("Expected 0", error = 0)
 		end
 
@@ -136,7 +125,7 @@ feature -- Test routines
 			error: INTEGER
 		do
 			create l_rep.make
-			error := git_repository_open (l_rep, (create {PATH}.make_current).extended ("error").out)
+			error := {LIBGIT2_REPOSITORY}.git_repository_open (l_rep, (create {PATH}.make_current).extended ("error").out)
 			assert ("Expected error code", error < 0)
 		end
 
@@ -148,17 +137,17 @@ feature -- Test routines
 			error: INTEGER
 		do
 			create l_rep.make
-			error := git_clone (l_rep, "https://github.com/eiffel-wrap-c/WrapC",  (create {PATH}.make_current).extended ("test_wrapc").out, Void)
+			error := {GIT_CLONE}.git_clone (l_rep, "https://github.com/eiffel-wrap-c/WrapC",  (create {PATH}.make_current).extended ("test_wrapc").out, Void)
 			assert ("Expected 0 ", error = 0)
 
 				-- Open repository, walking up from given directory to find root
 			create l_rep.make
-			error := git_repository_open_ext (l_rep, (create {PATH}.make_current).extended ("test_wrapc").extended("src").out, 0, Void)
+			error := {LIBGIT2_REPOSITORY}.git_repository_open_ext (l_rep, (create {PATH}.make_current).extended ("test_wrapc").extended("src").out, 0, Void)
 			assert ("Expected error code", error = 0)
 
 				-- Open repository, in given directory
 			create l_rep.make
-			error := git_repository_open_ext (l_rep, (create {PATH}.make_current).extended ("test_wrapc").out, {GIT_REPOSITORY_OPEN_FLAG_T_ENUM_API}.git_repository_open_no_search, Void)
+			error := {LIBGIT2_REPOSITORY}.git_repository_open_ext (l_rep, (create {PATH}.make_current).extended ("test_wrapc").out, {GIT_REPOSITORY_OPEN_FLAG_T_ENUM_API}.git_repository_open_no_search, Void)
 			assert ("Expected error code", error = 0)
 		end
 
@@ -169,12 +158,12 @@ feature -- Test routines
 			error: INTEGER
 		do
 			create l_rep.make
-			error := git_clone (l_rep, "https://github.com/eiffel-wrap-c/WrapC",  (create {PATH}.make_current).extended ("test_wrapc").out, Void)
+			error := {GIT_CLONE}.git_clone (l_rep, "https://github.com/eiffel-wrap-c/WrapC",  (create {PATH}.make_current).extended ("test_wrapc").out, Void)
 			assert ("Expected 0 ", error = 0)
 
 				-- Open repository, walking up from given directory to find root
 			create l_rep.make
-			error := git_repository_open_bare (l_rep, (create {PATH}.make_current).extended ("test_wrapc").extended(".git").out)
+			error := {LIBGIT2_REPOSITORY}.git_repository_open_bare (l_rep, (create {PATH}.make_current).extended ("test_wrapc").extended(".git").out)
 			assert ("Expected error code", error = 0)
 		end
 
@@ -186,12 +175,12 @@ feature -- Test routines
 			error: INTEGER
 		do
 			create l_rep.make
-			error := git_clone (l_rep, "https://github.com/eiffel-wrap-c/WrapC",  (create {PATH}.make_current).extended ("test_wrapc").out, Void)
+			error := {GIT_CLONE}.git_clone (l_rep, "https://github.com/eiffel-wrap-c/WrapC",  (create {PATH}.make_current).extended ("test_wrapc").out, Void)
 			assert ("Expected 0 ", error = 0)
 
 				-- Check if a given path is inside a repository and return the repository root if found.
 			create l_buf.make
-			error := git_repository_discover (l_buf, (create {PATH}.make_current).extended ("test_wrapc").extended("src").extended ("library").out, 0, Void)
+			error := {LIBGIT2_REPOSITORY}.git_repository_discover (l_buf, (create {PATH}.make_current).extended ("test_wrapc").extended("src").extended ("library").out, 0, Void)
 			assert ("Expected error code", error = 0)
 		end
 
@@ -202,7 +191,7 @@ feature -- Test routines
 			error: INTEGER
 		do
 			create l_rep.make
-			error := git_repository_is_bare (l_rep)
+			error := {LIBGIT2_REPOSITORY}.git_repository_is_bare (l_rep)
 			assert ("Expected error code", error = 0)
 		end
 

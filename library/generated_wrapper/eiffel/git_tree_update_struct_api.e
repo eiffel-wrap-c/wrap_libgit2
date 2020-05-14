@@ -86,25 +86,25 @@ feature {ANY} -- Member Access
 			filemode_set: a_value = filemode
 		end
 
-	path:  detachable STRING
+	path:  detachable C_STRING
 			-- Access member `path`
 		require
 			exists: exists
 		do
 			if attached c_path (item) as l_ptr then
-				Result := (create {C_STRING}.make_by_pointer (l_ptr)).string
+				create Result.make_by_pointer (l_ptr)
 			end
 		ensure
 			result_void: Result = Void implies c_path (item) = default_pointer
-			result_not_void: attached Result as l_result implies l_result.same_string ((create {C_STRING}.make_by_pointer (item)).string)
+			result_not_void: attached Result as l_result implies l_result.string.same_string ((create {C_STRING}.make_by_pointer (item)).string)
 		end
 
-	set_path (a_value: STRING) 
+	set_path (a_value: C_STRING) 
 			-- Change the value of member `path` to `a_value`.
 		require
 			exists: exists
 		do
-			set_c_path (item, (create {C_STRING}.make (a_value)).item )
+			set_c_path (item, a_value.item )
 		end
 
 feature {NONE} -- Implementation wrapper for struct git_tree_update

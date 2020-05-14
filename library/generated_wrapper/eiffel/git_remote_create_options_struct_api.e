@@ -69,46 +69,46 @@ feature {ANY} -- Member Access
 			repository_set: attached repository as l_value implies l_value.item = a_value.item
 		end
 
-	name:  detachable STRING
+	name:  detachable C_STRING
 			-- Access member `name`
 		require
 			exists: exists
 		do
 			if attached c_name (item) as l_ptr then
-				Result := (create {C_STRING}.make_by_pointer (l_ptr)).string
+				create Result.make_by_pointer (l_ptr)
 			end
 		ensure
 			result_void: Result = Void implies c_name (item) = default_pointer
-			result_not_void: attached Result as l_result implies l_result.same_string ((create {C_STRING}.make_by_pointer (item)).string)
+			result_not_void: attached Result as l_result implies l_result.string.same_string ((create {C_STRING}.make_by_pointer (item)).string)
 		end
 
-	set_name (a_value: STRING) 
+	set_name (a_value: C_STRING) 
 			-- Change the value of member `name` to `a_value`.
 		require
 			exists: exists
 		do
-			set_c_name (item, (create {C_STRING}.make (a_value)).item )
+			set_c_name (item, a_value.item )
 		end
 
-	fetchspec:  detachable STRING
+	fetchspec:  detachable C_STRING
 			-- Access member `fetchspec`
 		require
 			exists: exists
 		do
 			if attached c_fetchspec (item) as l_ptr then
-				Result := (create {C_STRING}.make_by_pointer (l_ptr)).string
+				create Result.make_by_pointer (l_ptr)
 			end
 		ensure
 			result_void: Result = Void implies c_fetchspec (item) = default_pointer
-			result_not_void: attached Result as l_result implies l_result.same_string ((create {C_STRING}.make_by_pointer (item)).string)
+			result_not_void: attached Result as l_result implies l_result.string.same_string ((create {C_STRING}.make_by_pointer (item)).string)
 		end
 
-	set_fetchspec (a_value: STRING) 
+	set_fetchspec (a_value: C_STRING) 
 			-- Change the value of member `fetchspec` to `a_value`.
 		require
 			exists: exists
 		do
-			set_c_fetchspec (item, (create {C_STRING}.make (a_value)).item )
+			set_c_fetchspec (item, a_value.item )
 		end
 
 	flags: INTEGER

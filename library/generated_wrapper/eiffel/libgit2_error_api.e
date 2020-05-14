@@ -15,6 +15,8 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_error_clear

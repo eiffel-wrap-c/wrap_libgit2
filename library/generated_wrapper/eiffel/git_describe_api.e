@@ -12,41 +12,57 @@ feature -- Access
 	git_describe_options_init (opts: GIT_DESCRIBE_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
 			Result := c_git_describe_options_init (opts.item, version)
+		ensure
+			instance_free: class
 		end
 
 	git_describe_format_options_init (opts: GIT_DESCRIBE_FORMAT_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
 			Result := c_git_describe_format_options_init (opts.item, version)
+		ensure
+			instance_free: class
 		end
 
 	git_describe_commit (a_result: GIT_DESCRIBE_RESULT_STRUCT_API; committish: GIT_OBJECT_STRUCT_API; opts: GIT_DESCRIBE_OPTIONS_STRUCT_API): INTEGER 
 		do
 			Result := c_git_describe_commit (a_result.item, committish.item, opts.item)
+		ensure
+			instance_free: class
 		end
 
 	git_describe_workdir (a_out: GIT_DESCRIBE_RESULT_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; opts: GIT_DESCRIBE_OPTIONS_STRUCT_API): INTEGER 
 		do
 			Result := c_git_describe_workdir (a_out.item, repo.item, opts.item)
+		ensure
+			instance_free: class
 		end
 
 	git_describe_format (a_out: GIT_BUF_STRUCT_API; a_result: GIT_DESCRIBE_RESULT_STRUCT_API; opts: GIT_DESCRIBE_FORMAT_OPTIONS_STRUCT_API): INTEGER 
 		do
 			Result := c_git_describe_format (a_out.item, a_result.item, opts.item)
+		ensure
+			instance_free: class
 		end
 
 	git_describe_result_free (a_result: GIT_DESCRIBE_RESULT_STRUCT_API) 
 		do
 			c_git_describe_result_free (a_result.item)
+		ensure
+			instance_free: class
 		end
 
 	git_describe_init_options (opts: GIT_DESCRIBE_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
 			Result := c_git_describe_init_options (opts.item, version)
+		ensure
+			instance_free: class
 		end
 
 	git_describe_init_format_options (opts: GIT_DESCRIBE_FORMAT_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
 			Result := c_git_describe_init_format_options (opts.item, version)
+		ensure
+			instance_free: class
 		end
 
 feature -- Externals

@@ -85,109 +85,109 @@ feature {ANY} -- Member Access
 			mode_set: a_value = mode
 		end
 
-	workdir_path:  detachable STRING
+	workdir_path:  detachable C_STRING
 			-- Access member `workdir_path`
 		require
 			exists: exists
 		do
 			if attached c_workdir_path (item) as l_ptr then
-				Result := (create {C_STRING}.make_by_pointer (l_ptr)).string
+				create Result.make_by_pointer (l_ptr)
 			end
 		ensure
 			result_void: Result = Void implies c_workdir_path (item) = default_pointer
-			result_not_void: attached Result as l_result implies l_result.same_string ((create {C_STRING}.make_by_pointer (item)).string)
+			result_not_void: attached Result as l_result implies l_result.string.same_string ((create {C_STRING}.make_by_pointer (item)).string)
 		end
 
-	set_workdir_path (a_value: STRING) 
+	set_workdir_path (a_value: C_STRING) 
 			-- Change the value of member `workdir_path` to `a_value`.
 		require
 			exists: exists
 		do
-			set_c_workdir_path (item, (create {C_STRING}.make (a_value)).item )
+			set_c_workdir_path (item, a_value.item )
 		end
 
-	description:  detachable STRING
+	description:  detachable C_STRING
 			-- Access member `description`
 		require
 			exists: exists
 		do
 			if attached c_description (item) as l_ptr then
-				Result := (create {C_STRING}.make_by_pointer (l_ptr)).string
+				create Result.make_by_pointer (l_ptr)
 			end
 		ensure
 			result_void: Result = Void implies c_description (item) = default_pointer
-			result_not_void: attached Result as l_result implies l_result.same_string ((create {C_STRING}.make_by_pointer (item)).string)
+			result_not_void: attached Result as l_result implies l_result.string.same_string ((create {C_STRING}.make_by_pointer (item)).string)
 		end
 
-	set_description (a_value: STRING) 
+	set_description (a_value: C_STRING) 
 			-- Change the value of member `description` to `a_value`.
 		require
 			exists: exists
 		do
-			set_c_description (item, (create {C_STRING}.make (a_value)).item )
+			set_c_description (item, a_value.item )
 		end
 
-	template_path:  detachable STRING
+	template_path:  detachable C_STRING
 			-- Access member `template_path`
 		require
 			exists: exists
 		do
 			if attached c_template_path (item) as l_ptr then
-				Result := (create {C_STRING}.make_by_pointer (l_ptr)).string
+				create Result.make_by_pointer (l_ptr)
 			end
 		ensure
 			result_void: Result = Void implies c_template_path (item) = default_pointer
-			result_not_void: attached Result as l_result implies l_result.same_string ((create {C_STRING}.make_by_pointer (item)).string)
+			result_not_void: attached Result as l_result implies l_result.string.same_string ((create {C_STRING}.make_by_pointer (item)).string)
 		end
 
-	set_template_path (a_value: STRING) 
+	set_template_path (a_value: C_STRING) 
 			-- Change the value of member `template_path` to `a_value`.
 		require
 			exists: exists
 		do
-			set_c_template_path (item, (create {C_STRING}.make (a_value)).item )
+			set_c_template_path (item, a_value.item )
 		end
 
-	initial_head:  detachable STRING
+	initial_head:  detachable C_STRING
 			-- Access member `initial_head`
 		require
 			exists: exists
 		do
 			if attached c_initial_head (item) as l_ptr then
-				Result := (create {C_STRING}.make_by_pointer (l_ptr)).string
+				create Result.make_by_pointer (l_ptr)
 			end
 		ensure
 			result_void: Result = Void implies c_initial_head (item) = default_pointer
-			result_not_void: attached Result as l_result implies l_result.same_string ((create {C_STRING}.make_by_pointer (item)).string)
+			result_not_void: attached Result as l_result implies l_result.string.same_string ((create {C_STRING}.make_by_pointer (item)).string)
 		end
 
-	set_initial_head (a_value: STRING) 
+	set_initial_head (a_value: C_STRING) 
 			-- Change the value of member `initial_head` to `a_value`.
 		require
 			exists: exists
 		do
-			set_c_initial_head (item, (create {C_STRING}.make (a_value)).item )
+			set_c_initial_head (item, a_value.item )
 		end
 
-	origin_url:  detachable STRING
+	origin_url:  detachable C_STRING
 			-- Access member `origin_url`
 		require
 			exists: exists
 		do
 			if attached c_origin_url (item) as l_ptr then
-				Result := (create {C_STRING}.make_by_pointer (l_ptr)).string
+				create Result.make_by_pointer (l_ptr)
 			end
 		ensure
 			result_void: Result = Void implies c_origin_url (item) = default_pointer
-			result_not_void: attached Result as l_result implies l_result.same_string ((create {C_STRING}.make_by_pointer (item)).string)
+			result_not_void: attached Result as l_result implies l_result.string.same_string ((create {C_STRING}.make_by_pointer (item)).string)
 		end
 
-	set_origin_url (a_value: STRING) 
+	set_origin_url (a_value: C_STRING) 
 			-- Change the value of member `origin_url` to `a_value`.
 		require
 			exists: exists
 		do
-			set_c_origin_url (item, (create {C_STRING}.make (a_value)).item )
+			set_c_origin_url (item, a_value.item )
 		end
 
 feature {NONE} -- Implementation wrapper for struct git_repository_init_options

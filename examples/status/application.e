@@ -23,15 +23,10 @@ feature {NONE} --Initialization
 			status: GIT_STATUS_LIST_STRUCT_API
 			repo: 	GIT_REPOSITORY_STRUCT_API
 			ini: INTEGER
-			git_status: GIT_STATUS
-			git_ref: GIT_REFERENCE
 			callback: GIT_SUBMODULE_CB_DISPATCHER
 			count: INTEGER
 		do
-			create git_repository
-			create git_status
 			create repo.make
-			create git_ref
 
 			ini := {LIBGIT2_INITIALIZER_API}.git_libgit2_init
 			debug
@@ -48,13 +43,13 @@ feature {NONE} --Initialization
 			make_command_line_parser
 			process_arguments
 
-			if git_repository.git_repository_open (repo, (create {PATH}.make_from_string (options.repodir)).out) < 0 then
+			if {LIBGIT2_REPOSITORY}.git_repository_open (repo, (create {PATH}.make_from_string (options.repodir)).out) < 0 then
 				print ("%NCould not open repository")
 				{EXCEPTIONS}.die (1)
 			end
 
-			if git_repository.git_repository_is_bare (repo) < 0 then
-				 print ("%NCannot report status on bare repository " + git_repository.git_repository_path (repo))
+			if {LIBGIT2_REPOSITORY}.git_repository_is_bare (repo) < 0 then
+				 print ("%NCannot report status on bare repository " + {LIBGIT2_REPOSITORY}.git_repository_path (repo))
 				{EXCEPTIONS}.die (1)
 			end
 
@@ -73,8 +68,8 @@ feature {NONE} --Initialization
 				--	 * about what results are presented.
 				--	 */
 
-			if git_status.git_status_list_new (status, repo, options.status_options) < 0 then
-				 print ("%NCould not get status " + git_repository.git_repository_path (repo))
+			if {GIT_STATUS}.git_status_list_new (status, repo, options.status_options) < 0 then
+				 print ("%NCould not get status " + {LIBGIT2_REPOSITORY}.git_repository_path (repo))
 				{EXCEPTIONS}.die (1)
 			end
 
@@ -87,7 +82,7 @@ feature {NONE} --Initialization
 
 			if options.show_submodule then
 			   -- to be completed.
-			  if  git_ref.git_submodule_foreach (repo, callback.c_dispatcher_1, $count ) < 0 then
+			  if  {GIT_REFERENCE}.git_submodule_foreach (repo, callback.c_dispatcher_1, $count ) < 0 then
 			  	print ("%N# Cannot iterate submodules" + options.repodir)
 			  end
 			end
@@ -98,7 +93,7 @@ feature {NONE} --Initialization
 				print_short (repo, status)
 			end
 
-			git_status.git_status_list_free (status)
+			{GIT_STATUS}.git_status_list_free (status)
 
 		end
 
@@ -108,23 +103,21 @@ feature {NONE} --Initialization
 			head: GIT_REFERENCE_STRUCT_API
 			error: INTEGER
 			branch: STRING
-			git_reference: GIT_REFERENCE
 		do
-			create git_reference
 			create head.make
-			error := git_repository.git_repository_head(head, a_repo)
+			error := {LIBGIT2_REPOSITORY}.git_repository_head(head, a_repo)
 
 			if error = {GIT_ERROR_CODE_ENUM_API}.GIT_EUNBORNBRANCH or error={GIT_ERROR_CODE_ENUM_API}.GIT_EUNBORNBRANCH then
 				branch := ""
 			elseif error >= 0 then
-				branch := git_reference.git_reference_shorthand (head)
+				branch := {GIT_REFERENCE}.git_reference_shorthand (head)
 			else
 				print ("%Nfailed to get current branch")
 				{EXCEPTIONS}.die (1)
 			end
 
 			print ("%NOn branch " + branch)
-			git_reference.git_reference_free (head)
+			{GIT_REFERENCE}.git_reference_free (head)
 		end
 
 
@@ -192,7 +185,7 @@ feature	{NONE} -- Process Arguments
 
 			if match_long_option ("git-dir") then
 				if is_next_option_long_option and then has_next_option_value then
-					options.set_repodir (next_option_value)
+					options.set_repodir (next_option_value.to_string_8)
 					consume_option
 				else
 					print("%N Missing command line parameter --git-dir=<dir>")
@@ -212,7 +205,6 @@ feature -- Print
 
 	print_long (a_status: GIT_STATUS_LIST_STRUCT_API)
 		local
-			git_status: GIT_STATUS
 			maxi: INTEGER
 			changed_in_index: BOOLEAN
 			header: BOOLEAN
@@ -222,14 +214,13 @@ feature -- Print
 			ws_status: STRING
 			continue: BOOLEAN
 		do
-			create git_status
-			maxi := git_status.git_status_list_entrycount (a_status)
+			maxi := {GIT_STATUS}.git_status_list_entrycount (a_status)
 
 				-- Print index changes
 			across 1 |..| maxi as ic loop
 				create is_status.make_empty
 				continue := False
-				if attached {GIT_STATUS_ENTRY_STRUCT_API} git_status.git_status_byindex (a_status, ic.item - 1) as s then
+				if attached {GIT_STATUS_ENTRY_STRUCT_API} {GIT_STATUS}.git_status_byindex (a_status, ic.item - 1) as s then
 					if s.status = {GIT_STATUS_T_ENUM_API}.Git_Status_current then
 						continue := True
 					end
@@ -264,17 +255,17 @@ feature -- Print
 						end
 
 						if attached s.head_to_index as l_head_to_index and then
-							attached l_head_to_index.old_file as l_old_file
+							attached l_head_to_index.old_file.path as l_old_file
 						then
-							old_path := l_old_file.path
+							old_path := l_old_file.string
 						else
 							old_path := Void
 						end
 
 						if attached s.head_to_index as l_head_to_index and then
-							attached l_head_to_index.new_file as l_new_file
+							attached l_head_to_index.new_file.path as l_new_file
 						then
-							new_path := l_new_file.path
+							new_path := l_new_file.string
 						else
 							old_path := Void
 						end
@@ -304,7 +295,7 @@ feature -- Print
 			across 1 |..| maxi as ic loop
 				create ws_status.make_empty
 				continue := False
-				if attached {GIT_STATUS_ENTRY_STRUCT_API} git_status.git_status_byindex (a_status, ic.item - 1) as s then
+				if attached {GIT_STATUS_ENTRY_STRUCT_API} {GIT_STATUS}.git_status_byindex (a_status, ic.item - 1) as s then
 						--
 						--	With `GIT_STATUS_OPT_INCLUDE_UNMODIFIED` (not used in this example)
 						--	`index_to_workdir` may not be `NULL` even if there are
@@ -344,15 +335,15 @@ feature -- Print
 						end
 
 						if attached s.index_to_workdir as l_index_to_workdir and then
-							attached l_index_to_workdir.old_file as l_old_file
+							attached l_index_to_workdir.old_file.path as l_old_file
 						then
-							old_path := l_old_file.path
+							old_path := l_old_file.string
 						end
 
 						if attached s.index_to_workdir as l_index_to_workdir and then
-							attached l_index_to_workdir.new_file as l_new_file
+							attached l_index_to_workdir.new_file.path as l_new_file
 						then
-							new_path := l_new_file.path
+							new_path := l_new_file.string
 						end
 						if old_path /= Void and then new_path  /= Void then
 							if not old_path.is_case_insensitive_equal_general (new_path) then
@@ -373,7 +364,7 @@ feature -- Print
 				-- Print untracked files.
 			header := False
 			across 1 |..| maxi as ic loop
-				if attached {GIT_STATUS_ENTRY_STRUCT_API} git_status.git_status_byindex (a_status, ic.item - 1) as s then
+				if attached {GIT_STATUS_ENTRY_STRUCT_API} {GIT_STATUS}.git_status_byindex (a_status, ic.item - 1) as s then
 					if s.status = {GIT_STATUS_T_ENUM_API}.git_status_wt_new then
 						if not header then
 							print("# Untracked files:%N");
@@ -381,7 +372,7 @@ feature -- Print
 							print("#%N");
 							header := True;
 						end
-						print("#%T" + if attached s.index_to_workdir as l_index_workdir and then attached l_index_workdir.old_file as l_old_file and then attached l_old_file.path as l_path then l_path else "" end + "%N")
+						print("#%T" + if attached s.index_to_workdir as l_index_workdir and then attached l_index_workdir.old_file as l_old_file and then attached l_old_file.path as l_path then l_path.string else "" end + "%N")
 					end
 				end
 			end
@@ -389,7 +380,7 @@ feature -- Print
 			header := False
 			--	Print ignored files.
 			across 1 |..| maxi as ic loop
-				if attached {GIT_STATUS_ENTRY_STRUCT_API} git_status.git_status_byindex (a_status, ic.item - 1) as s then
+				if attached {GIT_STATUS_ENTRY_STRUCT_API} {GIT_STATUS}.git_status_byindex (a_status, ic.item - 1) as s then
 					if s.status = {GIT_STATUS_T_ENUM_API}.git_status_ignored then
 						if not header then
 							print("# Ignored files:%N");
@@ -397,7 +388,7 @@ feature -- Print
 							print("#%N");
 							header := True;
 						end
-						print("#%T" + if attached s.index_to_workdir as l_index_workdir and then attached l_index_workdir.old_file as l_old_file and then attached l_old_file.path as l_path then l_path else "" end)
+						print("#%T" + if attached s.index_to_workdir as l_index_workdir and then attached l_index_workdir.old_file as l_old_file and then attached l_old_file.path as l_path then l_path.string else "" end)
 					end
 				end
 			end
@@ -412,26 +403,18 @@ feature -- Print
 	print_short (a_repo: GIT_REPOSITORY_STRUCT_API; a_status: GIT_STATUS_LIST_STRUCT_API)
 			-- This version of the output prefixes each path with two status columns and shows submodule status information.
 		local
-			git_status: GIT_STATUS
 			maxi: INTEGER
-			changed_in_index: BOOLEAN
-			header: BOOLEAN
-			changed_in_workdir, rm_in_workdir: BOOLEAN
-			old_path, new_path: STRING
 			is_status: STRING
 			ws_status: STRING
 			continue: BOOLEAN
 			a,b,c, extra: STRING
 			sm_status: INTEGER
-			git_ref: GIT_REFERENCE
 		do
-			create git_ref
-			create git_status
-			maxi := git_status.git_status_list_entrycount (a_status)
+			maxi := {GIT_STATUS}.git_status_list_entrycount (a_status)
 
 			across 1 |..| maxi as ic loop
 				continue := False
-				if attached {GIT_STATUS_ENTRY_STRUCT_API} git_status.git_status_byindex (a_status, ic.item - 1) as s then
+				if attached {GIT_STATUS_ENTRY_STRUCT_API} {GIT_STATUS}.git_status_byindex (a_status, ic.item - 1) as s then
 					if s.status = {GIT_STATUS_T_ENUM_API}.git_status_current then
 						continue := True
 					end
@@ -494,7 +477,7 @@ feature -- Print
 						then
 							sm_status := 0
 
-							if git_ref.git_submodule_status ($sm_status, a_repo, l_path ,{GIT_SUBMODULE_IGNORE_T_ENUM_API}.GIT_SUBMODULE_IGNORE_UNSPECIFIED) = 0 then
+							if {GIT_REFERENCE}.git_submodule_status ($sm_status, a_repo, l_path.string ,{GIT_SUBMODULE_IGNORE_T_ENUM_API}.GIT_SUBMODULE_IGNORE_UNSPECIFIED) = 0 then
 								if sm_status & {GIT_SUBMODULE_STATUS_T_ENUM_API}.GIT_SUBMODULE_STATUS_WD_MODIFIED /= 0 then
 									extra := " (new commits)"
 								elseif sm_status & {GIT_SUBMODULE_STATUS_T_ENUM_API}.GIT_SUBMODULE_STATUS_WD_INDEX_MODIFIED /= 0 then
@@ -510,18 +493,18 @@ feature -- Print
 							-- Now that we have all the information, format the output.
 
 						if attached s.head_to_index as l_head_to_index  then
-							a := if attached l_head_to_index.old_file as l_old_file then l_old_file.path else Void end
-							b := if attached l_head_to_index.new_file as l_new_file then l_new_file.path else Void end
+							a := if attached l_head_to_index.old_file.path as l_old_file then l_old_file.string else Void end
+							b := if attached l_head_to_index.new_file.path as l_new_file then l_new_file.string else Void end
 						end
 
 						if attached s.index_to_workdir as l_index_to_workdir and not continue then
 							if a = Void then
-								a := if attached l_index_to_workdir.old_file as l_old_file then l_old_file.path else Void end
+								a := if attached l_index_to_workdir.old_file.path as l_old_file then l_old_file.string else Void end
 							end
 							if b = Void then
-								b := if attached l_index_to_workdir.old_file as l_old_file then l_old_file.path else Void end
+								b := if attached l_index_to_workdir.old_file.path as l_old_file then l_old_file.string else Void end
 							end
-							c :=  if attached l_index_to_workdir.new_file as l_new_file then l_new_file.path else Void end
+							c :=  if attached l_index_to_workdir.new_file.path as l_new_file then l_new_file.string else Void end
 						end
 
 						if is_status.same_string ("R") then
@@ -546,9 +529,9 @@ feature -- Print
 			end
 
 			across 1 |..| maxi as ic loop
-				if attached {GIT_STATUS_ENTRY_STRUCT_API} git_status.git_status_byindex (a_status, ic.item - 1) as s then
+				if attached {GIT_STATUS_ENTRY_STRUCT_API} {GIT_STATUS}.git_status_byindex (a_status, ic.item - 1) as s then
 					if s.status = {GIT_STATUS_T_ENUM_API}.git_status_wt_new then
-						print ("%N?? " + if attached s.index_to_workdir as l_index_to_workdir and then attached l_index_to_workdir.old_file as l_old_file and then attached l_old_file.path as l_path then l_path else "" end )
+						print ("%N?? " + if attached s.index_to_workdir as l_index_to_workdir and then attached l_index_to_workdir.old_file.path as l_old_file and then attached l_old_file.string as l_path then l_path else "" end )
 					end
 				end
 			end
@@ -558,9 +541,7 @@ feature -- Print
 	print_submodule (sm: POINTER; name: POINTER; payload: POINTER): INTEGER
 		local
 			count: INTEGER
-			git_sub: GIT_REFERENCE
 		do
-			create git_sub
 
 			count := payload.to_integer_32
 			if count = 0  then
@@ -568,7 +549,7 @@ feature -- Print
 			end
 			count := count + 1
 			payload.set_item ($count)
-			print ("# -submodule " + (create {C_STRING}.make_by_pointer (git_sub.c_git_submodule_name (sm))).string + " at " + (create {C_STRING}.make_by_pointer (git_sub.c_git_submodule_path (sm))).string )
+			print ("# -submodule " + (create {C_STRING}.make_by_pointer ({GIT_REFERENCE}.c_git_submodule_name (sm))).string + " at " + (create {C_STRING}.make_by_pointer ({GIT_REFERENCE}.c_git_submodule_path (sm))).string )
 			Result := 0
 		end
 
@@ -592,7 +573,5 @@ feature -- Usage
 feature -- Options
 
 	options: OPTIONS
-
-	git_repository: LIBGIT2_REPOSITORY
 
 end

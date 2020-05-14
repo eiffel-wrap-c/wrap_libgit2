@@ -17,11 +17,15 @@ feature -- Access
 			create name_c_string.make (name)
 			create url_c_string.make (url)
 			Result := c_git_remote_create (a_out.item, repo.item, name_c_string.item, url_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_create_options_init (opts: GIT_REMOTE_CREATE_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
 			Result := c_git_remote_create_options_init (opts.item, version)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_create_with_opts (a_out: GIT_REMOTE_STRUCT_API; url: STRING; opts: GIT_REMOTE_CREATE_OPTIONS_STRUCT_API): INTEGER 
@@ -30,6 +34,8 @@ feature -- Access
 		do
 			create url_c_string.make (url)
 			Result := c_git_remote_create_with_opts (a_out.item, url_c_string.item, opts.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_create_with_fetchspec (a_out: GIT_REMOTE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING; url: STRING; fetch: STRING): INTEGER 
@@ -42,6 +48,8 @@ feature -- Access
 			create url_c_string.make (url)
 			create fetch_c_string.make (fetch)
 			Result := c_git_remote_create_with_fetchspec (a_out.item, repo.item, name_c_string.item, url_c_string.item, fetch_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_create_anonymous (a_out: GIT_REMOTE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; url: STRING): INTEGER 
@@ -50,6 +58,8 @@ feature -- Access
 		do
 			create url_c_string.make (url)
 			Result := c_git_remote_create_anonymous (a_out.item, repo.item, url_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_create_detached (a_out: GIT_REMOTE_STRUCT_API; url: STRING): INTEGER 
@@ -58,6 +68,8 @@ feature -- Access
 		do
 			create url_c_string.make (url)
 			Result := c_git_remote_create_detached (a_out.item, url_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_lookup (a_out: GIT_REMOTE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING): INTEGER 
@@ -66,11 +78,15 @@ feature -- Access
 		do
 			create name_c_string.make (name)
 			Result := c_git_remote_lookup (a_out.item, repo.item, name_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_dup (dest: GIT_REMOTE_STRUCT_API; source: GIT_REMOTE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_remote_dup (dest.item, source.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_owner (remote: GIT_REMOTE_STRUCT_API): detachable GIT_REPOSITORY_STRUCT_API 
@@ -79,21 +95,29 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_remote_name (remote: GIT_REMOTE_STRUCT_API): POINTER 
 		do
 			Result := c_git_remote_name (remote.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_url (remote: GIT_REMOTE_STRUCT_API): POINTER 
 		do
 			Result := c_git_remote_url (remote.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_pushurl (remote: GIT_REMOTE_STRUCT_API): POINTER 
 		do
 			Result := c_git_remote_pushurl (remote.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_set_url (repo: GIT_REPOSITORY_STRUCT_API; remote: STRING; url: STRING): INTEGER 
@@ -104,6 +128,8 @@ feature -- Access
 			create remote_c_string.make (remote)
 			create url_c_string.make (url)
 			Result := c_git_remote_set_url (repo.item, remote_c_string.item, url_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_set_pushurl (repo: GIT_REPOSITORY_STRUCT_API; remote: STRING; url: STRING): INTEGER 
@@ -114,6 +140,8 @@ feature -- Access
 			create remote_c_string.make (remote)
 			create url_c_string.make (url)
 			Result := c_git_remote_set_pushurl (repo.item, remote_c_string.item, url_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_add_fetch (repo: GIT_REPOSITORY_STRUCT_API; remote: STRING; refspec: STRING): INTEGER 
@@ -124,11 +152,15 @@ feature -- Access
 			create remote_c_string.make (remote)
 			create refspec_c_string.make (refspec)
 			Result := c_git_remote_add_fetch (repo.item, remote_c_string.item, refspec_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_get_fetch_refspecs (array: GIT_STRARRAY_STRUCT_API; remote: GIT_REMOTE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_remote_get_fetch_refspecs (array.item, remote.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_add_push (repo: GIT_REPOSITORY_STRUCT_API; remote: STRING; refspec: STRING): INTEGER 
@@ -139,66 +171,92 @@ feature -- Access
 			create remote_c_string.make (remote)
 			create refspec_c_string.make (refspec)
 			Result := c_git_remote_add_push (repo.item, remote_c_string.item, refspec_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_get_push_refspecs (array: GIT_STRARRAY_STRUCT_API; remote: GIT_REMOTE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_remote_get_push_refspecs (array.item, remote.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_refspec_count (remote: GIT_REMOTE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_remote_refspec_count (remote.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_connect (remote: GIT_REMOTE_STRUCT_API; direction: INTEGER; callbacks: GIT_REMOTE_CALLBACKS_STRUCT_API; proxy_opts: GIT_PROXY_OPTIONS_STRUCT_API; custom_headers: GIT_STRARRAY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_remote_connect (remote.item, direction, callbacks.item, proxy_opts.item, custom_headers.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_ls (a_out: GIT_REMOTE_HEAD_STRUCT_API; size: POINTER; remote: GIT_REMOTE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_remote_ls (a_out.item, size, remote.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_connected (remote: GIT_REMOTE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_remote_connected (remote.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_stop (remote: GIT_REMOTE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_remote_stop (remote.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_disconnect (remote: GIT_REMOTE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_remote_disconnect (remote.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_free (remote: GIT_REMOTE_STRUCT_API) 
 		do
 			c_git_remote_free (remote.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_list (a_out: GIT_STRARRAY_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_remote_list (a_out.item, repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_init_callbacks (opts: GIT_REMOTE_CALLBACKS_STRUCT_API; version: INTEGER): INTEGER 
 		do
 			Result := c_git_remote_init_callbacks (opts.item, version)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_download (remote: GIT_REMOTE_STRUCT_API; refspecs: GIT_STRARRAY_STRUCT_API; opts: GIT_FETCH_OPTIONS_STRUCT_API): INTEGER 
 		do
 			Result := c_git_remote_download (remote.item, refspecs.item, opts.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_upload (remote: GIT_REMOTE_STRUCT_API; refspecs: GIT_STRARRAY_STRUCT_API; opts: GIT_PUSH_OPTIONS_STRUCT_API): INTEGER 
 		do
 			Result := c_git_remote_upload (remote.item, refspecs.item, opts.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_update_tips (remote: GIT_REMOTE_STRUCT_API; callbacks: GIT_REMOTE_CALLBACKS_STRUCT_API; update_fetchhead: INTEGER; download_tags: INTEGER; reflog_message: STRING): INTEGER 
@@ -207,6 +265,8 @@ feature -- Access
 		do
 			create reflog_message_c_string.make (reflog_message)
 			Result := c_git_remote_update_tips (remote.item, callbacks.item, update_fetchhead, download_tags, reflog_message_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_fetch (remote: GIT_REMOTE_STRUCT_API; refspecs: GIT_STRARRAY_STRUCT_API; opts: GIT_FETCH_OPTIONS_STRUCT_API; reflog_message: STRING): INTEGER 
@@ -215,16 +275,22 @@ feature -- Access
 		do
 			create reflog_message_c_string.make (reflog_message)
 			Result := c_git_remote_fetch (remote.item, refspecs.item, opts.item, reflog_message_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_prune (remote: GIT_REMOTE_STRUCT_API; callbacks: GIT_REMOTE_CALLBACKS_STRUCT_API): INTEGER 
 		do
 			Result := c_git_remote_prune (remote.item, callbacks.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_push (remote: GIT_REMOTE_STRUCT_API; refspecs: GIT_STRARRAY_STRUCT_API; opts: GIT_PUSH_OPTIONS_STRUCT_API): INTEGER 
 		do
 			Result := c_git_remote_push (remote.item, refspecs.item, opts.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_stats (remote: GIT_REMOTE_STRUCT_API): detachable GIT_INDEXER_PROGRESS_STRUCT_API 
@@ -233,11 +299,15 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_remote_autotag (remote: GIT_REMOTE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_remote_autotag (remote.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_set_autotag (repo: GIT_REPOSITORY_STRUCT_API; remote: STRING; value: INTEGER): INTEGER 
@@ -246,11 +316,15 @@ feature -- Access
 		do
 			create remote_c_string.make (remote)
 			Result := c_git_remote_set_autotag (repo.item, remote_c_string.item, value)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_prune_refs (remote: GIT_REMOTE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_remote_prune_refs (remote.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_rename (problems: GIT_STRARRAY_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING; new_name: STRING): INTEGER 
@@ -261,6 +335,8 @@ feature -- Access
 			create name_c_string.make (name)
 			create new_name_c_string.make (new_name)
 			Result := c_git_remote_rename (problems.item, repo.item, name_c_string.item, new_name_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_is_valid_name (remote_name: POINTER): INTEGER
@@ -278,21 +354,29 @@ feature -- Access
 		do
 			create name_c_string.make (name)
 			Result := c_git_remote_delete (repo.item, name_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_default_branch (a_out: GIT_BUF_STRUCT_API; remote: GIT_REMOTE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_remote_default_branch (a_out.item, remote.item)
+		ensure
+			instance_free: class
 		end
 
 	git_push_init_options (opts: GIT_PUSH_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
 			Result := c_git_push_init_options (opts.item, version)
+		ensure
+			instance_free: class
 		end
 
 	git_remote_create_init_options (opts: GIT_REMOTE_CREATE_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
 			Result := c_git_remote_create_init_options (opts.item, version)
+		ensure
+			instance_free: class
 		end
 
 feature -- Externals

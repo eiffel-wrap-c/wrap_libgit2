@@ -1,5 +1,5 @@
 note
-	description: "Summary description for {LIBGIT2_REPOSITORY}."
+	description: "Objects representing repository functions"
 	date: "$Date$"
 	revision: "$Revision$"
 	EIS:"name=repository", "src=https://libgit2.org/libgit2/#HEAD/group/repository", "protocol=uri"
@@ -25,6 +25,8 @@ inherit
 feature -- Access
 
 	git_repository_open (a_out: GIT_REPOSITORY_STRUCT_API; path: STRING): INTEGER
+		note
+			eis: "name=git_repository_open", "src=https://libgit2.org/libgit2/#v1.0.0/group/repository/git_repository_open", "protocol=uri"
 		local
 			path_c_string: C_STRING
 			l_ptr: POINTER
@@ -34,9 +36,13 @@ feature -- Access
 			if l_ptr /= default_pointer then
 				a_out.make_by_pointer (l_ptr)
 			end
+		ensure
+			instance_free: class
 		end
 
 	git_repository_open_ext (a_out: GIT_REPOSITORY_STRUCT_API; path: STRING; flags: INTEGER; ceiling_dirs: detachable STRING): INTEGER
+		note
+			eis: "name=git_repository_open_ext", "src=https://libgit2.org/libgit2/#v1.0.0/group/repository/git_repository_open_ext", "protocol=uri"
 		local
 			path_c_string: C_STRING
 			ceiling_dirs_c_string: C_STRING
@@ -52,10 +58,14 @@ feature -- Access
 			if l_ptr /= default_pointer then
 				a_out.make_by_pointer (l_ptr)
 			end
+		ensure
+			instance_free: class
 		end
 
 
 	git_repository_init (a_out: GIT_REPOSITORY_STRUCT_API; path: STRING; is_bare: BOOLEAN): INTEGER
+		note
+			eis: "name=git_repository_init", "src=https://libgit2.org/libgit2/#v1.0.0/group/repository/git_repository_init", "protocol=uri"
 		local
 			path_c_string: C_STRING
 			l_ptr: POINTER
@@ -65,9 +75,13 @@ feature -- Access
 			if l_ptr /= default_pointer then
 				a_out.make_by_pointer (l_ptr)
 			end
+		ensure
+			instance_free: class
 		end
 
 	git_repository_init_ext (a_out: GIT_REPOSITORY_STRUCT_API; repo_path: STRING; opts: GIT_REPOSITORY_INIT_OPTIONS_STRUCT_API): INTEGER
+		note
+			eis: "name=git_repository_init_ext", "src=https://libgit2.org/libgit2/#v1.0.0/group/repository/git_repository_init_ext", "protocol=uri"
 		local
 			repo_path_c_string: C_STRING
 			l_ptr: POINTER
@@ -77,9 +91,13 @@ feature -- Access
 			if l_ptr /= default_pointer then
 				a_out.make_by_pointer (l_ptr)
 			end
+		ensure
+			instance_free: class
 		end
 
 	git_repository_open_bare (a_out: GIT_REPOSITORY_STRUCT_API; bare_path: STRING): INTEGER
+		note
+			eis: "name=git_repository_open_bare", "src=https://libgit2.org/libgit2/#v1.0.0/group/repository/git_repository_open_bare", "protocol=uri"
 		local
 			bare_path_c_string: C_STRING
 			l_ptr: POINTER
@@ -89,9 +107,13 @@ feature -- Access
 			if l_ptr /= default_pointer then
 				a_out.make_by_pointer (l_ptr)
 			end
+		ensure
+			instance_free: class
 		end
 
 	git_repository_discover (a_out: GIT_BUF_STRUCT_API; start_path: STRING; across_fs: INTEGER; ceiling_dirs: detachable STRING): INTEGER
+		note
+			eis: "name=git_repository_discover", "src=https://libgit2.org/libgit2/#v1.0.0/group/repository/git_repository_discover", "protocol=uri"
 		local
 			start_path_c_string: C_STRING
 			ceiling_dirs_c_string: C_STRING
@@ -103,9 +125,13 @@ feature -- Access
 				l_ceiling_ptr := ceiling_dirs_c_string.item
 			end
 			Result := c_git_repository_discover (a_out.item, start_path_c_string.item, across_fs, l_ceiling_ptr)
+		ensure
+			instance_free: class
 		end
 
 	git_repository_path (repo: GIT_REPOSITORY_STRUCT_API): STRING
+		note
+			eis: "name=", "src=https://libgit2.org/libgit2/#v1.0.0/group/repository/git_repository_path", "protocol=uri"
 		local
 			l_ptr: POINTER
 		do
@@ -115,9 +141,13 @@ feature -- Access
 			else
 				Result := ""
 			end
+		ensure
+			instance_free: class
 		end
 
 	git_repository_head (a_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API): INTEGER
+		note
+			eis: "name=git_repository_head", "src=https://libgit2.org/libgit2/#v1.0.0/group/repository/git_repository_head", "protocol=uri"
 		local
 			l_ptr: POINTER
 		do
@@ -125,9 +155,13 @@ feature -- Access
 			if l_ptr /= default_pointer then
 				a_out.make_by_pointer (l_ptr)
 			end
+		ensure
+			instance_free: class
 		end
 
 	git_repository_index (a_out: GIT_INDEX_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API): INTEGER
+		note
+			eis: "name=git_repository_index", "src=https://libgit2.org/libgit2/#v1.0.0/group/repository/git_repository_index", "protocol=uri"
 		local
 			l_ptr: POINTER
 		do
@@ -135,7 +169,8 @@ feature -- Access
 			if l_ptr /= default_pointer then
 				a_out.make_by_pointer (l_ptr)
 			end
+		ensure
+			instance_free: class
 		end
-
 
 end

@@ -85,25 +85,25 @@ feature {ANY} -- Member Access
 			describe_strategy_set: a_value = describe_strategy
 		end
 
-	pattern:  detachable STRING
+	pattern:  detachable C_STRING
 			-- Access member `pattern`
 		require
 			exists: exists
 		do
 			if attached c_pattern (item) as l_ptr then
-				Result := (create {C_STRING}.make_by_pointer (l_ptr)).string
+				create Result.make_by_pointer (l_ptr)
 			end
 		ensure
 			result_void: Result = Void implies c_pattern (item) = default_pointer
-			result_not_void: attached Result as l_result implies l_result.same_string ((create {C_STRING}.make_by_pointer (item)).string)
+			result_not_void: attached Result as l_result implies l_result.string.same_string ((create {C_STRING}.make_by_pointer (item)).string)
 		end
 
-	set_pattern (a_value: STRING) 
+	set_pattern (a_value: C_STRING) 
 			-- Change the value of member `pattern` to `a_value`.
 		require
 			exists: exists
 		do
-			set_c_pattern (item, (create {C_STRING}.make (a_value)).item )
+			set_c_pattern (item, a_value.item )
 		end
 
 	only_follow_first_parent: INTEGER

@@ -20,7 +20,6 @@ feature {NONE} --Initialization
 
 	make
 		do
-			create git_repository
 			create path.make_empty
 			create url.make_empty
 			make_command_line_parser
@@ -38,16 +37,11 @@ feature -- Intiialize Repository
 			cloned_repo: GIT_REPOSITORY_STRUCT_API
 			clone_opts: GIT_CLONE_OPTIONS_STRUCT_API
 			checkout_opts: GIT_CHECKOUT_OPTIONS_STRUCT_API
-			git_clone: GIT_CLONE
-			git_checkout: GIT_CHECKOUT_API
 			git_checkout_progress_cb: GIT_CHECKOUT_PROGRESS_CB_DISPATCHER
 			git_transport_message_cb: GIT_TRANSPORT_MESSAGE_CB_DISPATCHER
 			pd: PROGRESS_DATA
 			git_indexer_progress_cb: GIT_INDEXER_PROGRESS_CB_DISPATCHER
 			git_credential_acquire_cb: GIT_CREDENTIAL_ACQUIRE_CB_DISPATCHER
-			git_error: LIBGIT2_ERROR_API
-			l_ptr:POINTER
-
 		do
 			ini := {LIBGIT2_INITIALIZER_API}.git_libgit2_init
 			debug
@@ -56,11 +50,9 @@ feature -- Intiialize Repository
 
 			create clone_opts.make
 			create checkout_opts.make
-			create git_clone
-			create git_checkout
 
-			error := git_clone.git_clone_init_options (clone_opts, 1)
-			error := git_checkout.git_checkout_options_init (checkout_opts, 1)
+			error := {GIT_CLONE}.git_clone_init_options (clone_opts, 1)
+			error := {GIT_CHECKOUT_API}.git_checkout_options_init (checkout_opts, 1)
 
 			-- Setup options
 
@@ -89,20 +81,19 @@ feature -- Intiialize Repository
 
 			create cloned_repo.make
 
-			error := git_clone.git_clone (cloned_repo, url, path,  clone_opts)
+			error := {GIT_CLONE}.git_clone (cloned_repo, url, path,  clone_opts)
 			print ("%N")
 			if error /= 0 then
-				create git_error
-				if attached {GIT_ERROR_STRUCT_API} git_error.git_error_last as last_error and then
+				if attached {GIT_ERROR_STRUCT_API} {LIBGIT2_ERROR_API}.git_error_last as last_error and then
 					attached last_error.message as l_message
 				then
-					print ("%NERROR " + last_error.klass.out + " : " + l_message + "%N")
+					print ("%NERROR " + last_error.klass.out + " : " + l_message.string + "%N")
 				else
 					print("%NERROR Can't clone the repository: " + url + "%N")
 				end
 				{EXCEPTIONS}.die (1)
 			else
-				git_repository.git_repository_free(cloned_repo);
+				{LIBGIT2_REPOSITORY}.git_repository_free(cloned_repo);
 			end
 
 			ini := {LIBGIT2_INITIALIZER_API}.git_libgit2_shutdown
@@ -113,7 +104,6 @@ feature -- Intiialize Repository
 			l_user_name: STRING
 			exit: BOOLEAN
 			cred: GIT_CREDENTIAL_STRUCT_API
-			git_cred: GIT_CREDENTIALS_API
 			l_password: STRING
 			l_privkey: STRING
 			l_pubkey: STRING
@@ -140,23 +130,20 @@ feature -- Intiialize Repository
 				end
 				create l_pubkey.make_from_string (l_password)
 				l_pubkey.append_string (".pub")
-				create git_cred
 				create cred.make_by_pointer (a_cred)
-				Result := git_cred.git_cred_ssh_key_new(cred, l_user_name, l_pubkey, l_privkey, l_password)
+				Result := {GIT_CREDENTIALS_API}.git_cred_ssh_key_new(cred, l_user_name, l_pubkey, l_privkey, l_password)
 			elseif not exit and then a_allowed_types & {GIT_CREDENTIAL_T_ENUM_API}.git_credential_userpass_plaintext > 0 then
 				print ("%NPassword:")
 				l_password := read_password
 				exit := l_password.is_empty
 				if not exit then
-					create git_cred
 					create cred.make_by_pointer (a_cred)
-					Result := git_cred.git_cred_userpass_plaintext_new(cred, l_user_name, l_password)
+					Result := {GIT_CREDENTIALS_API}.git_cred_userpass_plaintext_new(cred, l_user_name, l_password)
 				end
 			else
 				if not exit then
-					create git_cred
 					create cred.make_by_pointer (a_cred)
-					Result := git_cred.git_cred_username_new (cred, l_user_name)
+					Result := {GIT_CREDENTIALS_API}.git_cred_username_new (cred, l_user_name)
 				end
 			end
 		end
@@ -312,19 +299,17 @@ feature	{NONE} -- Process Arguments
 
 	process_arguments
 			-- Process command line arguments
-		local
-			shared_value: STRING
 		do
 			if match_long_option ("url") then
 				if is_next_option_long_option and then has_next_option_value then
-					create url.make_from_string (next_option_value)
+					create url.make_from_string (next_option_value.to_string_8)
 					consume_option
 				end
 			end
 
 			if match_long_option ("path") then
 				if is_next_option_long_option and then has_next_option_value then
-					create path.make_from_string (next_option_value)
+					create path.make_from_string (next_option_value.to_string_8)
 					consume_option
 				end
 			end
@@ -353,8 +338,6 @@ feature	{NONE} -- Process Arguments
 
 feature -- Options
 
-
-	git_repository: LIBGIT2_REPOSITORY
 	path: STRING
 	url:  STRING
 

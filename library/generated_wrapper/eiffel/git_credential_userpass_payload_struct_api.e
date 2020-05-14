@@ -25,46 +25,46 @@ feature -- Measurement
 
 feature {ANY} -- Member Access
 
-	username:  detachable STRING
+	username:  detachable C_STRING
 			-- Access member `username`
 		require
 			exists: exists
 		do
 			if attached c_username (item) as l_ptr then
-				Result := (create {C_STRING}.make_by_pointer (l_ptr)).string
+				create Result.make_by_pointer (l_ptr)
 			end
 		ensure
 			result_void: Result = Void implies c_username (item) = default_pointer
-			result_not_void: attached Result as l_result implies l_result.same_string ((create {C_STRING}.make_by_pointer (item)).string)
+			result_not_void: attached Result as l_result implies l_result.string.same_string ((create {C_STRING}.make_by_pointer (item)).string)
 		end
 
-	set_username (a_value: STRING) 
+	set_username (a_value: C_STRING) 
 			-- Change the value of member `username` to `a_value`.
 		require
 			exists: exists
 		do
-			set_c_username (item, (create {C_STRING}.make (a_value)).item )
+			set_c_username (item, a_value.item )
 		end
 
-	password:  detachable STRING
+	password:  detachable C_STRING
 			-- Access member `password`
 		require
 			exists: exists
 		do
 			if attached c_password (item) as l_ptr then
-				Result := (create {C_STRING}.make_by_pointer (l_ptr)).string
+				create Result.make_by_pointer (l_ptr)
 			end
 		ensure
 			result_void: Result = Void implies c_password (item) = default_pointer
-			result_not_void: attached Result as l_result implies l_result.same_string ((create {C_STRING}.make_by_pointer (item)).string)
+			result_not_void: attached Result as l_result implies l_result.string.same_string ((create {C_STRING}.make_by_pointer (item)).string)
 		end
 
-	set_password (a_value: STRING) 
+	set_password (a_value: C_STRING) 
 			-- Change the value of member `password` to `a_value`.
 		require
 			exists: exists
 		do
-			set_c_password (item, (create {C_STRING}.make (a_value)).item )
+			set_c_password (item, a_value.item )
 		end
 
 feature {NONE} -- Implementation wrapper for struct struct git_credential_userpass_payload

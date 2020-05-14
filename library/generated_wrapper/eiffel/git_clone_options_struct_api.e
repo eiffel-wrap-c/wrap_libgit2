@@ -127,25 +127,25 @@ feature {ANY} -- Member Access
 			a_local_set: a_value = a_local
 		end
 
-	checkout_branch:  detachable STRING
+	checkout_branch:  detachable C_STRING
 			-- Access member `checkout_branch`
 		require
 			exists: exists
 		do
 			if attached c_checkout_branch (item) as l_ptr then
-				Result := (create {C_STRING}.make_by_pointer (l_ptr)).string
+				create Result.make_by_pointer (l_ptr)
 			end
 		ensure
 			result_void: Result = Void implies c_checkout_branch (item) = default_pointer
-			result_not_void: attached Result as l_result implies l_result.same_string ((create {C_STRING}.make_by_pointer (item)).string)
+			result_not_void: attached Result as l_result implies l_result.string.same_string ((create {C_STRING}.make_by_pointer (item)).string)
 		end
 
-	set_checkout_branch (a_value: STRING) 
+	set_checkout_branch (a_value: C_STRING) 
 			-- Change the value of member `checkout_branch` to `a_value`.
 		require
 			exists: exists
 		do
-			set_c_checkout_branch (item, (create {C_STRING}.make (a_value)).item )
+			set_c_checkout_branch (item, a_value.item )
 		end
 
 	repository_cb: POINTER

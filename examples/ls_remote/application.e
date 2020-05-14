@@ -20,7 +20,6 @@ feature {NONE} --Initialization
 	make
 
 		do
-			create git_repository
 			path := "."
 			remote := ""
 
@@ -38,7 +37,6 @@ feature -- Intiialize Repository
 			repo: GIT_REPOSITORY_STRUCT_API
 			iniopts: GIT_REPOSITORY_INIT_OPTIONS_STRUCT_API
 			l_remote: GIT_REMOTE_STRUCT_API
-			git_remote: GIT_REMOTE
 			refspec: STRING
 			l_options: GIT_PUSH_OPTIONS_STRUCT_API
 			a_array: GIT_STRARRAY_STRUCT_API
@@ -46,14 +44,12 @@ feature -- Intiialize Repository
 			callback_dispatcher: GIT_CREDENTIAL_ACQUIRE_CB_DISPATCHER
 			refs: ARRAYED_LIST [GIT_REMOTE_HEAD_STRUCT_API]
 			ref_len: INTEGER
-			git_oid: GIT_OID
 			oid: STRING
-
 		do
 			ini := {LIBGIT2_INITIALIZER_API}.git_libgit2_init
 			create repo.make
 
-			if git_repository.git_repository_open (repo, (create {PATH}.make_from_string (path)).out) < 0 then
+			if {LIBGIT2_REPOSITORY}.git_repository_open (repo, (create {PATH}.make_from_string (path)).out) < 0 then
 				print ("%NCould not open repository")
 				{EXCEPTIONS}.die (1)
 			end
@@ -61,16 +57,15 @@ feature -- Intiialize Repository
 				-- get the remote
 			create l_remote.make
 
-			create git_remote
-			if git_remote.git_remote_lookup (l_remote, repo, remote) < 0 then
-				if git_remote.git_remote_create_anonymous (l_remote, repo, remote) < 0 then
+			if {GIT_REMOTE}.git_remote_lookup (l_remote, repo, remote) < 0 then
+				if {GIT_REMOTE}.git_remote_create_anonymous (l_remote, repo, remote) < 0 then
 					print ("%NCould not get remote repository " + remote)
 					{EXCEPTIONS}.die (1)
 				end
 			end
 
 			create callbacks.make
-			if git_remote.git_remote_init_callbacks (callbacks, 1) < 0 then
+			if {GIT_REMOTE}.git_remote_init_callbacks (callbacks, 1) < 0 then
 				print ("%NCould not intialize callback ")
 				{EXCEPTIONS}.die (1)
 			end
@@ -80,22 +75,21 @@ feature -- Intiialize Repository
 			callbacks.set_credentials (callback_dispatcher.c_dispatcher_1)
 
 				-- connect to remote
-			if git_remote.git_remote_connect (l_remote, {GIT_DIRECTION_ENUM_API}.git_direction_fetch, callbacks, Void, Void) < 0 then
+			if {GIT_REMOTE}.git_remote_connect (l_remote, {GIT_DIRECTION_ENUM_API}.git_direction_fetch, callbacks, Void, Void) < 0 then
 				print ("%NCould not connect to remote repository " + remote)
-				git_remote.git_remote_free (l_remote)
+				{GIT_REMOTE}.git_remote_free (l_remote)
 				{EXCEPTIONS}.die (1)
 			end
 			create refs.make (1)
 				-- Get the list of references on the remote and print out
 				-- their name next to what they point to.
 
-			if git_remote.git_remote_ls (refs, l_remote) < 0 then
+			if {GIT_REMOTE}.git_remote_ls (refs, l_remote) < 0 then
 				print ("%NCould not get the remote repository's reference advertisement list")
-				git_remote.git_remote_free (l_remote)
+				{GIT_REMOTE}.git_remote_free (l_remote)
 				{EXCEPTIONS}.die (1)
 			end
 
-			create git_oid
 			from
 				refs.start
 			until
@@ -103,16 +97,16 @@ feature -- Intiialize Repository
 			loop
 				create oid.make_filled ('%U', {LIBGIT2_CONSTANTS}.GIT_OID_HEXSZ + 1)
 				if attached refs.item_for_iteration.oid as l_oid then
-					git_oid.git_oid_fmt (oid, l_oid)
+					{GIT_OID}.git_oid_fmt (oid, l_oid)
 					if attached refs.item_for_iteration.name as l_name then
-						print("%N" + oid.substring (1, {LIBGIT2_CONSTANTS}.GIT_OID_HEXSZ) +"%T" + l_name )
+						print("%N" + oid.substring (1, {LIBGIT2_CONSTANTS}.GIT_OID_HEXSZ) +"%T" + l_name.string )
 					else
 						print("%N" + oid +"%T")
 					end
 				end
 				refs.forth
 			end
-			git_repository.git_repository_free (repo)
+			{LIBGIT2_REPOSITORY}.git_repository_free (repo)
 			ini := {LIBGIT2_INITIALIZER_API}.git_libgit2_shutdown
 			io.read_line
 		end
@@ -134,7 +128,6 @@ feature -- Intiialize Repository
 			l_user_name: STRING
 			exit: BOOLEAN
 			cred: GIT_CREDENTIAL_STRUCT_API
-			git_cred: GIT_CREDENTIALS_API
 			l_password: STRING
 			l_privkey: STRING
 			l_pubkey: STRING
@@ -161,23 +154,20 @@ feature -- Intiialize Repository
 				end
 				create l_pubkey.make_from_string (l_password)
 				l_pubkey.append_string (".pub")
-				create git_cred
 				create cred.make_by_pointer (a_cred)
-				Result := git_cred.git_cred_ssh_key_new(cred, l_user_name, l_pubkey, l_privkey, l_password)
+				Result := {GIT_CREDENTIALS_API}.git_cred_ssh_key_new(cred, l_user_name, l_pubkey, l_privkey, l_password)
 			elseif not exit and then a_allowed_types & {GIT_CREDENTIAL_T_ENUM_API}.git_credential_userpass_plaintext > 0 then
 				print ("%NPassword:")
 				l_password := read_password
 				exit := l_password.is_empty
 				if not exit then
-					create git_cred
 					create cred.make_by_pointer (a_cred)
-					Result := git_cred.git_cred_userpass_plaintext_new(cred, l_user_name, l_password)
+					Result := {GIT_CREDENTIALS_API}.git_cred_userpass_plaintext_new(cred, l_user_name, l_password)
 				end
 			else
 				if not exit then
-					create git_cred
 					create cred.make_by_pointer (a_cred)
-					Result := git_cred.git_cred_username_new (cred, l_user_name)
+					Result := {GIT_CREDENTIALS_API}.git_cred_username_new (cred, l_user_name)
 				end
 			end
 		end
@@ -221,7 +211,7 @@ feature	{NONE} -- Process Arguments
 
 			print("%N")
 			print (str)
-			print("%N")	
+			print("%N")
 		end
 
 	read_password: STRING
@@ -281,6 +271,5 @@ feature -- Options
 
 	path: STRING
 	remote: STRING
-	git_repository: LIBGIT2_REPOSITORY
 
 end

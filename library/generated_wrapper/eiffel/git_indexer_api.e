@@ -12,6 +12,8 @@ feature -- Access
 	git_indexer_options_init (opts: GIT_INDEXER_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
 			Result := c_git_indexer_options_init (opts.item, version)
+		ensure
+			instance_free: class
 		end
 
 	git_indexer_new (a_out: GIT_INDEXER_STRUCT_API; path: STRING; mode: INTEGER; odb: GIT_ODB_STRUCT_API; opts: GIT_INDEXER_OPTIONS_STRUCT_API): INTEGER 
@@ -20,16 +22,22 @@ feature -- Access
 		do
 			create path_c_string.make (path)
 			Result := c_git_indexer_new (a_out.item, path_c_string.item, mode, odb.item, opts.item)
+		ensure
+			instance_free: class
 		end
 
 	git_indexer_append (idx: GIT_INDEXER_STRUCT_API; data: POINTER; size: INTEGER; stats: GIT_INDEXER_PROGRESS_STRUCT_API): INTEGER 
 		do
 			Result := c_git_indexer_append (idx.item, data, size, stats.item)
+		ensure
+			instance_free: class
 		end
 
 	git_indexer_commit (idx: GIT_INDEXER_STRUCT_API; stats: GIT_INDEXER_PROGRESS_STRUCT_API): INTEGER 
 		do
 			Result := c_git_indexer_commit (idx.item, stats.item)
+		ensure
+			instance_free: class
 		end
 
 	git_indexer_hash (idx: GIT_INDEXER_STRUCT_API): detachable GIT_OID_STRUCT_API 
@@ -38,16 +46,22 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_indexer_free (idx: GIT_INDEXER_STRUCT_API) 
 		do
 			c_git_indexer_free (idx.item)
+		ensure
+			instance_free: class
 		end
 
 	git_indexer_init_options (opts: GIT_INDEXER_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
 			Result := c_git_indexer_init_options (opts.item, version)
+		ensure
+			instance_free: class
 		end
 
 feature -- Externals

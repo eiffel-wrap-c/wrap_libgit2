@@ -15,16 +15,22 @@ feature -- Access
 		do
 			create index_path_c_string.make (index_path)
 			Result := c_git_index_open (a_out.item, index_path_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_new (a_out: GIT_INDEX_STRUCT_API): INTEGER 
 		do
 			Result := c_git_index_new (a_out.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_free (index: GIT_INDEX_STRUCT_API) 
 		do
 			c_git_index_free (index.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_owner (index: GIT_INDEX_STRUCT_API): detachable GIT_REPOSITORY_STRUCT_API 
@@ -33,41 +39,57 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_index_caps (index: GIT_INDEX_STRUCT_API): INTEGER 
 		do
 			Result := c_git_index_caps (index.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_set_caps (index: GIT_INDEX_STRUCT_API; caps: INTEGER): INTEGER 
 		do
 			Result := c_git_index_set_caps (index.item, caps)
+		ensure
+			instance_free: class
 		end
 
 	git_index_version (index: GIT_INDEX_STRUCT_API): INTEGER 
 		do
 			Result := c_git_index_version (index.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_set_version (index: GIT_INDEX_STRUCT_API; version: INTEGER): INTEGER 
 		do
 			Result := c_git_index_set_version (index.item, version)
+		ensure
+			instance_free: class
 		end
 
 	git_index_read (index: GIT_INDEX_STRUCT_API; force: INTEGER): INTEGER 
 		do
 			Result := c_git_index_read (index.item, force)
+		ensure
+			instance_free: class
 		end
 
 	git_index_write (index: GIT_INDEX_STRUCT_API): INTEGER 
 		do
 			Result := c_git_index_write (index.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_path (index: GIT_INDEX_STRUCT_API): POINTER 
 		do
 			Result := c_git_index_path (index.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_checksum (index: GIT_INDEX_STRUCT_API): detachable GIT_OID_STRUCT_API 
@@ -76,31 +98,43 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_index_read_tree (index: GIT_INDEX_STRUCT_API; tree: GIT_TREE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_index_read_tree (index.item, tree.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_write_tree (a_out: GIT_OID_STRUCT_API; index: GIT_INDEX_STRUCT_API): INTEGER 
 		do
 			Result := c_git_index_write_tree (a_out.item, index.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_write_tree_to (a_out: GIT_OID_STRUCT_API; index: GIT_INDEX_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_index_write_tree_to (a_out.item, index.item, repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_entrycount (index: GIT_INDEX_STRUCT_API): INTEGER 
 		do
 			Result := c_git_index_entrycount (index.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_clear (index: GIT_INDEX_STRUCT_API): INTEGER 
 		do
 			Result := c_git_index_clear (index.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_get_byindex (index: GIT_INDEX_STRUCT_API; n: INTEGER): detachable GIT_INDEX_ENTRY_STRUCT_API 
@@ -109,6 +143,8 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_index_get_bypath (index: GIT_INDEX_STRUCT_API; path: STRING; stage: INTEGER): detachable GIT_INDEX_ENTRY_STRUCT_API 
@@ -120,6 +156,8 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_index_remove (index: GIT_INDEX_STRUCT_API; path: STRING; stage: INTEGER): INTEGER 
@@ -128,6 +166,8 @@ feature -- Access
 		do
 			create path_c_string.make (path)
 			Result := c_git_index_remove (index.item, path_c_string.item, stage)
+		ensure
+			instance_free: class
 		end
 
 	git_index_remove_directory (index: GIT_INDEX_STRUCT_API; dir: STRING; stage: INTEGER): INTEGER 
@@ -136,36 +176,50 @@ feature -- Access
 		do
 			create dir_c_string.make (dir)
 			Result := c_git_index_remove_directory (index.item, dir_c_string.item, stage)
+		ensure
+			instance_free: class
 		end
 
 	git_index_add (index: GIT_INDEX_STRUCT_API; source_entry: GIT_INDEX_ENTRY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_index_add (index.item, source_entry.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_entry_stage (entry: GIT_INDEX_ENTRY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_index_entry_stage (entry.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_entry_is_conflict (entry: GIT_INDEX_ENTRY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_index_entry_is_conflict (entry.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_iterator_new (iterator_out: GIT_INDEX_ITERATOR_STRUCT_API; index: GIT_INDEX_STRUCT_API): INTEGER 
 		do
 			Result := c_git_index_iterator_new (iterator_out.item, index.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_iterator_next (a_out: GIT_INDEX_ENTRY_STRUCT_API; iterator: GIT_INDEX_ITERATOR_STRUCT_API): INTEGER 
 		do
 			Result := c_git_index_iterator_next (a_out.item, iterator.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_iterator_free (iterator: GIT_INDEX_ITERATOR_STRUCT_API) 
 		do
 			c_git_index_iterator_free (iterator.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_add_bypath (index: GIT_INDEX_STRUCT_API; path: STRING): INTEGER 
@@ -174,11 +228,15 @@ feature -- Access
 		do
 			create path_c_string.make (path)
 			Result := c_git_index_add_bypath (index.item, path_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_add_from_buffer (index: GIT_INDEX_STRUCT_API; entry: GIT_INDEX_ENTRY_STRUCT_API; buffer: POINTER; len: INTEGER): INTEGER 
 		do
 			Result := c_git_index_add_from_buffer (index.item, entry.item, buffer, len)
+		ensure
+			instance_free: class
 		end
 
 	git_index_remove_bypath (index: GIT_INDEX_STRUCT_API; path: STRING): INTEGER 
@@ -187,21 +245,29 @@ feature -- Access
 		do
 			create path_c_string.make (path)
 			Result := c_git_index_remove_bypath (index.item, path_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_add_all (index: GIT_INDEX_STRUCT_API; pathspec: GIT_STRARRAY_STRUCT_API; flags: INTEGER; callback: POINTER; payload: POINTER): INTEGER 
 		do
 			Result := c_git_index_add_all (index.item, pathspec.item, flags, callback, payload)
+		ensure
+			instance_free: class
 		end
 
 	git_index_remove_all (index: GIT_INDEX_STRUCT_API; pathspec: GIT_STRARRAY_STRUCT_API; callback: POINTER; payload: POINTER): INTEGER 
 		do
 			Result := c_git_index_remove_all (index.item, pathspec.item, callback, payload)
+		ensure
+			instance_free: class
 		end
 
 	git_index_update_all (index: GIT_INDEX_STRUCT_API; pathspec: GIT_STRARRAY_STRUCT_API; callback: POINTER; payload: POINTER): INTEGER 
 		do
 			Result := c_git_index_update_all (index.item, pathspec.item, callback, payload)
+		ensure
+			instance_free: class
 		end
 
 	git_index_find (at_pos: POINTER; index: GIT_INDEX_STRUCT_API; path: STRING): INTEGER 
@@ -210,6 +276,8 @@ feature -- Access
 		do
 			create path_c_string.make (path)
 			Result := c_git_index_find (at_pos, index.item, path_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_find_prefix (at_pos: POINTER; index: GIT_INDEX_STRUCT_API; a_prefix: STRING): INTEGER 
@@ -218,11 +286,15 @@ feature -- Access
 		do
 			create a_prefix_c_string.make (a_prefix)
 			Result := c_git_index_find_prefix (at_pos, index.item, a_prefix_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_conflict_add (index: GIT_INDEX_STRUCT_API; ancestor_entry: GIT_INDEX_ENTRY_STRUCT_API; our_entry: GIT_INDEX_ENTRY_STRUCT_API; their_entry: GIT_INDEX_ENTRY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_index_conflict_add (index.item, ancestor_entry.item, our_entry.item, their_entry.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_conflict_get (ancestor_out: GIT_INDEX_ENTRY_STRUCT_API; our_out: GIT_INDEX_ENTRY_STRUCT_API; their_out: GIT_INDEX_ENTRY_STRUCT_API; index: GIT_INDEX_STRUCT_API; path: STRING): INTEGER 
@@ -231,6 +303,8 @@ feature -- Access
 		do
 			create path_c_string.make (path)
 			Result := c_git_index_conflict_get (ancestor_out.item, our_out.item, their_out.item, index.item, path_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_conflict_remove (index: GIT_INDEX_STRUCT_API; path: STRING): INTEGER 
@@ -239,36 +313,50 @@ feature -- Access
 		do
 			create path_c_string.make (path)
 			Result := c_git_index_conflict_remove (index.item, path_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_conflict_cleanup (index: GIT_INDEX_STRUCT_API): INTEGER 
 		do
 			Result := c_git_index_conflict_cleanup (index.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_has_conflicts (index: GIT_INDEX_STRUCT_API): INTEGER 
 		do
 			Result := c_git_index_has_conflicts (index.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_conflict_iterator_new (iterator_out: GIT_INDEX_CONFLICT_ITERATOR_STRUCT_API; index: GIT_INDEX_STRUCT_API): INTEGER 
 		do
 			Result := c_git_index_conflict_iterator_new (iterator_out.item, index.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_conflict_next (ancestor_out: GIT_INDEX_ENTRY_STRUCT_API; our_out: GIT_INDEX_ENTRY_STRUCT_API; their_out: GIT_INDEX_ENTRY_STRUCT_API; iterator: GIT_INDEX_CONFLICT_ITERATOR_STRUCT_API): INTEGER 
 		do
 			Result := c_git_index_conflict_next (ancestor_out.item, our_out.item, their_out.item, iterator.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_conflict_iterator_free (iterator: GIT_INDEX_CONFLICT_ITERATOR_STRUCT_API) 
 		do
 			c_git_index_conflict_iterator_free (iterator.item)
+		ensure
+			instance_free: class
 		end
 
 	git_index_add_frombuffer (index: GIT_INDEX_STRUCT_API; entry: GIT_INDEX_ENTRY_STRUCT_API; buffer: POINTER; len: INTEGER): INTEGER 
 		do
 			Result := c_git_index_add_frombuffer (index.item, entry.item, buffer, len)
+		ensure
+			instance_free: class
 		end
 
 feature -- Externals

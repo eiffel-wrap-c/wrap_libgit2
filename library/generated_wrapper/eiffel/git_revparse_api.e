@@ -15,6 +15,8 @@ feature -- Access
 		do
 			create spec_c_string.make (spec)
 			Result := c_git_revparse_single (a_out.item, repo.item, spec_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_revparse_ext (object_out: GIT_OBJECT_STRUCT_API; reference_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; spec: STRING): INTEGER 
@@ -23,6 +25,8 @@ feature -- Access
 		do
 			create spec_c_string.make (spec)
 			Result := c_git_revparse_ext (object_out.item, reference_out.item, repo.item, spec_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 feature -- Externals

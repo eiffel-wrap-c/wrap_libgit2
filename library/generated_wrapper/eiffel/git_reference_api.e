@@ -15,6 +15,8 @@ feature -- Access
 		do
 			create name_c_string.make (name)
 			Result := c_git_reference_lookup (a_out.item, repo.item, name_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_name_to_id (a_out: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING): INTEGER 
@@ -23,6 +25,8 @@ feature -- Access
 		do
 			create name_c_string.make (name)
 			Result := c_git_reference_name_to_id (a_out.item, repo.item, name_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_dwim (a_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; shorthand: STRING): INTEGER 
@@ -31,6 +35,8 @@ feature -- Access
 		do
 			create shorthand_c_string.make (shorthand)
 			Result := c_git_reference_dwim (a_out.item, repo.item, shorthand_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_symbolic_create_matching (a_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING; target: STRING; force: INTEGER; current_value: STRING; log_message: STRING): INTEGER 
@@ -45,6 +51,8 @@ feature -- Access
 			create current_value_c_string.make (current_value)
 			create log_message_c_string.make (log_message)
 			Result := c_git_reference_symbolic_create_matching (a_out.item, repo.item, name_c_string.item, target_c_string.item, force, current_value_c_string.item, log_message_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_symbolic_create (a_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING; target: STRING; force: INTEGER; log_message: STRING): INTEGER 
@@ -57,6 +65,8 @@ feature -- Access
 			create target_c_string.make (target)
 			create log_message_c_string.make (log_message)
 			Result := c_git_reference_symbolic_create (a_out.item, repo.item, name_c_string.item, target_c_string.item, force, log_message_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_create (a_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING; id: GIT_OID_STRUCT_API; force: INTEGER; log_message: STRING): INTEGER 
@@ -67,6 +77,8 @@ feature -- Access
 			create name_c_string.make (name)
 			create log_message_c_string.make (log_message)
 			Result := c_git_reference_create (a_out.item, repo.item, name_c_string.item, id.item, force, log_message_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_create_matching (a_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING; id: GIT_OID_STRUCT_API; force: INTEGER; current_id: GIT_OID_STRUCT_API; log_message: STRING): INTEGER 
@@ -77,6 +89,8 @@ feature -- Access
 			create name_c_string.make (name)
 			create log_message_c_string.make (log_message)
 			Result := c_git_reference_create_matching (a_out.item, repo.item, name_c_string.item, id.item, force, current_id.item, log_message_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_target (ref: GIT_REFERENCE_STRUCT_API): detachable GIT_OID_STRUCT_API 
@@ -85,6 +99,8 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_reference_target_peel (ref: GIT_REFERENCE_STRUCT_API): detachable GIT_OID_STRUCT_API 
@@ -93,26 +109,36 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_reference_symbolic_target (ref: GIT_REFERENCE_STRUCT_API): POINTER 
 		do
 			Result := c_git_reference_symbolic_target (ref.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_type (ref: GIT_REFERENCE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_reference_type (ref.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_name (ref: GIT_REFERENCE_STRUCT_API): POINTER 
 		do
 			Result := c_git_reference_name (ref.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_resolve (a_out: GIT_REFERENCE_STRUCT_API; ref: GIT_REFERENCE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_reference_resolve (a_out.item, ref.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_owner (ref: GIT_REFERENCE_STRUCT_API): detachable GIT_REPOSITORY_STRUCT_API 
@@ -121,6 +147,8 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_reference_symbolic_set_target (a_out: GIT_REFERENCE_STRUCT_API; ref: GIT_REFERENCE_STRUCT_API; target: STRING; log_message: STRING): INTEGER 
@@ -131,6 +159,8 @@ feature -- Access
 			create target_c_string.make (target)
 			create log_message_c_string.make (log_message)
 			Result := c_git_reference_symbolic_set_target (a_out.item, ref.item, target_c_string.item, log_message_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_set_target (a_out: GIT_REFERENCE_STRUCT_API; ref: GIT_REFERENCE_STRUCT_API; id: GIT_OID_STRUCT_API; log_message: STRING): INTEGER 
@@ -139,6 +169,8 @@ feature -- Access
 		do
 			create log_message_c_string.make (log_message)
 			Result := c_git_reference_set_target (a_out.item, ref.item, id.item, log_message_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_rename (new_ref: GIT_REFERENCE_STRUCT_API; ref: GIT_REFERENCE_STRUCT_API; new_name: STRING; force: INTEGER; log_message: STRING): INTEGER 
@@ -149,11 +181,15 @@ feature -- Access
 			create new_name_c_string.make (new_name)
 			create log_message_c_string.make (log_message)
 			Result := c_git_reference_rename (new_ref.item, ref.item, new_name_c_string.item, force, log_message_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_delete (ref: GIT_REFERENCE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_reference_delete (ref.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_remove (repo: GIT_REPOSITORY_STRUCT_API; name: STRING): INTEGER 
@@ -162,41 +198,57 @@ feature -- Access
 		do
 			create name_c_string.make (name)
 			Result := c_git_reference_remove (repo.item, name_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_list (array: GIT_STRARRAY_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_reference_list (array.item, repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_foreach (repo: GIT_REPOSITORY_STRUCT_API; callback: POINTER; payload: POINTER): INTEGER 
 		do
 			Result := c_git_reference_foreach (repo.item, callback, payload)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_foreach_name (repo: GIT_REPOSITORY_STRUCT_API; callback: POINTER; payload: POINTER): INTEGER 
 		do
 			Result := c_git_reference_foreach_name (repo.item, callback, payload)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_dup (dest: GIT_REFERENCE_STRUCT_API; source: GIT_REFERENCE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_reference_dup (dest.item, source.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_free (ref: GIT_REFERENCE_STRUCT_API) 
 		do
 			c_git_reference_free (ref.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_cmp (ref1: GIT_REFERENCE_STRUCT_API; ref2: GIT_REFERENCE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_reference_cmp (ref1.item, ref2.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_iterator_new (a_out: GIT_REFERENCE_ITERATOR_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		do
 			Result := c_git_reference_iterator_new (a_out.item, repo.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_iterator_glob_new (a_out: GIT_REFERENCE_ITERATOR_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; glob: STRING): INTEGER 
@@ -205,21 +257,29 @@ feature -- Access
 		do
 			create glob_c_string.make (glob)
 			Result := c_git_reference_iterator_glob_new (a_out.item, repo.item, glob_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_next (a_out: GIT_REFERENCE_STRUCT_API; iter: GIT_REFERENCE_ITERATOR_STRUCT_API): INTEGER 
 		do
 			Result := c_git_reference_next (a_out.item, iter.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_next_name (a_out: POINTER; iter: GIT_REFERENCE_ITERATOR_STRUCT_API): INTEGER 
 		do
 			Result := c_git_reference_next_name (a_out, iter.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_iterator_free (iter: GIT_REFERENCE_ITERATOR_STRUCT_API) 
 		do
 			c_git_reference_iterator_free (iter.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_foreach_glob (repo: GIT_REPOSITORY_STRUCT_API; glob: STRING; callback: POINTER; payload: POINTER): INTEGER 
@@ -228,6 +288,8 @@ feature -- Access
 		do
 			create glob_c_string.make (glob)
 			Result := c_git_reference_foreach_glob (repo.item, glob_c_string.item, callback, payload)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_has_log (repo: GIT_REPOSITORY_STRUCT_API; refname: STRING): INTEGER 
@@ -236,6 +298,8 @@ feature -- Access
 		do
 			create refname_c_string.make (refname)
 			Result := c_git_reference_has_log (repo.item, refname_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_ensure_log (repo: GIT_REPOSITORY_STRUCT_API; refname: STRING): INTEGER 
@@ -244,26 +308,36 @@ feature -- Access
 		do
 			create refname_c_string.make (refname)
 			Result := c_git_reference_ensure_log (repo.item, refname_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_is_branch (ref: GIT_REFERENCE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_reference_is_branch (ref.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_is_remote (ref: GIT_REFERENCE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_reference_is_remote (ref.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_is_tag (ref: GIT_REFERENCE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_reference_is_tag (ref.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_is_note (ref: GIT_REFERENCE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_reference_is_note (ref.item)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_normalize_name (buffer_out: POINTER; buffer_size: INTEGER; name: POINTER; flags: INTEGER): INTEGER
@@ -278,6 +352,8 @@ feature -- Access
 	git_reference_peel (a_out: GIT_OBJECT_STRUCT_API; ref: GIT_REFERENCE_STRUCT_API; type: INTEGER): INTEGER 
 		do
 			Result := c_git_reference_peel (a_out.item, ref.item, type)
+		ensure
+			instance_free: class
 		end
 
 	git_reference_is_valid_name (refname: POINTER): INTEGER
@@ -292,16 +368,22 @@ feature -- Access
 	git_reference_shorthand (ref: GIT_REFERENCE_STRUCT_API): POINTER 
 		do
 			Result := c_git_reference_shorthand (ref.item)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_update_options_init (opts: GIT_SUBMODULE_UPDATE_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
 			Result := c_git_submodule_update_options_init (opts.item, version)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_update (submodule: GIT_SUBMODULE_STRUCT_API; init: INTEGER; options: GIT_SUBMODULE_UPDATE_OPTIONS_STRUCT_API): INTEGER 
 		do
 			Result := c_git_submodule_update (submodule.item, init, options.item)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_lookup (a_out: GIT_SUBMODULE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING): INTEGER 
@@ -310,16 +392,22 @@ feature -- Access
 		do
 			create name_c_string.make (name)
 			Result := c_git_submodule_lookup (a_out.item, repo.item, name_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_free (submodule: GIT_SUBMODULE_STRUCT_API) 
 		do
 			c_git_submodule_free (submodule.item)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_foreach (repo: GIT_REPOSITORY_STRUCT_API; callback: POINTER; payload: POINTER): INTEGER 
 		do
 			Result := c_git_submodule_foreach (repo.item, callback, payload)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_add_setup (a_out: GIT_SUBMODULE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; url: STRING; path: STRING; use_gitlink: INTEGER): INTEGER 
@@ -330,21 +418,29 @@ feature -- Access
 			create url_c_string.make (url)
 			create path_c_string.make (path)
 			Result := c_git_submodule_add_setup (a_out.item, repo.item, url_c_string.item, path_c_string.item, use_gitlink)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_clone (a_out: GIT_REPOSITORY_STRUCT_API; submodule: GIT_SUBMODULE_STRUCT_API; opts: GIT_SUBMODULE_UPDATE_OPTIONS_STRUCT_API): INTEGER 
 		do
 			Result := c_git_submodule_clone (a_out.item, submodule.item, opts.item)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_add_finalize (submodule: GIT_SUBMODULE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_submodule_add_finalize (submodule.item)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_add_to_index (submodule: GIT_SUBMODULE_STRUCT_API; write_index: INTEGER): INTEGER 
 		do
 			Result := c_git_submodule_add_to_index (submodule.item, write_index)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_owner (submodule: GIT_SUBMODULE_STRUCT_API): detachable GIT_REPOSITORY_STRUCT_API 
@@ -353,21 +449,29 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_name (submodule: GIT_SUBMODULE_STRUCT_API): POINTER 
 		do
 			Result := c_git_submodule_name (submodule.item)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_path (submodule: GIT_SUBMODULE_STRUCT_API): POINTER 
 		do
 			Result := c_git_submodule_path (submodule.item)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_url (submodule: GIT_SUBMODULE_STRUCT_API): POINTER 
 		do
 			Result := c_git_submodule_url (submodule.item)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_resolve_url (a_out: GIT_BUF_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; url: STRING): INTEGER 
@@ -376,11 +480,15 @@ feature -- Access
 		do
 			create url_c_string.make (url)
 			Result := c_git_submodule_resolve_url (a_out.item, repo.item, url_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_branch (submodule: GIT_SUBMODULE_STRUCT_API): POINTER 
 		do
 			Result := c_git_submodule_branch (submodule.item)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_set_branch (repo: GIT_REPOSITORY_STRUCT_API; name: STRING; branch: STRING): INTEGER 
@@ -391,6 +499,8 @@ feature -- Access
 			create name_c_string.make (name)
 			create branch_c_string.make (branch)
 			Result := c_git_submodule_set_branch (repo.item, name_c_string.item, branch_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_set_url (repo: GIT_REPOSITORY_STRUCT_API; name: STRING; url: STRING): INTEGER 
@@ -401,6 +511,8 @@ feature -- Access
 			create name_c_string.make (name)
 			create url_c_string.make (url)
 			Result := c_git_submodule_set_url (repo.item, name_c_string.item, url_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_index_id (submodule: GIT_SUBMODULE_STRUCT_API): detachable GIT_OID_STRUCT_API 
@@ -409,6 +521,8 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_head_id (submodule: GIT_SUBMODULE_STRUCT_API): detachable GIT_OID_STRUCT_API 
@@ -417,6 +531,8 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_wd_id (submodule: GIT_SUBMODULE_STRUCT_API): detachable GIT_OID_STRUCT_API 
@@ -425,11 +541,15 @@ feature -- Access
 				create Result.make_by_pointer ( l_ptr )
 			end
 
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_ignore (submodule: GIT_SUBMODULE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_submodule_ignore (submodule.item)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_set_ignore (repo: GIT_REPOSITORY_STRUCT_API; name: STRING; ignore: INTEGER): INTEGER 
@@ -438,11 +558,15 @@ feature -- Access
 		do
 			create name_c_string.make (name)
 			Result := c_git_submodule_set_ignore (repo.item, name_c_string.item, ignore)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_update_strategy (submodule: GIT_SUBMODULE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_submodule_update_strategy (submodule.item)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_set_update (repo: GIT_REPOSITORY_STRUCT_API; name: STRING; update: INTEGER): INTEGER 
@@ -451,11 +575,15 @@ feature -- Access
 		do
 			create name_c_string.make (name)
 			Result := c_git_submodule_set_update (repo.item, name_c_string.item, update)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_fetch_recurse_submodules (submodule: GIT_SUBMODULE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_submodule_fetch_recurse_submodules (submodule.item)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_set_fetch_recurse_submodules (repo: GIT_REPOSITORY_STRUCT_API; name: STRING; fetch_recurse_submodules: INTEGER): INTEGER 
@@ -464,31 +592,43 @@ feature -- Access
 		do
 			create name_c_string.make (name)
 			Result := c_git_submodule_set_fetch_recurse_submodules (repo.item, name_c_string.item, fetch_recurse_submodules)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_init (submodule: GIT_SUBMODULE_STRUCT_API; overwrite: INTEGER): INTEGER 
 		do
 			Result := c_git_submodule_init (submodule.item, overwrite)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_repo_init (a_out: GIT_REPOSITORY_STRUCT_API; sm: GIT_SUBMODULE_STRUCT_API; use_gitlink: INTEGER): INTEGER 
 		do
 			Result := c_git_submodule_repo_init (a_out.item, sm.item, use_gitlink)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_sync (submodule: GIT_SUBMODULE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_submodule_sync (submodule.item)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_open (repo: GIT_REPOSITORY_STRUCT_API; submodule: GIT_SUBMODULE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_submodule_open (repo.item, submodule.item)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_reload (submodule: GIT_SUBMODULE_STRUCT_API; force: INTEGER): INTEGER 
 		do
 			Result := c_git_submodule_reload (submodule.item, force)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_status (status: POINTER; repo: GIT_REPOSITORY_STRUCT_API; name: STRING; ignore: INTEGER): INTEGER 
@@ -497,16 +637,22 @@ feature -- Access
 		do
 			create name_c_string.make (name)
 			Result := c_git_submodule_status (status, repo.item, name_c_string.item, ignore)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_location (location_status: POINTER; submodule: GIT_SUBMODULE_STRUCT_API): INTEGER 
 		do
 			Result := c_git_submodule_location (location_status, submodule.item)
+		ensure
+			instance_free: class
 		end
 
 	git_submodule_update_init_options (opts: GIT_SUBMODULE_UPDATE_OPTIONS_STRUCT_API; version: INTEGER): INTEGER 
 		do
 			Result := c_git_submodule_update_init_options (opts.item, version)
+		ensure
+			instance_free: class
 		end
 
 feature -- Externals

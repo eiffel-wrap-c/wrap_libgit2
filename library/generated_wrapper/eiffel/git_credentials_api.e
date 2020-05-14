@@ -12,16 +12,22 @@ feature -- Access
 	git_credential_free (cred: GIT_CREDENTIAL_STRUCT_API) 
 		do
 			c_git_credential_free (cred.item)
+		ensure
+			instance_free: class
 		end
 
 	git_credential_has_username (cred: GIT_CREDENTIAL_STRUCT_API): INTEGER 
 		do
 			Result := c_git_credential_has_username (cred.item)
+		ensure
+			instance_free: class
 		end
 
 	git_credential_get_username (cred: GIT_CREDENTIAL_STRUCT_API): POINTER 
 		do
 			Result := c_git_credential_get_username (cred.item)
+		ensure
+			instance_free: class
 		end
 
 	git_credential_userpass_plaintext_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING; password: STRING): INTEGER 
@@ -32,11 +38,15 @@ feature -- Access
 			create username_c_string.make (username)
 			create password_c_string.make (password)
 			Result := c_git_credential_userpass_plaintext_new (a_out.item, username_c_string.item, password_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_credential_default_new (a_out: GIT_CREDENTIAL_STRUCT_API): INTEGER 
 		do
 			Result := c_git_credential_default_new (a_out.item)
+		ensure
+			instance_free: class
 		end
 
 	git_credential_username_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING): INTEGER 
@@ -45,6 +55,8 @@ feature -- Access
 		do
 			create username_c_string.make (username)
 			Result := c_git_credential_username_new (a_out.item, username_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_credential_ssh_key_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING; publickey: STRING; privatekey: STRING; passphrase: STRING): INTEGER 
@@ -59,6 +71,8 @@ feature -- Access
 			create privatekey_c_string.make (privatekey)
 			create passphrase_c_string.make (passphrase)
 			Result := c_git_credential_ssh_key_new (a_out.item, username_c_string.item, publickey_c_string.item, privatekey_c_string.item, passphrase_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_credential_ssh_key_memory_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING; publickey: STRING; privatekey: STRING; passphrase: STRING): INTEGER 
@@ -73,6 +87,8 @@ feature -- Access
 			create privatekey_c_string.make (privatekey)
 			create passphrase_c_string.make (passphrase)
 			Result := c_git_credential_ssh_key_memory_new (a_out.item, username_c_string.item, publickey_c_string.item, privatekey_c_string.item, passphrase_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_credential_ssh_interactive_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING; prompt_callback: POINTER; payload: POINTER): INTEGER 
@@ -81,6 +97,8 @@ feature -- Access
 		do
 			create username_c_string.make (username)
 			Result := c_git_credential_ssh_interactive_new (a_out.item, username_c_string.item, prompt_callback, payload)
+		ensure
+			instance_free: class
 		end
 
 	git_credential_ssh_key_from_agent (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING): INTEGER 
@@ -89,6 +107,8 @@ feature -- Access
 		do
 			create username_c_string.make (username)
 			Result := c_git_credential_ssh_key_from_agent (a_out.item, username_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_credential_ssh_custom_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING; publickey: STRING; publickey_len: INTEGER; sign_callback: POINTER; payload: POINTER): INTEGER 
@@ -99,6 +119,8 @@ feature -- Access
 			create username_c_string.make (username)
 			create publickey_c_string.make (publickey)
 			Result := c_git_credential_ssh_custom_new (a_out.item, username_c_string.item, publickey_c_string.item, publickey_len, sign_callback, payload)
+		ensure
+			instance_free: class
 		end
 
 	git_credential_userpass (a_out: GIT_CREDENTIAL_STRUCT_API; url: STRING; user_from_url: STRING; allowed_types: INTEGER; payload: POINTER): INTEGER 
@@ -109,21 +131,29 @@ feature -- Access
 			create url_c_string.make (url)
 			create user_from_url_c_string.make (user_from_url)
 			Result := c_git_credential_userpass (a_out.item, url_c_string.item, user_from_url_c_string.item, allowed_types, payload)
+		ensure
+			instance_free: class
 		end
 
 	git_cred_free (cred: GIT_CREDENTIAL_STRUCT_API) 
 		do
 			c_git_cred_free (cred.item)
+		ensure
+			instance_free: class
 		end
 
 	git_cred_has_username (cred: GIT_CREDENTIAL_STRUCT_API): INTEGER 
 		do
 			Result := c_git_cred_has_username (cred.item)
+		ensure
+			instance_free: class
 		end
 
 	git_cred_get_username (cred: GIT_CREDENTIAL_STRUCT_API): POINTER 
 		do
 			Result := c_git_cred_get_username (cred.item)
+		ensure
+			instance_free: class
 		end
 
 	git_cred_userpass_plaintext_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING; password: STRING): INTEGER 
@@ -134,11 +164,15 @@ feature -- Access
 			create username_c_string.make (username)
 			create password_c_string.make (password)
 			Result := c_git_cred_userpass_plaintext_new (a_out.item, username_c_string.item, password_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_cred_default_new (a_out: GIT_CREDENTIAL_STRUCT_API): INTEGER 
 		do
 			Result := c_git_cred_default_new (a_out.item)
+		ensure
+			instance_free: class
 		end
 
 	git_cred_username_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING): INTEGER 
@@ -147,6 +181,8 @@ feature -- Access
 		do
 			create username_c_string.make (username)
 			Result := c_git_cred_username_new (a_out.item, username_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_cred_ssh_key_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING; publickey: STRING; privatekey: STRING; passphrase: STRING): INTEGER 
@@ -161,6 +197,8 @@ feature -- Access
 			create privatekey_c_string.make (privatekey)
 			create passphrase_c_string.make (passphrase)
 			Result := c_git_cred_ssh_key_new (a_out.item, username_c_string.item, publickey_c_string.item, privatekey_c_string.item, passphrase_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_cred_ssh_key_memory_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING; publickey: STRING; privatekey: STRING; passphrase: STRING): INTEGER 
@@ -175,6 +213,8 @@ feature -- Access
 			create privatekey_c_string.make (privatekey)
 			create passphrase_c_string.make (passphrase)
 			Result := c_git_cred_ssh_key_memory_new (a_out.item, username_c_string.item, publickey_c_string.item, privatekey_c_string.item, passphrase_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_cred_ssh_interactive_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING; prompt_callback: POINTER; payload: POINTER): INTEGER 
@@ -183,6 +223,8 @@ feature -- Access
 		do
 			create username_c_string.make (username)
 			Result := c_git_cred_ssh_interactive_new (a_out.item, username_c_string.item, prompt_callback, payload)
+		ensure
+			instance_free: class
 		end
 
 	git_cred_ssh_key_from_agent (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING): INTEGER 
@@ -191,6 +233,8 @@ feature -- Access
 		do
 			create username_c_string.make (username)
 			Result := c_git_cred_ssh_key_from_agent (a_out.item, username_c_string.item)
+		ensure
+			instance_free: class
 		end
 
 	git_cred_ssh_custom_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING; publickey: STRING; publickey_len: INTEGER; sign_callback: POINTER; payload: POINTER): INTEGER 
@@ -201,6 +245,8 @@ feature -- Access
 			create username_c_string.make (username)
 			create publickey_c_string.make (publickey)
 			Result := c_git_cred_ssh_custom_new (a_out.item, username_c_string.item, publickey_c_string.item, publickey_len, sign_callback, payload)
+		ensure
+			instance_free: class
 		end
 
 	git_cred_userpass (a_out: GIT_CREDENTIAL_STRUCT_API; url: STRING; user_from_url: STRING; allowed_types: INTEGER; payload: POINTER): INTEGER 
@@ -211,6 +257,8 @@ feature -- Access
 			create url_c_string.make (url)
 			create user_from_url_c_string.make (user_from_url)
 			Result := c_git_cred_userpass (a_out.item, url_c_string.item, user_from_url_c_string.item, allowed_types, payload)
+		ensure
+			instance_free: class
 		end
 
 feature -- Externals

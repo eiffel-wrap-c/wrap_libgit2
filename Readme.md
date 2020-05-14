@@ -8,11 +8,44 @@ allowing you to write native speed custom Git applications in any language which
 ## Requirements 
 
 *  [WrapC](https://github.com/eiffel-wrap-c/WrapC) tool.
-*  [libgit2 v0.99.0](https://github.com/libgit2/libgit2/releases).
+*  [libgit2 v1.0.0](https://github.com/libgit2/libgit2/releases).
 
 ### Status
 The binding is work in progress.
 Tested on Linux and Windows 64 bits.
+
+### Download and Install
+
+[Guide to linking libgit2](https://libgit2.org/docs/guides/build-and-link/) on various platforms
+
+#### Linu
+
+On Linux to install version 1.0.0 you will need to do the following. 
+
+	$ mkdir build
+	$ cd build
+	$ cmake ..
+	$ sudo cmake --build . --target install
+
+Rebuild the ldconfig cache using
+ 
+ 	sudo ldconfig 
+ 
+Optionally you can use [vckpg](https://github.com/Microsoft/vcpkg), a C++ Library Manager for Windows, Linux, and MacOS.
+```
+	./vcpkg install libgit2:x64-linux
+```
+Windows
+
+Using vcpkg (https://github.com/microsoft/vcpkg) tool, you can install libgit2 library
+
+```
+	vcpkg install libgit2:x64-windows
+```
+
+Then copy the `git2.lib` to %LIBRARY_PATH%wrap_library/library/C/lib
+Be sure to have the `git2.dll` on the PATH.
+
 
 ## Examples 
 
@@ -26,36 +59,18 @@ Tested on Linux and Windows 64 bits.
 * [Git ls_remote](./examples/ls_remote)	`shows how to list remote references.`
 * [Git clone](./examples/cloe)	`shows how to list perform clones.`
 
-[Guide to linking libgit2](https://libgit2.org/docs/guides/build-and-link/) on various platforms
 
-On Linux to install version 0.99.0 you will need to do the following. 
+### How to compile the C library glue code.
 
-	$ mkdir build
-	$ cd build
-	$ cmake ..
-	$ sudo cmake --build . --target install
+Before to use the examples you will need to compile the C glue code, go to 
 
-Rebuild the ldconfig cache using
- 
- 	sudo ldconfig 
- 
-Optionally you can use [vckpg](https://github.com/Microsoft/vcpkg), a C++ Library Manager for Windows, Linux, and MacOS.
+	library/generated_wrapper/c/src
 
-Windows example
-```
-	vcpkg install libgit2:x64-windows
-```
-or
-Linux example
-```
-	./vcpkg install libgit2:x64-linux
-```
+and run
 
+	finish_freezing --library
 
-
-
-
-
+It will copy the C lib `eif_libgit2.a` to `$ECF_CONFIG_PATH/C/spec/$(ISE_PLATFORM)/lib/`  or `eif_libgit2.lib`  to `$ECF_CONFIG_PATH/C/spec/$ISE_C_COMPILER/$ISE_PLATFORM/lib` 
 
 
 

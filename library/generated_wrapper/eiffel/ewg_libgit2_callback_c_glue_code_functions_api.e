@@ -12,6 +12,8 @@ feature -- Access
 	set_git_index_matched_path_cb_object (a_class: POINTER) 
 		do
 			c_set_git_index_matched_path_cb_object (a_class)
+		ensure
+			instance_free: class
 		end
 
 	release_git_index_matched_path_cb_object
@@ -53,16 +55,22 @@ feature -- Access
 	set_git_index_matched_path_cb_entry_1 (a_feature: POINTER) 
 		do
 			c_set_git_index_matched_path_cb_entry_1 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	set_git_index_matched_path_cb_entry_2 (a_feature: POINTER) 
 		do
 			c_set_git_index_matched_path_cb_entry_2 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	set_git_index_matched_path_cb_entry_3 (a_feature: POINTER) 
 		do
 			c_set_git_index_matched_path_cb_entry_3 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	call_git_index_matched_path_cb (a_function: POINTER; path: STRING; matched_pathspec: STRING; payload: POINTER): INTEGER 
@@ -73,11 +81,15 @@ feature -- Access
 			create path_c_string.make (path)
 			create matched_pathspec_c_string.make (matched_pathspec)
 			Result := c_call_git_index_matched_path_cb (a_function, path_c_string.item, matched_pathspec_c_string.item, payload)
+		ensure
+			instance_free: class
 		end
 
 	set_git_status_cb_object (a_class: POINTER) 
 		do
 			c_set_git_status_cb_object (a_class)
+		ensure
+			instance_free: class
 		end
 
 	release_git_status_cb_object
@@ -119,16 +131,22 @@ feature -- Access
 	set_git_status_cb_entry_1 (a_feature: POINTER) 
 		do
 			c_set_git_status_cb_entry_1 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	set_git_status_cb_entry_2 (a_feature: POINTER) 
 		do
 			c_set_git_status_cb_entry_2 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	set_git_status_cb_entry_3 (a_feature: POINTER) 
 		do
 			c_set_git_status_cb_entry_3 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	call_git_status_cb (a_function: POINTER; path: STRING; status_flags: INTEGER; payload: POINTER): INTEGER 
@@ -137,11 +155,15 @@ feature -- Access
 		do
 			create path_c_string.make (path)
 			Result := c_call_git_status_cb (a_function, path_c_string.item, status_flags, payload)
+		ensure
+			instance_free: class
 		end
 
 	set_git_submodule_cb_object (a_class: POINTER) 
 		do
 			c_set_git_submodule_cb_object (a_class)
+		ensure
+			instance_free: class
 		end
 
 	release_git_submodule_cb_object
@@ -183,16 +205,22 @@ feature -- Access
 	set_git_submodule_cb_entry_1 (a_feature: POINTER) 
 		do
 			c_set_git_submodule_cb_entry_1 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	set_git_submodule_cb_entry_2 (a_feature: POINTER) 
 		do
 			c_set_git_submodule_cb_entry_2 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	set_git_submodule_cb_entry_3 (a_feature: POINTER) 
 		do
 			c_set_git_submodule_cb_entry_3 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	call_git_submodule_cb (a_function: POINTER; sm: GIT_SUBMODULE_STRUCT_API; name: STRING; payload: POINTER): INTEGER 
@@ -201,11 +229,15 @@ feature -- Access
 		do
 			create name_c_string.make (name)
 			Result := c_call_git_submodule_cb (a_function, sm.item, name_c_string.item, payload)
+		ensure
+			instance_free: class
 		end
 
 	set_git_tag_foreach_cb_object (a_class: POINTER) 
 		do
 			c_set_git_tag_foreach_cb_object (a_class)
+		ensure
+			instance_free: class
 		end
 
 	release_git_tag_foreach_cb_object
@@ -247,16 +279,22 @@ feature -- Access
 	set_git_tag_foreach_cb_entry_1 (a_feature: POINTER) 
 		do
 			c_set_git_tag_foreach_cb_entry_1 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	set_git_tag_foreach_cb_entry_2 (a_feature: POINTER) 
 		do
 			c_set_git_tag_foreach_cb_entry_2 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	set_git_tag_foreach_cb_entry_3 (a_feature: POINTER) 
 		do
 			c_set_git_tag_foreach_cb_entry_3 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	call_git_tag_foreach_cb (a_function: POINTER; name: STRING; oid: GIT_OID_STRUCT_API; payload: POINTER): INTEGER 
@@ -265,11 +303,15 @@ feature -- Access
 		do
 			create name_c_string.make (name)
 			Result := c_call_git_tag_foreach_cb (a_function, name_c_string.item, oid.item, payload)
+		ensure
+			instance_free: class
 		end
 
 	set_git_checkout_progress_cb_object (a_class: POINTER) 
 		do
 			c_set_git_checkout_progress_cb_object (a_class)
+		ensure
+			instance_free: class
 		end
 
 	release_git_checkout_progress_cb_object
@@ -311,16 +353,22 @@ feature -- Access
 	set_git_checkout_progress_cb_entry_1 (a_feature: POINTER) 
 		do
 			c_set_git_checkout_progress_cb_entry_1 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	set_git_checkout_progress_cb_entry_2 (a_feature: POINTER) 
 		do
 			c_set_git_checkout_progress_cb_entry_2 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	set_git_checkout_progress_cb_entry_3 (a_feature: POINTER) 
 		do
 			c_set_git_checkout_progress_cb_entry_3 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	call_git_checkout_progress_cb (a_function: POINTER; path: STRING; completed_steps: INTEGER; total_steps: INTEGER; payload: POINTER) 
@@ -329,11 +377,15 @@ feature -- Access
 		do
 			create path_c_string.make (path)
 			c_call_git_checkout_progress_cb (a_function, path_c_string.item, completed_steps, total_steps, payload)
+		ensure
+			instance_free: class
 		end
 
 	set_git_checkout_perfdata_cb_object (a_class: POINTER) 
 		do
 			c_set_git_checkout_perfdata_cb_object (a_class)
+		ensure
+			instance_free: class
 		end
 
 	release_git_checkout_perfdata_cb_object
@@ -375,26 +427,36 @@ feature -- Access
 	set_git_checkout_perfdata_cb_entry_1 (a_feature: POINTER) 
 		do
 			c_set_git_checkout_perfdata_cb_entry_1 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	set_git_checkout_perfdata_cb_entry_2 (a_feature: POINTER) 
 		do
 			c_set_git_checkout_perfdata_cb_entry_2 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	set_git_checkout_perfdata_cb_entry_3 (a_feature: POINTER) 
 		do
 			c_set_git_checkout_perfdata_cb_entry_3 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	call_git_checkout_perfdata_cb (a_function: POINTER; perfdata: GIT_CHECKOUT_PERFDATA_STRUCT_API; payload: POINTER) 
 		do
 			c_call_git_checkout_perfdata_cb (a_function, perfdata.item, payload)
+		ensure
+			instance_free: class
 		end
 
 	set_git_indexer_progress_cb_object (a_class: POINTER) 
 		do
 			c_set_git_indexer_progress_cb_object (a_class)
+		ensure
+			instance_free: class
 		end
 
 	release_git_indexer_progress_cb_object
@@ -436,26 +498,36 @@ feature -- Access
 	set_git_indexer_progress_cb_entry_1 (a_feature: POINTER) 
 		do
 			c_set_git_indexer_progress_cb_entry_1 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	set_git_indexer_progress_cb_entry_2 (a_feature: POINTER) 
 		do
 			c_set_git_indexer_progress_cb_entry_2 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	set_git_indexer_progress_cb_entry_3 (a_feature: POINTER) 
 		do
 			c_set_git_indexer_progress_cb_entry_3 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	call_git_indexer_progress_cb (a_function: POINTER; stats: GIT_INDEXER_PROGRESS_STRUCT_API; payload: POINTER): INTEGER 
 		do
 			Result := c_call_git_indexer_progress_cb (a_function, stats.item, payload)
+		ensure
+			instance_free: class
 		end
 
 	set_git_transport_message_cb_object (a_class: POINTER) 
 		do
 			c_set_git_transport_message_cb_object (a_class)
+		ensure
+			instance_free: class
 		end
 
 	release_git_transport_message_cb_object
@@ -497,16 +569,22 @@ feature -- Access
 	set_git_transport_message_cb_entry_1 (a_feature: POINTER) 
 		do
 			c_set_git_transport_message_cb_entry_1 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	set_git_transport_message_cb_entry_2 (a_feature: POINTER) 
 		do
 			c_set_git_transport_message_cb_entry_2 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	set_git_transport_message_cb_entry_3 (a_feature: POINTER) 
 		do
 			c_set_git_transport_message_cb_entry_3 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	call_git_transport_message_cb (a_function: POINTER; str: STRING; len: INTEGER; payload: POINTER): INTEGER 
@@ -515,11 +593,15 @@ feature -- Access
 		do
 			create str_c_string.make (str)
 			Result := c_call_git_transport_message_cb (a_function, str_c_string.item, len, payload)
+		ensure
+			instance_free: class
 		end
 
 	set_git_credential_acquire_cb_object (a_class: POINTER) 
 		do
 			c_set_git_credential_acquire_cb_object (a_class)
+		ensure
+			instance_free: class
 		end
 
 	release_git_credential_acquire_cb_object
@@ -561,16 +643,22 @@ feature -- Access
 	set_git_credential_acquire_cb_entry_1 (a_feature: POINTER) 
 		do
 			c_set_git_credential_acquire_cb_entry_1 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	set_git_credential_acquire_cb_entry_2 (a_feature: POINTER) 
 		do
 			c_set_git_credential_acquire_cb_entry_2 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	set_git_credential_acquire_cb_entry_3 (a_feature: POINTER) 
 		do
 			c_set_git_credential_acquire_cb_entry_3 (a_feature)
+		ensure
+			instance_free: class
 		end
 
 	call_git_credential_acquire_cb (a_function: POINTER; a_out: GIT_CREDENTIAL_STRUCT_API; url: STRING; username_from_url: STRING; allowed_types: INTEGER; payload: POINTER): INTEGER 
@@ -581,6 +669,8 @@ feature -- Access
 			create url_c_string.make (url)
 			create username_from_url_c_string.make (username_from_url)
 			Result := c_call_git_credential_acquire_cb (a_function, a_out.item, url_c_string.item, username_from_url_c_string.item, allowed_types, payload)
+		ensure
+			instance_free: class
 		end
 
 feature -- Externals

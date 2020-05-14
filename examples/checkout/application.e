@@ -22,7 +22,6 @@ feature {NONE} --Initialization
 
 		do
 			create options
-			create git_repository
 			create path.make_from_string (".")
 
 			make_command_line_parser
@@ -38,19 +37,15 @@ feature -- Intiialize Repository
 			repo: GIT_REPOSITORY_STRUCT_API
 			ini: INTEGER
 			error: INTEGER
-			iniopts: GIT_REPOSITORY_INIT_OPTIONS_STRUCT_API
 			l_state: INTEGER
 			checkout_target: GIT_ANNOTATED_COMMIT_STRUCT_API
-			commit: GIT_ANNOTATED_COMMIT_API
-
 		do
 			ini := {LIBGIT2_INITIALIZER_API}.git_libgit2_init
 			debug
 				print ("%N Intializing Libgit2")
 			end
 			create repo.make
-			create commit
-			if git_repository.git_repository_open (repo, (create {PATH}.make_from_string (path)).out) < 0 then
+			if {LIBGIT2_REPOSITORY}.git_repository_open (repo, (create {PATH}.make_from_string (path)).out) < 0 then
 				print ("%NCould not open repository")
 				{EXCEPTIONS}.die (1)
 			end
@@ -58,20 +53,20 @@ feature -- Intiialize Repository
 			create checkout_target.make
 
 				-- Make sure we're not about to checkout while something else is going on 			
-			l_state := git_repository.git_repository_state (repo)
+			l_state := {LIBGIT2_REPOSITORY}.git_repository_state (repo)
 
 			if l_state /= {GIT_REPOSITORY_STATE_T_ENUM_API}.GIT_REPOSITORY_STATE_NONE then
 				print ("%N Repository is in unexpected state -> " + l_state.out )
-				commit.git_annotated_commit_free(checkout_target)
+				{GIT_ANNOTATED_COMMIT}.git_annotated_commit_free(checkout_target)
 				{EXCEPTIONS}.die (1)
 			end
 
-			if attached checkout as l_checkout and then resolve_refish (checkout_target, repo, l_checkout ) /= 0 then
+			if attached checkout as l_checkout and then resolve_refish (checkout_target, repo, l_checkout.to_string_8 ) /= 0 then
 				print ("%NFailed to resolve: ")
-				if attached (create {LIBGIT2_ERROR_API}).git_error_last as last_error and then
+				if attached {LIBGIT2_ERROR_API}.git_error_last as last_error and then
 				   attached last_error.message as l_message
 				then
-					print (l_message + "%N")
+					print (l_message.string + "%N")
 				else
 					print ("missing message" + "%N")
 				end
@@ -111,14 +106,10 @@ feature -- Intiialize Repository
 			-- a branch-based checkout.
 		local
 			l_checkout_opts: GIT_CHECKOUT_OPTIONS_STRUCT_API
-			err: INTEGER
 			target_commit: GIT_COMMIT_STRUCT_API
 			cp_dispatcher: GIT_CHECKOUT_PROGRESS_CB_DISPATCHER
 			cf_dispatcher: GIT_CHECKOUT_PERFDATA_CB_DISPATCHER
-			git_commit: GIT_COMMIT
-			git_an_commit: GIT_ANNOTATED_COMMIT
 			git_object: GIT_OBJECT_STRUCT_API
-			git_checkout: GIT_CHECKOUT_API
 		do
 			create cp_dispatcher.make
 			cp_dispatcher.register_callback_1(agent print_checkout_progress)
@@ -143,21 +134,18 @@ feature -- Intiialize Repository
 			end
 
 				-- Grab the commit we're interested to move to.
-			create git_commit
-			create git_an_commit
-			Result := git_commit.git_commit_lookup (target_commit, a_repo, if attached git_an_commit.git_annotated_commit_id (a_target) as l_commit then l_commit else create {GIT_OID_STRUCT_API}.make end)
+			Result := {GIT_COMMIT}.git_commit_lookup (target_commit, a_repo, if attached {GIT_ANNOTATED_COMMIT}.git_annotated_commit_id (a_target) as l_commit then l_commit else create {GIT_OID_STRUCT_API}.make end)
 			if Result /= 0 then
 				print ("%NFailed to lookup commit")
-				git_commit.git_commit_free (target_commit)
+				{GIT_COMMIT}.git_commit_free (target_commit)
 			end
 
 
 				-- Perform the checkout so the workdir corresponds to what target_commit contains. 			
 				--Note that it's okay to pass a git_commit here, because it will be peeled to a tree.
 			if Result = 0 then
-				create git_checkout
 				create git_object.make_by_pointer (target_commit.item)
-				Result := git_checkout.git_checkout_tree (a_repo, git_object, l_checkout_opts)
+				Result := {GIT_CHECKOUT_API}.git_checkout_tree (a_repo, git_object, l_checkout_opts)
 				if Result /= 0 then
 					print ("%NFailed to checkout tree")
 				end
@@ -167,15 +155,15 @@ feature -- Intiialize Repository
 				-- Now that the checkout has completed, we have to update HEAD.
 				-- Depending on the "origin" of target (ie. it's an OID or a branch name), we might need to detach HEAD.
 
-				if attached git_an_commit.git_annotated_commit_ref (a_target) as l_refname then
-					Result := git_repository.git_repository_set_head (a_repo, l_refname)
+				if attached {GIT_ANNOTATED_COMMIT}.git_annotated_commit_ref (a_target) as l_refname then
+					Result := {LIBGIT2_REPOSITORY}.git_repository_set_head (a_repo, l_refname)
 				else
-					Result := git_repository.git_repository_set_head_detached_from_annotated (a_repo, a_target)
+					Result := {LIBGIT2_REPOSITORY}.git_repository_set_head_detached_from_annotated (a_repo, a_target)
 				end
 
 				if Result /= 0 then
 					print ("%N failed to update HEAD reference")
-					git_commit.git_commit_free (target_commit)
+					{GIT_COMMIT}.git_commit_free (target_commit)
 				end
 			end
 
@@ -187,8 +175,6 @@ feature	{NONE} -- Process Arguments
 
 	process_arguments
 			-- Process command line arguments
-		local
-			shared_value: STRING
 		do
 			if match_long_option ("git-dir") then
 				if is_next_option_long_option and then has_next_option_value then
@@ -243,33 +229,24 @@ feature	{NONE} -- Process Arguments
 			print("%N")
 		end
 
-
 	resolve_refish (a_target: GIT_ANNOTATED_COMMIT_STRUCT_API; a_repo: GIT_REPOSITORY_STRUCT_API; a_refish: STRING): INTEGER
 			-- Convert a refish to an annotated commit.
 		local
 			ref: GIT_REFERENCE_STRUCT_API
 			obj: GIT_OBJECT_STRUCT_API
-			git_ref: GIT_REFERENCE
 			err:  INTEGER
-			gcommit: GIT_ANNOTATED_COMMIT
-			grev: GIT_REVPARSE
-			gobj: GIT_OBJECT_API
 		do
-			create gcommit
-			create git_ref
 			create ref.make
-			Result := git_ref.git_reference_dwim (ref, a_repo, a_refish)
+			Result := {GIT_REFERENCE}.git_reference_dwim (ref, a_repo, a_refish)
 			if Result = {GIT_ERROR_CODE_ENUM_API}.GIT_OK  then
-				err := gcommit.git_annotated_commit_from_ref (a_target, a_repo, ref)
-				git_ref.git_reference_free (ref)
+				err := {GIT_ANNOTATED_COMMIT}.git_annotated_commit_from_ref (a_target, a_repo, ref)
+				{GIT_REFERENCE}.git_reference_free (ref)
 			else
-				create grev
 				create obj.make
-				create gobj
-				Result := grev.git_revparse_single (obj, a_repo, a_refish)
-				if Result = {GIT_ERROR_CODE_ENUM_API}.GIT_OK  and then attached gobj.git_object_id (obj) as l_oid then
-					Result := gcommit.git_annotated_commit_lookup (a_target, a_repo, l_oid )
-					gobj.git_object_free(obj)
+				Result := {GIT_REVPARSE}.git_revparse_single (obj, a_repo, a_refish)
+				if Result = {GIT_ERROR_CODE_ENUM_API}.GIT_OK  and then attached {GIT_OBJECT_API}.git_object_id (obj) as l_oid then
+					Result := {GIT_ANNOTATED_COMMIT}.git_annotated_commit_lookup (a_target, a_repo, l_oid )
+					{GIT_OBJECT_API}.git_object_free(obj)
 				else
 					Result := -1
 				end
@@ -280,8 +257,7 @@ feature	{NONE} -- Process Arguments
 feature -- Options
 
 	options: OPTIONS
-	git_repository: LIBGIT2_REPOSITORY
-	path: STRING
-	checkout: detachable STRING
+	path: STRING_32
+	checkout: detachable STRING_32
 
 end

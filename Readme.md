@@ -18,7 +18,7 @@ Tested on Linux and Windows 64 bits.
 
 [Guide to linking libgit2](https://libgit2.org/docs/guides/build-and-link/) on various platforms
 
-#### Linu
+#### Linux
 
 On Linux to install version 1.0.0 you will need to do the following. 
 

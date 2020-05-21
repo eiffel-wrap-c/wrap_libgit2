@@ -64,7 +64,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_blob_filter (a_out: GIT_BUF_STRUCT_API; blob: GIT_BLOB_STRUCT_API; as_path: STRING; opts: GIT_BLOB_FILTER_OPTIONS_STRUCT_API): INTEGER 
+	git_blob_filter (a_out: GIT_BUF_STRUCT_API; blob: GIT_BLOB_STRUCT_API; as_path: STRING_8; opts: GIT_BLOB_FILTER_OPTIONS_STRUCT_API): INTEGER 
 		local
 			as_path_c_string: C_STRING
 		do
@@ -74,7 +74,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_blob_create_from_workdir (id: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; relative_path: STRING): INTEGER 
+	git_blob_create_from_workdir (id: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; relative_path: STRING_8): INTEGER 
 		local
 			relative_path_c_string: C_STRING
 		do
@@ -84,7 +84,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_blob_create_from_disk (id: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; path: STRING): INTEGER 
+	git_blob_create_from_disk (id: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; path: STRING_8): INTEGER 
 		local
 			path_c_string: C_STRING
 		do
@@ -94,7 +94,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_blob_create_from_stream (a_out: GIT_WRITESTREAM_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; hintpath: STRING): INTEGER 
+	git_blob_create_from_stream (a_out: GIT_WRITESTREAM_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; hintpath: STRING_8): INTEGER 
 		local
 			hintpath_c_string: C_STRING
 		do
@@ -132,7 +132,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_blob_create_fromworkdir (id: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; relative_path: STRING): INTEGER 
+	git_blob_create_fromworkdir (id: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; relative_path: STRING_8): INTEGER 
 		local
 			relative_path_c_string: C_STRING
 		do
@@ -142,7 +142,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_blob_create_fromdisk (id: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; path: STRING): INTEGER 
+	git_blob_create_fromdisk (id: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; path: STRING_8): INTEGER 
 		local
 			path_c_string: C_STRING
 		do
@@ -152,7 +152,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_blob_create_fromstream (a_out: GIT_WRITESTREAM_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; hintpath: STRING): INTEGER 
+	git_blob_create_fromstream (a_out: GIT_WRITESTREAM_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; hintpath: STRING_8): INTEGER 
 		local
 			hintpath_c_string: C_STRING
 		do
@@ -176,7 +176,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_blob_filtered_content (a_out: GIT_BUF_STRUCT_API; blob: GIT_BLOB_STRUCT_API; as_path: STRING; check_for_binary_data: INTEGER): INTEGER 
+	git_blob_filtered_content (a_out: GIT_BUF_STRUCT_API; blob: GIT_BLOB_STRUCT_API; as_path: STRING_8; check_for_binary_data: INTEGER): INTEGER 
 		local
 			as_path_c_string: C_STRING
 		do

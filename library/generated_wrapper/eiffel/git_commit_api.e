@@ -188,7 +188,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_commit_header_field (a_out: GIT_BUF_STRUCT_API; commit: GIT_COMMIT_STRUCT_API; field: STRING): INTEGER 
+	git_commit_header_field (a_out: GIT_BUF_STRUCT_API; commit: GIT_COMMIT_STRUCT_API; field: STRING_8): INTEGER 
 		local
 			field_c_string: C_STRING
 		do
@@ -198,7 +198,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_commit_extract_signature (signature: GIT_BUF_STRUCT_API; signed_data: GIT_BUF_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; commit_id: GIT_OID_STRUCT_API; field: STRING): INTEGER 
+	git_commit_extract_signature (signature: GIT_BUF_STRUCT_API; signed_data: GIT_BUF_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; commit_id: GIT_OID_STRUCT_API; field: STRING_8): INTEGER 
 		local
 			field_c_string: C_STRING
 		do
@@ -208,7 +208,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_commit_create (id: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; update_ref: STRING; author: GIT_SIGNATURE_STRUCT_API; committer: GIT_SIGNATURE_STRUCT_API; message_encoding: STRING; message: STRING; tree: GIT_TREE_STRUCT_API; parent_count: INTEGER; parents: POINTER): INTEGER 
+	git_commit_create (id: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; update_ref: STRING_8; author: GIT_SIGNATURE_STRUCT_API; committer: GIT_SIGNATURE_STRUCT_API; message_encoding: STRING_8; message: STRING_8; tree: GIT_TREE_STRUCT_API; parent_count: INTEGER; parents: POINTER): INTEGER 
 		local
 			update_ref_c_string: C_STRING
 			message_encoding_c_string: C_STRING
@@ -222,7 +222,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_commit_create_v (id: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; update_ref: STRING; author: GIT_SIGNATURE_STRUCT_API; committer: GIT_SIGNATURE_STRUCT_API; message_encoding: STRING; message: STRING; tree: GIT_TREE_STRUCT_API; parent_count: INTEGER): INTEGER 
+	git_commit_create_v (id: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; update_ref: STRING_8; author: GIT_SIGNATURE_STRUCT_API; committer: GIT_SIGNATURE_STRUCT_API; message_encoding: STRING_8; message: STRING_8; tree: GIT_TREE_STRUCT_API; parent_count: INTEGER): INTEGER 
 		local
 			update_ref_c_string: C_STRING
 			message_encoding_c_string: C_STRING
@@ -236,7 +236,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_commit_amend (id: GIT_OID_STRUCT_API; commit_to_amend: GIT_COMMIT_STRUCT_API; update_ref: STRING; author: GIT_SIGNATURE_STRUCT_API; committer: GIT_SIGNATURE_STRUCT_API; message_encoding: STRING; message: STRING; tree: GIT_TREE_STRUCT_API): INTEGER 
+	git_commit_amend (id: GIT_OID_STRUCT_API; commit_to_amend: GIT_COMMIT_STRUCT_API; update_ref: STRING_8; author: GIT_SIGNATURE_STRUCT_API; committer: GIT_SIGNATURE_STRUCT_API; message_encoding: STRING_8; message: STRING_8; tree: GIT_TREE_STRUCT_API): INTEGER 
 		local
 			update_ref_c_string: C_STRING
 			message_encoding_c_string: C_STRING
@@ -250,7 +250,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_commit_create_buffer (a_out: GIT_BUF_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; author: GIT_SIGNATURE_STRUCT_API; committer: GIT_SIGNATURE_STRUCT_API; message_encoding: STRING; message: STRING; tree: GIT_TREE_STRUCT_API; parent_count: INTEGER; parents: POINTER): INTEGER 
+	git_commit_create_buffer (a_out: GIT_BUF_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; author: GIT_SIGNATURE_STRUCT_API; committer: GIT_SIGNATURE_STRUCT_API; message_encoding: STRING_8; message: STRING_8; tree: GIT_TREE_STRUCT_API; parent_count: INTEGER; parents: POINTER): INTEGER 
 		local
 			message_encoding_c_string: C_STRING
 			message_c_string: C_STRING
@@ -262,7 +262,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_commit_create_with_signature (a_out: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; commit_content: STRING; signature: STRING; signature_field: STRING): INTEGER 
+	git_commit_create_with_signature (a_out: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; commit_content: STRING_8; signature: STRING_8; signature_field: STRING_8): INTEGER 
 		local
 			commit_content_c_string: C_STRING
 			signature_c_string: C_STRING

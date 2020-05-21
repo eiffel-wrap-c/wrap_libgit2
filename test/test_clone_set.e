@@ -51,7 +51,6 @@ feature -- Test routines
 	test_clone
 		local
 			rep: GIT_REPOSITORY_STRUCT_API
-			opts: GIT_CLONE_OPTIONS_STRUCT_API
 			error: INTEGER
 		do
 			create rep.make

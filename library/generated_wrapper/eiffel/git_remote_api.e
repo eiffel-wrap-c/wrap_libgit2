@@ -9,7 +9,7 @@ class GIT_REMOTE_API
 
 feature -- Access
 
-	git_remote_create (a_out: GIT_REMOTE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING; url: STRING): INTEGER 
+	git_remote_create (a_out: GIT_REMOTE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING_8; url: STRING_8): INTEGER 
 		local
 			name_c_string: C_STRING
 			url_c_string: C_STRING
@@ -28,7 +28,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_remote_create_with_opts (a_out: GIT_REMOTE_STRUCT_API; url: STRING; opts: GIT_REMOTE_CREATE_OPTIONS_STRUCT_API): INTEGER 
+	git_remote_create_with_opts (a_out: GIT_REMOTE_STRUCT_API; url: STRING_8; opts: GIT_REMOTE_CREATE_OPTIONS_STRUCT_API): INTEGER 
 		local
 			url_c_string: C_STRING
 		do
@@ -38,7 +38,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_remote_create_with_fetchspec (a_out: GIT_REMOTE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING; url: STRING; fetch: STRING): INTEGER 
+	git_remote_create_with_fetchspec (a_out: GIT_REMOTE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING_8; url: STRING_8; fetch: STRING_8): INTEGER 
 		local
 			name_c_string: C_STRING
 			url_c_string: C_STRING
@@ -52,7 +52,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_remote_create_anonymous (a_out: GIT_REMOTE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; url: STRING): INTEGER 
+	git_remote_create_anonymous (a_out: GIT_REMOTE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; url: STRING_8): INTEGER 
 		local
 			url_c_string: C_STRING
 		do
@@ -62,7 +62,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_remote_create_detached (a_out: GIT_REMOTE_STRUCT_API; url: STRING): INTEGER 
+	git_remote_create_detached (a_out: GIT_REMOTE_STRUCT_API; url: STRING_8): INTEGER 
 		local
 			url_c_string: C_STRING
 		do
@@ -72,7 +72,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_remote_lookup (a_out: GIT_REMOTE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING): INTEGER 
+	git_remote_lookup (a_out: GIT_REMOTE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING_8): INTEGER 
 		local
 			name_c_string: C_STRING
 		do
@@ -120,7 +120,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_remote_set_url (repo: GIT_REPOSITORY_STRUCT_API; remote: STRING; url: STRING): INTEGER 
+	git_remote_set_url (repo: GIT_REPOSITORY_STRUCT_API; remote: STRING_8; url: STRING_8): INTEGER 
 		local
 			remote_c_string: C_STRING
 			url_c_string: C_STRING
@@ -132,7 +132,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_remote_set_pushurl (repo: GIT_REPOSITORY_STRUCT_API; remote: STRING; url: STRING): INTEGER 
+	git_remote_set_pushurl (repo: GIT_REPOSITORY_STRUCT_API; remote: STRING_8; url: STRING_8): INTEGER 
 		local
 			remote_c_string: C_STRING
 			url_c_string: C_STRING
@@ -144,7 +144,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_remote_add_fetch (repo: GIT_REPOSITORY_STRUCT_API; remote: STRING; refspec: STRING): INTEGER 
+	git_remote_add_fetch (repo: GIT_REPOSITORY_STRUCT_API; remote: STRING_8; refspec: STRING_8): INTEGER 
 		local
 			remote_c_string: C_STRING
 			refspec_c_string: C_STRING
@@ -163,7 +163,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_remote_add_push (repo: GIT_REPOSITORY_STRUCT_API; remote: STRING; refspec: STRING): INTEGER 
+	git_remote_add_push (repo: GIT_REPOSITORY_STRUCT_API; remote: STRING_8; refspec: STRING_8): INTEGER 
 		local
 			remote_c_string: C_STRING
 			refspec_c_string: C_STRING
@@ -259,7 +259,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_remote_update_tips (remote: GIT_REMOTE_STRUCT_API; callbacks: GIT_REMOTE_CALLBACKS_STRUCT_API; update_fetchhead: INTEGER; download_tags: INTEGER; reflog_message: STRING): INTEGER 
+	git_remote_update_tips (remote: GIT_REMOTE_STRUCT_API; callbacks: GIT_REMOTE_CALLBACKS_STRUCT_API; update_fetchhead: INTEGER; download_tags: INTEGER; reflog_message: STRING_8): INTEGER 
 		local
 			reflog_message_c_string: C_STRING
 		do
@@ -269,7 +269,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_remote_fetch (remote: GIT_REMOTE_STRUCT_API; refspecs: GIT_STRARRAY_STRUCT_API; opts: GIT_FETCH_OPTIONS_STRUCT_API; reflog_message: STRING): INTEGER 
+	git_remote_fetch (remote: GIT_REMOTE_STRUCT_API; refspecs: GIT_STRARRAY_STRUCT_API; opts: GIT_FETCH_OPTIONS_STRUCT_API; reflog_message: STRING_8): INTEGER 
 		local
 			reflog_message_c_string: C_STRING
 		do
@@ -310,7 +310,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_remote_set_autotag (repo: GIT_REPOSITORY_STRUCT_API; remote: STRING; value: INTEGER): INTEGER 
+	git_remote_set_autotag (repo: GIT_REPOSITORY_STRUCT_API; remote: STRING_8; value: INTEGER): INTEGER 
 		local
 			remote_c_string: C_STRING
 		do
@@ -327,7 +327,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_remote_rename (problems: GIT_STRARRAY_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING; new_name: STRING): INTEGER 
+	git_remote_rename (problems: GIT_STRARRAY_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING_8; new_name: STRING_8): INTEGER 
 		local
 			name_c_string: C_STRING
 			new_name_c_string: C_STRING
@@ -348,7 +348,7 @@ feature -- Access
 			]"
 		end
 
-	git_remote_delete (repo: GIT_REPOSITORY_STRUCT_API; name: STRING): INTEGER 
+	git_remote_delete (repo: GIT_REPOSITORY_STRUCT_API; name: STRING_8): INTEGER 
 		local
 			name_c_string: C_STRING
 		do

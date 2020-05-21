@@ -23,7 +23,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_object_lookup_bypath (a_out: GIT_OBJECT_STRUCT_API; treeish: GIT_OBJECT_STRUCT_API; path: STRING; type: INTEGER): INTEGER 
+	git_object_lookup_bypath (a_out: GIT_OBJECT_STRUCT_API; treeish: GIT_OBJECT_STRUCT_API; path: STRING_8; type: INTEGER): INTEGER 
 		local
 			path_c_string: C_STRING
 		do

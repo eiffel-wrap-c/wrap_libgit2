@@ -16,7 +16,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_annotated_commit_from_fetchhead (a_out: GIT_ANNOTATED_COMMIT_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; branch_name: STRING; remote_url: STRING; id: GIT_OID_STRUCT_API): INTEGER 
+	git_annotated_commit_from_fetchhead (a_out: GIT_ANNOTATED_COMMIT_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; branch_name: STRING_8; remote_url: STRING_8; id: GIT_OID_STRUCT_API): INTEGER 
 		local
 			branch_name_c_string: C_STRING
 			remote_url_c_string: C_STRING
@@ -35,7 +35,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_annotated_commit_from_revspec (a_out: GIT_ANNOTATED_COMMIT_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; revspec: STRING): INTEGER 
+	git_annotated_commit_from_revspec (a_out: GIT_ANNOTATED_COMMIT_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; revspec: STRING_8): INTEGER 
 		local
 			revspec_c_string: C_STRING
 		do

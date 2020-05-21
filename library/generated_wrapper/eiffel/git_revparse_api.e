@@ -9,7 +9,7 @@ class GIT_REVPARSE_API
 
 feature -- Access
 
-	git_revparse_single (a_out: GIT_OBJECT_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; spec: STRING): INTEGER 
+	git_revparse_single (a_out: GIT_OBJECT_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; spec: STRING_8): INTEGER 
 		local
 			spec_c_string: C_STRING
 		do
@@ -19,7 +19,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_revparse_ext (object_out: GIT_OBJECT_STRUCT_API; reference_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; spec: STRING): INTEGER 
+	git_revparse_ext (object_out: GIT_OBJECT_STRUCT_API; reference_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; spec: STRING_8): INTEGER 
 		local
 			spec_c_string: C_STRING
 		do

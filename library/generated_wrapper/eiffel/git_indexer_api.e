@@ -16,7 +16,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_indexer_new (a_out: GIT_INDEXER_STRUCT_API; path: STRING; mode: INTEGER; odb: GIT_ODB_STRUCT_API; opts: GIT_INDEXER_OPTIONS_STRUCT_API): INTEGER 
+	git_indexer_new (a_out: GIT_INDEXER_STRUCT_API; path: STRING_8; mode: INTEGER; odb: GIT_ODB_STRUCT_API; opts: GIT_INDEXER_OPTIONS_STRUCT_API): INTEGER 
 		local
 			path_c_string: C_STRING
 		do

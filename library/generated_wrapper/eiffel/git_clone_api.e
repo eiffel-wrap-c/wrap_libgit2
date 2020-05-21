@@ -16,7 +16,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_clone (a_out: GIT_REPOSITORY_STRUCT_API; url: STRING; local_path: STRING; options: GIT_CLONE_OPTIONS_STRUCT_API): INTEGER 
+	git_clone (a_out: GIT_REPOSITORY_STRUCT_API; url: STRING_8; local_path: STRING_8; options: GIT_CLONE_OPTIONS_STRUCT_API): INTEGER 
 		local
 			url_c_string: C_STRING
 			local_path_c_string: C_STRING

@@ -9,7 +9,7 @@ class LIBGIT2_REPOSITORY_API
 
 feature -- Access
 
-	git_repository_open (a_out: GIT_REPOSITORY_STRUCT_API; path: STRING): INTEGER 
+	git_repository_open (a_out: GIT_REPOSITORY_STRUCT_API; path: STRING_8): INTEGER 
 		local
 			path_c_string: C_STRING
 		do
@@ -33,7 +33,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_repository_discover (a_out: GIT_BUF_STRUCT_API; start_path: STRING; across_fs: INTEGER; ceiling_dirs: STRING): INTEGER 
+	git_repository_discover (a_out: GIT_BUF_STRUCT_API; start_path: STRING_8; across_fs: INTEGER; ceiling_dirs: STRING_8): INTEGER 
 		local
 			start_path_c_string: C_STRING
 			ceiling_dirs_c_string: C_STRING
@@ -45,7 +45,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_repository_open_ext (a_out: GIT_REPOSITORY_STRUCT_API; path: STRING; flags: INTEGER; ceiling_dirs: STRING): INTEGER 
+	git_repository_open_ext (a_out: GIT_REPOSITORY_STRUCT_API; path: STRING_8; flags: INTEGER; ceiling_dirs: STRING_8): INTEGER 
 		local
 			path_c_string: C_STRING
 			ceiling_dirs_c_string: C_STRING
@@ -57,7 +57,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_repository_open_bare (a_out: GIT_REPOSITORY_STRUCT_API; bare_path: STRING): INTEGER 
+	git_repository_open_bare (a_out: GIT_REPOSITORY_STRUCT_API; bare_path: STRING_8): INTEGER 
 		local
 			bare_path_c_string: C_STRING
 		do
@@ -74,7 +74,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_repository_init (a_out: GIT_REPOSITORY_STRUCT_API; path: STRING; is_bare: INTEGER): INTEGER 
+	git_repository_init (a_out: GIT_REPOSITORY_STRUCT_API; path: STRING_8; is_bare: INTEGER): INTEGER 
 		local
 			path_c_string: C_STRING
 		do
@@ -91,7 +91,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_repository_init_ext (a_out: GIT_REPOSITORY_STRUCT_API; repo_path: STRING; opts: GIT_REPOSITORY_INIT_OPTIONS_STRUCT_API): INTEGER 
+	git_repository_init_ext (a_out: GIT_REPOSITORY_STRUCT_API; repo_path: STRING_8; opts: GIT_REPOSITORY_INIT_OPTIONS_STRUCT_API): INTEGER 
 		local
 			repo_path_c_string: C_STRING
 		do
@@ -108,7 +108,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_repository_head_for_worktree (a_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING): INTEGER 
+	git_repository_head_for_worktree (a_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING_8): INTEGER 
 		local
 			name_c_string: C_STRING
 		do
@@ -125,7 +125,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_repository_head_detached_for_worktree (repo: GIT_REPOSITORY_STRUCT_API; name: STRING): INTEGER 
+	git_repository_head_detached_for_worktree (repo: GIT_REPOSITORY_STRUCT_API; name: STRING_8): INTEGER 
 		local
 			name_c_string: C_STRING
 		do
@@ -177,7 +177,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_repository_set_workdir (repo: GIT_REPOSITORY_STRUCT_API; workdir: STRING; update_gitlink: INTEGER): INTEGER 
+	git_repository_set_workdir (repo: GIT_REPOSITORY_STRUCT_API; workdir: STRING_8; update_gitlink: INTEGER): INTEGER 
 		local
 			workdir_c_string: C_STRING
 		do
@@ -271,7 +271,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_repository_hashfile (a_out: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; path: STRING; type: INTEGER; as_path: STRING): INTEGER 
+	git_repository_hashfile (a_out: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; path: STRING_8; type: INTEGER; as_path: STRING_8): INTEGER 
 		local
 			path_c_string: C_STRING
 			as_path_c_string: C_STRING
@@ -283,7 +283,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_repository_set_head (repo: GIT_REPOSITORY_STRUCT_API; refname: STRING): INTEGER 
+	git_repository_set_head (repo: GIT_REPOSITORY_STRUCT_API; refname: STRING_8): INTEGER 
 		local
 			refname_c_string: C_STRING
 		do
@@ -321,7 +321,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_repository_set_namespace (repo: GIT_REPOSITORY_STRUCT_API; nmspace: STRING): INTEGER 
+	git_repository_set_namespace (repo: GIT_REPOSITORY_STRUCT_API; nmspace: STRING_8): INTEGER 
 		local
 			nmspace_c_string: C_STRING
 		do
@@ -352,7 +352,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_repository_set_ident (repo: GIT_REPOSITORY_STRUCT_API; name: STRING; email: STRING): INTEGER 
+	git_repository_set_ident (repo: GIT_REPOSITORY_STRUCT_API; name: STRING_8; email: STRING_8): INTEGER 
 		local
 			name_c_string: C_STRING
 			email_c_string: C_STRING

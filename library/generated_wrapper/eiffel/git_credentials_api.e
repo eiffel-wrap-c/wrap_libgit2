@@ -30,7 +30,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_credential_userpass_plaintext_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING; password: STRING): INTEGER 
+	git_credential_userpass_plaintext_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING_8; password: STRING_8): INTEGER 
 		local
 			username_c_string: C_STRING
 			password_c_string: C_STRING
@@ -49,7 +49,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_credential_username_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING): INTEGER 
+	git_credential_username_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING_8): INTEGER 
 		local
 			username_c_string: C_STRING
 		do
@@ -59,7 +59,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_credential_ssh_key_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING; publickey: STRING; privatekey: STRING; passphrase: STRING): INTEGER 
+	git_credential_ssh_key_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING_8; publickey: STRING_8; privatekey: STRING_8; passphrase: STRING_8): INTEGER 
 		local
 			username_c_string: C_STRING
 			publickey_c_string: C_STRING
@@ -75,7 +75,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_credential_ssh_key_memory_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING; publickey: STRING; privatekey: STRING; passphrase: STRING): INTEGER 
+	git_credential_ssh_key_memory_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING_8; publickey: STRING_8; privatekey: STRING_8; passphrase: STRING_8): INTEGER 
 		local
 			username_c_string: C_STRING
 			publickey_c_string: C_STRING
@@ -91,7 +91,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_credential_ssh_interactive_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING; prompt_callback: POINTER; payload: POINTER): INTEGER 
+	git_credential_ssh_interactive_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING_8; prompt_callback: POINTER; payload: POINTER): INTEGER 
 		local
 			username_c_string: C_STRING
 		do
@@ -101,7 +101,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_credential_ssh_key_from_agent (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING): INTEGER 
+	git_credential_ssh_key_from_agent (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING_8): INTEGER 
 		local
 			username_c_string: C_STRING
 		do
@@ -111,7 +111,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_credential_ssh_custom_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING; publickey: STRING; publickey_len: INTEGER; sign_callback: POINTER; payload: POINTER): INTEGER 
+	git_credential_ssh_custom_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING_8; publickey: STRING_8; publickey_len: INTEGER; sign_callback: POINTER; payload: POINTER): INTEGER 
 		local
 			username_c_string: C_STRING
 			publickey_c_string: C_STRING
@@ -123,7 +123,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_credential_userpass (a_out: GIT_CREDENTIAL_STRUCT_API; url: STRING; user_from_url: STRING; allowed_types: INTEGER; payload: POINTER): INTEGER 
+	git_credential_userpass (a_out: GIT_CREDENTIAL_STRUCT_API; url: STRING_8; user_from_url: STRING_8; allowed_types: INTEGER; payload: POINTER): INTEGER 
 		local
 			url_c_string: C_STRING
 			user_from_url_c_string: C_STRING
@@ -156,7 +156,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_cred_userpass_plaintext_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING; password: STRING): INTEGER 
+	git_cred_userpass_plaintext_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING_8; password: STRING_8): INTEGER 
 		local
 			username_c_string: C_STRING
 			password_c_string: C_STRING
@@ -175,7 +175,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_cred_username_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING): INTEGER 
+	git_cred_username_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING_8): INTEGER 
 		local
 			username_c_string: C_STRING
 		do
@@ -185,7 +185,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_cred_ssh_key_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING; publickey: STRING; privatekey: STRING; passphrase: STRING): INTEGER 
+	git_cred_ssh_key_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING_8; publickey: STRING_8; privatekey: STRING_8; passphrase: STRING_8): INTEGER 
 		local
 			username_c_string: C_STRING
 			publickey_c_string: C_STRING
@@ -201,7 +201,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_cred_ssh_key_memory_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING; publickey: STRING; privatekey: STRING; passphrase: STRING): INTEGER 
+	git_cred_ssh_key_memory_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING_8; publickey: STRING_8; privatekey: STRING_8; passphrase: STRING_8): INTEGER 
 		local
 			username_c_string: C_STRING
 			publickey_c_string: C_STRING
@@ -217,7 +217,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_cred_ssh_interactive_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING; prompt_callback: POINTER; payload: POINTER): INTEGER 
+	git_cred_ssh_interactive_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING_8; prompt_callback: POINTER; payload: POINTER): INTEGER 
 		local
 			username_c_string: C_STRING
 		do
@@ -227,7 +227,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_cred_ssh_key_from_agent (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING): INTEGER 
+	git_cred_ssh_key_from_agent (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING_8): INTEGER 
 		local
 			username_c_string: C_STRING
 		do
@@ -237,7 +237,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_cred_ssh_custom_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING; publickey: STRING; publickey_len: INTEGER; sign_callback: POINTER; payload: POINTER): INTEGER 
+	git_cred_ssh_custom_new (a_out: GIT_CREDENTIAL_STRUCT_API; username: STRING_8; publickey: STRING_8; publickey_len: INTEGER; sign_callback: POINTER; payload: POINTER): INTEGER 
 		local
 			username_c_string: C_STRING
 			publickey_c_string: C_STRING
@@ -249,7 +249,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_cred_userpass (a_out: GIT_CREDENTIAL_STRUCT_API; url: STRING; user_from_url: STRING; allowed_types: INTEGER; payload: POINTER): INTEGER 
+	git_cred_userpass (a_out: GIT_CREDENTIAL_STRUCT_API; url: STRING_8; user_from_url: STRING_8; allowed_types: INTEGER; payload: POINTER): INTEGER 
 		local
 			url_c_string: C_STRING
 			user_from_url_c_string: C_STRING

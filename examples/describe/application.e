@@ -102,7 +102,6 @@ feature -- Describe
 
 	describe_single (a_repo: GIT_REPOSITORY_STRUCT_API; a_options: OPTIONS; a_rev: detachable STRING)
 		local
-			commit: GIT_OBJECT_STRUCT_API
 			describe_result: GIT_DESCRIBE_RESULT_STRUCT_API
 			buf: GIT_BUF_STRUCT_API
 		do
@@ -130,8 +129,6 @@ feature	{NONE} -- Process Arguments
 
 	process_arguments
 			-- Process command line arguments
-		local
-			shared_value: STRING
 		do
 			if match_long_option ("git-dir") then
 				if is_next_option_long_option and then has_next_option_value then

@@ -35,15 +35,10 @@ feature -- Intiialize Repository
 		local
 			ini: INTEGER
 			repo: GIT_REPOSITORY_STRUCT_API
-			iniopts: GIT_REPOSITORY_INIT_OPTIONS_STRUCT_API
 			l_remote: GIT_REMOTE_STRUCT_API
-			refspec: STRING
-			l_options: GIT_PUSH_OPTIONS_STRUCT_API
-			a_array: GIT_STRARRAY_STRUCT_API
 			callbacks: GIT_REMOTE_CALLBACKS_STRUCT_API
 			callback_dispatcher: GIT_CREDENTIAL_ACQUIRE_CB_DISPATCHER
 			refs: ARRAYED_LIST [GIT_REMOTE_HEAD_STRUCT_API]
-			ref_len: INTEGER
 			oid: STRING
 		do
 			ini := {LIBGIT2_INITIALIZER_API}.git_libgit2_init
@@ -176,12 +171,10 @@ feature	{NONE} -- Process Arguments
 
 	process_arguments
 			-- Process command line arguments
-		local
-			shared_value: STRING
 		do
 			if match_long_option ("git-dir") then
 				if is_next_option_long_option and then has_next_option_value then
-					create path.make_from_string (next_option_value)
+					create path.make_from_string (next_option_value.to_string_8)
 					consume_option
 				else
 					print("%N Missing command line parameter --git-dir=<dir>")
@@ -190,7 +183,7 @@ feature	{NONE} -- Process Arguments
 				end
 			end
 			if  has_next_option and then not is_next_option_long_option then
-				create remote.make_from_string (next_option)
+				create remote.make_from_string (next_option.to_string_8)
 				consume_option
 			else
 				print("%N Missing command line parameter <remote>%N")

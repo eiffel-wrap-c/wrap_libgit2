@@ -73,7 +73,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	call_git_index_matched_path_cb (a_function: POINTER; path: STRING; matched_pathspec: STRING; payload: POINTER): INTEGER 
+	call_git_index_matched_path_cb (a_function: POINTER; path: STRING_8; matched_pathspec: STRING_8; payload: POINTER): INTEGER 
 		local
 			path_c_string: C_STRING
 			matched_pathspec_c_string: C_STRING
@@ -149,7 +149,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	call_git_status_cb (a_function: POINTER; path: STRING; status_flags: INTEGER; payload: POINTER): INTEGER 
+	call_git_status_cb (a_function: POINTER; path: STRING_8; status_flags: INTEGER; payload: POINTER): INTEGER 
 		local
 			path_c_string: C_STRING
 		do
@@ -223,7 +223,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	call_git_submodule_cb (a_function: POINTER; sm: GIT_SUBMODULE_STRUCT_API; name: STRING; payload: POINTER): INTEGER 
+	call_git_submodule_cb (a_function: POINTER; sm: GIT_SUBMODULE_STRUCT_API; name: STRING_8; payload: POINTER): INTEGER 
 		local
 			name_c_string: C_STRING
 		do
@@ -297,7 +297,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	call_git_tag_foreach_cb (a_function: POINTER; name: STRING; oid: GIT_OID_STRUCT_API; payload: POINTER): INTEGER 
+	call_git_tag_foreach_cb (a_function: POINTER; name: STRING_8; oid: GIT_OID_STRUCT_API; payload: POINTER): INTEGER 
 		local
 			name_c_string: C_STRING
 		do
@@ -371,7 +371,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	call_git_checkout_progress_cb (a_function: POINTER; path: STRING; completed_steps: INTEGER; total_steps: INTEGER; payload: POINTER) 
+	call_git_checkout_progress_cb (a_function: POINTER; path: STRING_8; completed_steps: INTEGER; total_steps: INTEGER; payload: POINTER) 
 		local
 			path_c_string: C_STRING
 		do
@@ -587,7 +587,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	call_git_transport_message_cb (a_function: POINTER; str: STRING; len: INTEGER; payload: POINTER): INTEGER 
+	call_git_transport_message_cb (a_function: POINTER; str: STRING_8; len: INTEGER; payload: POINTER): INTEGER 
 		local
 			str_c_string: C_STRING
 		do
@@ -661,7 +661,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	call_git_credential_acquire_cb (a_function: POINTER; a_out: GIT_CREDENTIAL_STRUCT_API; url: STRING; username_from_url: STRING; allowed_types: INTEGER; payload: POINTER): INTEGER 
+	call_git_credential_acquire_cb (a_function: POINTER; a_out: GIT_CREDENTIAL_STRUCT_API; url: STRING_8; username_from_url: STRING_8; allowed_types: INTEGER; payload: POINTER): INTEGER 
 		local
 			url_c_string: C_STRING
 			username_from_url_c_string: C_STRING

@@ -9,7 +9,7 @@ class GIT_INDEX_API
 
 feature -- Access
 
-	git_index_open (a_out: GIT_INDEX_STRUCT_API; index_path: STRING): INTEGER 
+	git_index_open (a_out: GIT_INDEX_STRUCT_API; index_path: STRING_8): INTEGER 
 		local
 			index_path_c_string: C_STRING
 		do
@@ -147,7 +147,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_index_get_bypath (index: GIT_INDEX_STRUCT_API; path: STRING; stage: INTEGER): detachable GIT_INDEX_ENTRY_STRUCT_API 
+	git_index_get_bypath (index: GIT_INDEX_STRUCT_API; path: STRING_8; stage: INTEGER): detachable GIT_INDEX_ENTRY_STRUCT_API 
 		local
 			path_c_string: C_STRING
 		do
@@ -160,7 +160,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_index_remove (index: GIT_INDEX_STRUCT_API; path: STRING; stage: INTEGER): INTEGER 
+	git_index_remove (index: GIT_INDEX_STRUCT_API; path: STRING_8; stage: INTEGER): INTEGER 
 		local
 			path_c_string: C_STRING
 		do
@@ -170,7 +170,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_index_remove_directory (index: GIT_INDEX_STRUCT_API; dir: STRING; stage: INTEGER): INTEGER 
+	git_index_remove_directory (index: GIT_INDEX_STRUCT_API; dir: STRING_8; stage: INTEGER): INTEGER 
 		local
 			dir_c_string: C_STRING
 		do
@@ -222,7 +222,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_index_add_bypath (index: GIT_INDEX_STRUCT_API; path: STRING): INTEGER 
+	git_index_add_bypath (index: GIT_INDEX_STRUCT_API; path: STRING_8): INTEGER 
 		local
 			path_c_string: C_STRING
 		do
@@ -239,7 +239,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_index_remove_bypath (index: GIT_INDEX_STRUCT_API; path: STRING): INTEGER 
+	git_index_remove_bypath (index: GIT_INDEX_STRUCT_API; path: STRING_8): INTEGER 
 		local
 			path_c_string: C_STRING
 		do
@@ -270,7 +270,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_index_find (at_pos: POINTER; index: GIT_INDEX_STRUCT_API; path: STRING): INTEGER 
+	git_index_find (at_pos: POINTER; index: GIT_INDEX_STRUCT_API; path: STRING_8): INTEGER 
 		local
 			path_c_string: C_STRING
 		do
@@ -280,7 +280,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_index_find_prefix (at_pos: POINTER; index: GIT_INDEX_STRUCT_API; a_prefix: STRING): INTEGER 
+	git_index_find_prefix (at_pos: POINTER; index: GIT_INDEX_STRUCT_API; a_prefix: STRING_8): INTEGER 
 		local
 			a_prefix_c_string: C_STRING
 		do
@@ -297,7 +297,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_index_conflict_get (ancestor_out: GIT_INDEX_ENTRY_STRUCT_API; our_out: GIT_INDEX_ENTRY_STRUCT_API; their_out: GIT_INDEX_ENTRY_STRUCT_API; index: GIT_INDEX_STRUCT_API; path: STRING): INTEGER 
+	git_index_conflict_get (ancestor_out: GIT_INDEX_ENTRY_STRUCT_API; our_out: GIT_INDEX_ENTRY_STRUCT_API; their_out: GIT_INDEX_ENTRY_STRUCT_API; index: GIT_INDEX_STRUCT_API; path: STRING_8): INTEGER 
 		local
 			path_c_string: C_STRING
 		do
@@ -307,7 +307,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_index_conflict_remove (index: GIT_INDEX_STRUCT_API; path: STRING): INTEGER 
+	git_index_conflict_remove (index: GIT_INDEX_STRUCT_API; path: STRING_8): INTEGER 
 		local
 			path_c_string: C_STRING
 		do

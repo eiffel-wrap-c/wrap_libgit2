@@ -57,7 +57,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_tree_entry_byname (tree: GIT_TREE_STRUCT_API; filename: STRING): detachable GIT_TREE_ENTRY_STRUCT_API 
+	git_tree_entry_byname (tree: GIT_TREE_STRUCT_API; filename: STRING_8): detachable GIT_TREE_ENTRY_STRUCT_API 
 		local
 			filename_c_string: C_STRING
 		do
@@ -90,7 +90,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_tree_entry_bypath (a_out: GIT_TREE_ENTRY_STRUCT_API; root: GIT_TREE_STRUCT_API; path: STRING): INTEGER 
+	git_tree_entry_bypath (a_out: GIT_TREE_ENTRY_STRUCT_API; root: GIT_TREE_STRUCT_API; path: STRING_8): INTEGER 
 		local
 			path_c_string: C_STRING
 		do

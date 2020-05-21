@@ -9,7 +9,7 @@ class GIT_OID_API
 
 feature -- Access
 
-	git_oid_fromstr (a_out: GIT_OID_STRUCT_API; str: STRING): INTEGER 
+	git_oid_fromstr (a_out: GIT_OID_STRUCT_API; str: STRING_8): INTEGER 
 		local
 			str_c_string: C_STRING
 		do
@@ -19,7 +19,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_oid_fromstrp (a_out: GIT_OID_STRUCT_API; str: STRING): INTEGER 
+	git_oid_fromstrp (a_out: GIT_OID_STRUCT_API; str: STRING_8): INTEGER 
 		local
 			str_c_string: C_STRING
 		do
@@ -29,7 +29,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_oid_fromstrn (a_out: GIT_OID_STRUCT_API; str: STRING; length: INTEGER): INTEGER 
+	git_oid_fromstrn (a_out: GIT_OID_STRUCT_API; str: STRING_8; length: INTEGER): INTEGER 
 		local
 			str_c_string: C_STRING
 		do
@@ -39,7 +39,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_oid_fromraw (a_out: GIT_OID_STRUCT_API; raw: STRING): INTEGER 
+	git_oid_fromraw (a_out: GIT_OID_STRUCT_API; raw: STRING_8): INTEGER 
 		local
 			raw_c_string: C_STRING
 		do
@@ -49,7 +49,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_oid_fmt (a_out: STRING; id: GIT_OID_STRUCT_API): INTEGER 
+	git_oid_fmt (a_out: STRING_8; id: GIT_OID_STRUCT_API): INTEGER 
 		local
 			a_out_c_string: C_STRING
 		do
@@ -59,7 +59,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_oid_nfmt (a_out: STRING; n: INTEGER; id: GIT_OID_STRUCT_API): INTEGER 
+	git_oid_nfmt (a_out: STRING_8; n: INTEGER; id: GIT_OID_STRUCT_API): INTEGER 
 		local
 			a_out_c_string: C_STRING
 		do
@@ -69,7 +69,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_oid_pathfmt (a_out: STRING; id: GIT_OID_STRUCT_API): INTEGER 
+	git_oid_pathfmt (a_out: STRING_8; id: GIT_OID_STRUCT_API): INTEGER 
 		local
 			a_out_c_string: C_STRING
 		do
@@ -86,7 +86,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_oid_tostr (a_out: STRING; n: INTEGER; id: GIT_OID_STRUCT_API): POINTER 
+	git_oid_tostr (a_out: STRING_8; n: INTEGER; id: GIT_OID_STRUCT_API): POINTER 
 		local
 			a_out_c_string: C_STRING
 		do
@@ -124,7 +124,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_oid_streq (id: GIT_OID_STRUCT_API; str: STRING): INTEGER 
+	git_oid_streq (id: GIT_OID_STRUCT_API; str: STRING_8): INTEGER 
 		local
 			str_c_string: C_STRING
 		do
@@ -134,7 +134,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_oid_strcmp (id: GIT_OID_STRUCT_API; str: STRING): INTEGER 
+	git_oid_strcmp (id: GIT_OID_STRUCT_API; str: STRING_8): INTEGER 
 		local
 			str_c_string: C_STRING
 		do
@@ -160,7 +160,7 @@ feature -- Access
 			]"
 		end
 
-	git_oid_shorten_add (os: GIT_OID_SHORTEN_STRUCT_API; text_id: STRING): INTEGER 
+	git_oid_shorten_add (os: GIT_OID_SHORTEN_STRUCT_API; text_id: STRING_8): INTEGER 
 		local
 			text_id_c_string: C_STRING
 		do

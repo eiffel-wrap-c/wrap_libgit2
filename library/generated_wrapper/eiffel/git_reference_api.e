@@ -9,7 +9,7 @@ class GIT_REFERENCE_API
 
 feature -- Access
 
-	git_reference_lookup (a_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING): INTEGER 
+	git_reference_lookup (a_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING_8): INTEGER 
 		local
 			name_c_string: C_STRING
 		do
@@ -19,7 +19,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_reference_name_to_id (a_out: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING): INTEGER 
+	git_reference_name_to_id (a_out: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING_8): INTEGER 
 		local
 			name_c_string: C_STRING
 		do
@@ -29,7 +29,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_reference_dwim (a_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; shorthand: STRING): INTEGER 
+	git_reference_dwim (a_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; shorthand: STRING_8): INTEGER 
 		local
 			shorthand_c_string: C_STRING
 		do
@@ -39,7 +39,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_reference_symbolic_create_matching (a_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING; target: STRING; force: INTEGER; current_value: STRING; log_message: STRING): INTEGER 
+	git_reference_symbolic_create_matching (a_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING_8; target: STRING_8; force: INTEGER; current_value: STRING_8; log_message: STRING_8): INTEGER 
 		local
 			name_c_string: C_STRING
 			target_c_string: C_STRING
@@ -55,7 +55,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_reference_symbolic_create (a_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING; target: STRING; force: INTEGER; log_message: STRING): INTEGER 
+	git_reference_symbolic_create (a_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING_8; target: STRING_8; force: INTEGER; log_message: STRING_8): INTEGER 
 		local
 			name_c_string: C_STRING
 			target_c_string: C_STRING
@@ -69,7 +69,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_reference_create (a_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING; id: GIT_OID_STRUCT_API; force: INTEGER; log_message: STRING): INTEGER 
+	git_reference_create (a_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING_8; id: GIT_OID_STRUCT_API; force: INTEGER; log_message: STRING_8): INTEGER 
 		local
 			name_c_string: C_STRING
 			log_message_c_string: C_STRING
@@ -81,7 +81,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_reference_create_matching (a_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING; id: GIT_OID_STRUCT_API; force: INTEGER; current_id: GIT_OID_STRUCT_API; log_message: STRING): INTEGER 
+	git_reference_create_matching (a_out: GIT_REFERENCE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING_8; id: GIT_OID_STRUCT_API; force: INTEGER; current_id: GIT_OID_STRUCT_API; log_message: STRING_8): INTEGER 
 		local
 			name_c_string: C_STRING
 			log_message_c_string: C_STRING
@@ -151,7 +151,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_reference_symbolic_set_target (a_out: GIT_REFERENCE_STRUCT_API; ref: GIT_REFERENCE_STRUCT_API; target: STRING; log_message: STRING): INTEGER 
+	git_reference_symbolic_set_target (a_out: GIT_REFERENCE_STRUCT_API; ref: GIT_REFERENCE_STRUCT_API; target: STRING_8; log_message: STRING_8): INTEGER 
 		local
 			target_c_string: C_STRING
 			log_message_c_string: C_STRING
@@ -163,7 +163,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_reference_set_target (a_out: GIT_REFERENCE_STRUCT_API; ref: GIT_REFERENCE_STRUCT_API; id: GIT_OID_STRUCT_API; log_message: STRING): INTEGER 
+	git_reference_set_target (a_out: GIT_REFERENCE_STRUCT_API; ref: GIT_REFERENCE_STRUCT_API; id: GIT_OID_STRUCT_API; log_message: STRING_8): INTEGER 
 		local
 			log_message_c_string: C_STRING
 		do
@@ -173,7 +173,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_reference_rename (new_ref: GIT_REFERENCE_STRUCT_API; ref: GIT_REFERENCE_STRUCT_API; new_name: STRING; force: INTEGER; log_message: STRING): INTEGER 
+	git_reference_rename (new_ref: GIT_REFERENCE_STRUCT_API; ref: GIT_REFERENCE_STRUCT_API; new_name: STRING_8; force: INTEGER; log_message: STRING_8): INTEGER 
 		local
 			new_name_c_string: C_STRING
 			log_message_c_string: C_STRING
@@ -192,7 +192,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_reference_remove (repo: GIT_REPOSITORY_STRUCT_API; name: STRING): INTEGER 
+	git_reference_remove (repo: GIT_REPOSITORY_STRUCT_API; name: STRING_8): INTEGER 
 		local
 			name_c_string: C_STRING
 		do
@@ -251,7 +251,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_reference_iterator_glob_new (a_out: GIT_REFERENCE_ITERATOR_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; glob: STRING): INTEGER 
+	git_reference_iterator_glob_new (a_out: GIT_REFERENCE_ITERATOR_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; glob: STRING_8): INTEGER 
 		local
 			glob_c_string: C_STRING
 		do
@@ -282,7 +282,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_reference_foreach_glob (repo: GIT_REPOSITORY_STRUCT_API; glob: STRING; callback: POINTER; payload: POINTER): INTEGER 
+	git_reference_foreach_glob (repo: GIT_REPOSITORY_STRUCT_API; glob: STRING_8; callback: POINTER; payload: POINTER): INTEGER 
 		local
 			glob_c_string: C_STRING
 		do
@@ -292,7 +292,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_reference_has_log (repo: GIT_REPOSITORY_STRUCT_API; refname: STRING): INTEGER 
+	git_reference_has_log (repo: GIT_REPOSITORY_STRUCT_API; refname: STRING_8): INTEGER 
 		local
 			refname_c_string: C_STRING
 		do
@@ -302,7 +302,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_reference_ensure_log (repo: GIT_REPOSITORY_STRUCT_API; refname: STRING): INTEGER 
+	git_reference_ensure_log (repo: GIT_REPOSITORY_STRUCT_API; refname: STRING_8): INTEGER 
 		local
 			refname_c_string: C_STRING
 		do
@@ -386,7 +386,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_submodule_lookup (a_out: GIT_SUBMODULE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING): INTEGER 
+	git_submodule_lookup (a_out: GIT_SUBMODULE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; name: STRING_8): INTEGER 
 		local
 			name_c_string: C_STRING
 		do
@@ -410,7 +410,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_submodule_add_setup (a_out: GIT_SUBMODULE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; url: STRING; path: STRING; use_gitlink: INTEGER): INTEGER 
+	git_submodule_add_setup (a_out: GIT_SUBMODULE_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; url: STRING_8; path: STRING_8; use_gitlink: INTEGER): INTEGER 
 		local
 			url_c_string: C_STRING
 			path_c_string: C_STRING
@@ -474,7 +474,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_submodule_resolve_url (a_out: GIT_BUF_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; url: STRING): INTEGER 
+	git_submodule_resolve_url (a_out: GIT_BUF_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; url: STRING_8): INTEGER 
 		local
 			url_c_string: C_STRING
 		do
@@ -491,7 +491,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_submodule_set_branch (repo: GIT_REPOSITORY_STRUCT_API; name: STRING; branch: STRING): INTEGER 
+	git_submodule_set_branch (repo: GIT_REPOSITORY_STRUCT_API; name: STRING_8; branch: STRING_8): INTEGER 
 		local
 			name_c_string: C_STRING
 			branch_c_string: C_STRING
@@ -503,7 +503,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_submodule_set_url (repo: GIT_REPOSITORY_STRUCT_API; name: STRING; url: STRING): INTEGER 
+	git_submodule_set_url (repo: GIT_REPOSITORY_STRUCT_API; name: STRING_8; url: STRING_8): INTEGER 
 		local
 			name_c_string: C_STRING
 			url_c_string: C_STRING
@@ -552,7 +552,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_submodule_set_ignore (repo: GIT_REPOSITORY_STRUCT_API; name: STRING; ignore: INTEGER): INTEGER 
+	git_submodule_set_ignore (repo: GIT_REPOSITORY_STRUCT_API; name: STRING_8; ignore: INTEGER): INTEGER 
 		local
 			name_c_string: C_STRING
 		do
@@ -569,7 +569,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_submodule_set_update (repo: GIT_REPOSITORY_STRUCT_API; name: STRING; update: INTEGER): INTEGER 
+	git_submodule_set_update (repo: GIT_REPOSITORY_STRUCT_API; name: STRING_8; update: INTEGER): INTEGER 
 		local
 			name_c_string: C_STRING
 		do
@@ -586,7 +586,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_submodule_set_fetch_recurse_submodules (repo: GIT_REPOSITORY_STRUCT_API; name: STRING; fetch_recurse_submodules: INTEGER): INTEGER 
+	git_submodule_set_fetch_recurse_submodules (repo: GIT_REPOSITORY_STRUCT_API; name: STRING_8; fetch_recurse_submodules: INTEGER): INTEGER 
 		local
 			name_c_string: C_STRING
 		do
@@ -631,7 +631,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_submodule_status (status: POINTER; repo: GIT_REPOSITORY_STRUCT_API; name: STRING; ignore: INTEGER): INTEGER 
+	git_submodule_status (status: POINTER; repo: GIT_REPOSITORY_STRUCT_API; name: STRING_8; ignore: INTEGER): INTEGER 
 		local
 			name_c_string: C_STRING
 		do

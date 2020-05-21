@@ -9,7 +9,7 @@ class GIT_SIGNATURE_API
 
 feature -- Access
 
-	git_signature_new (a_out: GIT_SIGNATURE_STRUCT_API; name: STRING; email: STRING; time: INTEGER; offset: INTEGER): INTEGER 
+	git_signature_new (a_out: GIT_SIGNATURE_STRUCT_API; name: STRING_8; email: STRING_8; time: INTEGER; offset: INTEGER): INTEGER 
 		local
 			name_c_string: C_STRING
 			email_c_string: C_STRING
@@ -21,7 +21,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_signature_now (a_out: GIT_SIGNATURE_STRUCT_API; name: STRING; email: STRING): INTEGER 
+	git_signature_now (a_out: GIT_SIGNATURE_STRUCT_API; name: STRING_8; email: STRING_8): INTEGER 
 		local
 			name_c_string: C_STRING
 			email_c_string: C_STRING
@@ -40,7 +40,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_signature_from_buffer (a_out: GIT_SIGNATURE_STRUCT_API; buf: STRING): INTEGER 
+	git_signature_from_buffer (a_out: GIT_SIGNATURE_STRUCT_API; buf: STRING_8): INTEGER 
 		local
 			buf_c_string: C_STRING
 		do

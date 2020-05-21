@@ -77,10 +77,10 @@ feature -- Repository
 
 			callback := if attached matched_cb as l_matched_cb then l_matched_cb.c_dispatcher_1 else default_pointer end
 
-			if (options & UPDATE) /= 0 then
-				ini := {GIT_INDEX_API}.git_index_update_all (index, array, callback, serialize (payload))
-			else
+			if (options & UPDATE) = 0 then
 				ini := {GIT_INDEX_API}.git_index_add_all (index, array, 0,  callback, serialize (payload))
+			else
+				ini := {GIT_INDEX_API}.git_index_update_all (index, array, callback, serialize (payload))
 			end
 
 				-- Clenup memory

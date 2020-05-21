@@ -9,7 +9,7 @@ class GIT_TAG_API
 
 feature -- Access
 
-	git_tag_create_frombuffer (oid: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; buffer: STRING; force: INTEGER): INTEGER 
+	git_tag_create_frombuffer (oid: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; buffer: STRING_8; force: INTEGER): INTEGER 
 		local
 			buffer_c_string: C_STRING
 		do
@@ -108,7 +108,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_tag_create (oid: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; tag_name: STRING; target: GIT_OBJECT_STRUCT_API; tagger: GIT_SIGNATURE_STRUCT_API; message: STRING; force: INTEGER): INTEGER 
+	git_tag_create (oid: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; tag_name: STRING_8; target: GIT_OBJECT_STRUCT_API; tagger: GIT_SIGNATURE_STRUCT_API; message: STRING_8; force: INTEGER): INTEGER 
 		local
 			tag_name_c_string: C_STRING
 			message_c_string: C_STRING
@@ -120,7 +120,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_tag_annotation_create (oid: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; tag_name: STRING; target: GIT_OBJECT_STRUCT_API; tagger: GIT_SIGNATURE_STRUCT_API; message: STRING): INTEGER 
+	git_tag_annotation_create (oid: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; tag_name: STRING_8; target: GIT_OBJECT_STRUCT_API; tagger: GIT_SIGNATURE_STRUCT_API; message: STRING_8): INTEGER 
 		local
 			tag_name_c_string: C_STRING
 			message_c_string: C_STRING
@@ -132,7 +132,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_tag_create_from_buffer (oid: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; buffer: STRING; force: INTEGER): INTEGER 
+	git_tag_create_from_buffer (oid: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; buffer: STRING_8; force: INTEGER): INTEGER 
 		local
 			buffer_c_string: C_STRING
 		do
@@ -142,7 +142,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_tag_create_lightweight (oid: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; tag_name: STRING; target: GIT_OBJECT_STRUCT_API; force: INTEGER): INTEGER 
+	git_tag_create_lightweight (oid: GIT_OID_STRUCT_API; repo: GIT_REPOSITORY_STRUCT_API; tag_name: STRING_8; target: GIT_OBJECT_STRUCT_API; force: INTEGER): INTEGER 
 		local
 			tag_name_c_string: C_STRING
 		do
@@ -152,7 +152,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_tag_delete (repo: GIT_REPOSITORY_STRUCT_API; tag_name: STRING): INTEGER 
+	git_tag_delete (repo: GIT_REPOSITORY_STRUCT_API; tag_name: STRING_8): INTEGER 
 		local
 			tag_name_c_string: C_STRING
 		do
@@ -169,7 +169,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_tag_list_match (tag_names: GIT_STRARRAY_STRUCT_API; pattern: STRING; repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
+	git_tag_list_match (tag_names: GIT_STRARRAY_STRUCT_API; pattern: STRING_8; repo: GIT_REPOSITORY_STRUCT_API): INTEGER 
 		local
 			pattern_c_string: C_STRING
 		do

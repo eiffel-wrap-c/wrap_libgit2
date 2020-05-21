@@ -30,7 +30,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_status_file (status_flags: POINTER; repo: GIT_REPOSITORY_STRUCT_API; path: STRING): INTEGER 
+	git_status_file (status_flags: POINTER; repo: GIT_REPOSITORY_STRUCT_API; path: STRING_8): INTEGER 
 		local
 			path_c_string: C_STRING
 		do
@@ -71,7 +71,7 @@ feature -- Access
 			instance_free: class
 		end
 
-	git_status_should_ignore (ignored: POINTER; repo: GIT_REPOSITORY_STRUCT_API; path: STRING): INTEGER 
+	git_status_should_ignore (ignored: POINTER; repo: GIT_REPOSITORY_STRUCT_API; path: STRING_8): INTEGER 
 		local
 			path_c_string: C_STRING
 		do

@@ -35,7 +35,7 @@ Optionally you can use [vckpg](https://github.com/Microsoft/vcpkg), a C++ Librar
 ```
 	./vcpkg install libgit2:x64-linux
 ```
-Windows
+#### Windows
 
 Using vcpkg (https://github.com/microsoft/vcpkg) tool, you can install libgit2 library
 
